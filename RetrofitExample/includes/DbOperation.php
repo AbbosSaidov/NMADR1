@@ -58,7 +58,7 @@ class DbOperation
 
         $BotOrClient = "true";
         $GroupNumber = 0;
-
+        $pul = "";
         if(strlen($data)>2 && substr($data,0, 2) == "%%" && strlen($data)>=69)
         {
             $GroupNumber = substr($data,10, 4);
@@ -74,16 +74,15 @@ class DbOperation
             }
         }
         $ki=$GroupNumber;
-        $stmt2=$this->con->prepare("SELECT HowmanyPlayer FROM players WHERE GroupNumber=?");
-        $stmt2->bind_param("i",$ki);
-        $stmt2->execute();
-        $stmt2->store_result();
-
-
         if ($GroupNumber > 2100)
         {
             for($i = 0; $i < 100; $i = $i + 2)
             {
+
+                $stmt2=$this->con->prepare("SELECT HowmanyPlayer FROM players WHERE GroupNumber=?");
+                $stmt2->bind_param("i",$ki);
+                $stmt2->execute();
+                $stmt2->store_result();
                 if ( $GroupNumber%2==0 &&$ki==5)
                     {
                         $GroupNumber = $GroupNumber+ $i;
@@ -99,48 +98,51 @@ class DbOperation
         }
         else
         {/**/
-            if (MainData.GroupNumber.ToString().PadLeft(4,'0') == "0001")
+            if (str_pad((string)$ki,10,"0") == "0001")
             {
-                int mvc = 0;
-                    for(int i = 2; i < 100; i=i+2)
-                    {
+                $mvc = 0;
+                    for($i = 2; $i < 100; $i=$i+2)
+                    { $stmt2=$this->con->prepare("SELECT HowmanyPlayer FROM players WHERE GroupNumber=?");
+                        $stmt2->bind_param("i",$ki);
+                        $stmt2->execute();
+                        $stmt2->store_result();
                         //  print("1");
-                        switch (int.Parse(MainData.pul))
+                        switch ((int)$pul)
                         {
-                            case 100:if (uyinchilar[i].Length < 5) { MainData.GroupNumber = i; mvc = 1; }  ; break;
-                            case 500: if (uyinchilar[100 + i].Length < 5) { MainData.GroupNumber = 100 + i; mvc = 1; } break;
-                            case 2000: if (uyinchilar[200 + i].Length < 5) { MainData.GroupNumber = 200 + i; mvc = 1; }; break;
-                            case 10000: if (uyinchilar[300 + i].Length < 5) { MainData.GroupNumber = 300 + i; mvc = 1; }; break;
-                            case 40000: if (uyinchilar[400 + i].Length < 5) { MainData.GroupNumber = 400 + i; mvc = 1; }; break;
-                            case 200000: if (uyinchilar[500 + i].Length < 5) { MainData.GroupNumber = 500 + i; mvc = 1; }; break;
-                            case 1000000: if (uyinchilar[600 + i].Length < 5) { MainData.GroupNumber = 600 + i; mvc = 1; }; break;
-                            case 10000000: if (uyinchilar[700 + i].Length < 5) { MainData.GroupNumber = 700 + i; mvc = 1; }; break;
-                            case 100000000: if (uyinchilar[800 + i].Length < 5) { MainData.GroupNumber = 800 + i; mvc = 1; }; break;
-                            case 200000000: if (uyinchilar[900 + i].Length < 5) { MainData.GroupNumber = 900 + i; mvc = 1; }; break;
-                            case 400000000: if (uyinchilar[1000 + i].Length < 5) { MainData.GroupNumber = 1000 + i; mvc = 1; }; break;
-                            case 1000000000: if (uyinchilar[1100 + i].Length < 5) { MainData.GroupNumber = 1100 + i; mvc = 1; }; break;
-                            case 2000000000: if (uyinchilar[1200 + i].Length < 5) { MainData.GroupNumber = 1200 + i; mvc = 1; }; break;
+                            case 100:if (uyinchilar[i].Length < 5) { MainData.GroupNumber = i; $mvc = 1; }  ; break;
+                            case 500: if (uyinchilar[100 + i].Length < 5) { MainData.GroupNumber = 100 + i; $mvc = 1; } break;
+                            case 2000: if (uyinchilar[200 + i].Length < 5) { MainData.GroupNumber = 200 + i; $mvc = 1; }; break;
+                            case 10000: if (uyinchilar[300 + i].Length < 5) { MainData.GroupNumber = 300 + i; $mvc = 1; }; break;
+                            case 40000: if (uyinchilar[400 + i].Length < 5) { MainData.GroupNumber = 400 + i; $mvc = 1; }; break;
+                            case 200000: if (uyinchilar[500 + i].Length < 5) { MainData.GroupNumber = 500 + i; $mvc = 1; }; break;
+                            case 1000000: if (uyinchilar[600 + i].Length < 5) { MainData.GroupNumber = 600 + i; $mvc = 1; }; break;
+                            case 10000000: if (uyinchilar[700 + i].Length < 5) { MainData.GroupNumber = 700 + i; $mvc = 1; }; break;
+                            case 100000000: if (uyinchilar[800 + i].Length < 5) { MainData.GroupNumber = 800 + i; $mvc = 1; }; break;
+                            case 200000000: if (uyinchilar[900 + i].Length < 5) { MainData.GroupNumber = 900 + i; $mvc = 1; }; break;
+                            case 400000000: if (uyinchilar[1000 + i].Length < 5) { MainData.GroupNumber = 1000 + i; $mvc = 1; }; break;
+                            case 1000000000: if (uyinchilar[1100 + i].Length < 5) { MainData.GroupNumber = 1100 + i; $mvc = 1; }; break;
+                            case 2000000000: if (uyinchilar[1200 + i].Length < 5) { MainData.GroupNumber = 1200 + i; $mvc = 1; }; break;
                         }
                         //  print("41");
-                        if (mvc == 1) {  break; }
+                        if ($mvc == 1) {  break; }
                         //  print("6");
-                        switch (int.Parse(MainData.pul))
+                        switch ((int)$pul)
                         {
-                            case 100: if (uyinchilar[i + 1].Length < 9) { MainData.GroupNumber =  i + 1; mvc = 1; }; break;
-                            case 500: if (uyinchilar[100 + i + 1].Length < 9) { MainData.GroupNumber = 100 + i + 1; mvc = 1; }; break;
-                            case 2000: if (uyinchilar[200 + i + 1].Length < 9) { MainData.GroupNumber = 200 + i + 1; mvc = 1; }; break;
-                            case 10000: if (uyinchilar[300 + i + 1].Length < 9) { MainData.GroupNumber = 300 + i + 1; mvc = 1; }; break;
-                            case 40000: if (uyinchilar[400 + i + 1].Length < 9) { MainData.GroupNumber = 400 + i + 1; mvc = 1; }; break;
-                            case 200000: if (uyinchilar[500 + i + 1].Length < 9) { MainData.GroupNumber = 500 + i + 1; mvc = 1; }; break;
-                            case 1000000: if (uyinchilar[600 + i + 1].Length < 9) { MainData.GroupNumber = 600 + i + 1; mvc = 1; }; break;
-                            case 10000000: if (uyinchilar[700 + i + 1].Length < 9) { MainData.GroupNumber = 700 + i + 1; mvc = 1; }; break;
-                            case 100000000: if (uyinchilar[800 + i + 1].Length < 9) { MainData.GroupNumber = 800 + i + 1; mvc = 1; }; break;
-                            case 200000000: if (uyinchilar[900 + i + 1].Length < 9) { MainData.GroupNumber = 9000 + i + 1; mvc = 1; }; break;
-                            case 400000000: if (uyinchilar[1000 + i + 1].Length < 9) { MainData.GroupNumber = 1000 + i + 1; mvc = 1; }; break;
-                            case 1000000000: if (uyinchilar[1100 + i + 1].Length < 9) { MainData.GroupNumber = 1100 + i + 1; mvc = 1; }; break;
-                            case 2000000000: if (uyinchilar[1200 + i + 1].Length < 9) { MainData.GroupNumber = 1200 + i + 1; mvc = 1; }; break;
+                            case 100: if (uyinchilar[i + 1].Length < 9) { MainData.GroupNumber =  i + 1; $mvc = 1; }; break;
+                            case 500: if (uyinchilar[100 + i + 1].Length < 9) { MainData.GroupNumber = 100 + i + 1; $mvc = 1; }; break;
+                            case 2000: if (uyinchilar[200 + i + 1].Length < 9) { MainData.GroupNumber = 200 + i + 1; $mvc = 1; }; break;
+                            case 10000: if (uyinchilar[300 + i + 1].Length < 9) { MainData.GroupNumber = 300 + i + 1; $mvc = 1; }; break;
+                            case 40000: if (uyinchilar[400 + i + 1].Length < 9) { MainData.GroupNumber = 400 + i + 1; $mvc = 1; }; break;
+                            case 200000: if (uyinchilar[500 + i + 1].Length < 9) { MainData.GroupNumber = 500 + i + 1; $mvc = 1; }; break;
+                            case 1000000: if (uyinchilar[600 + i + 1].Length < 9) { MainData.GroupNumber = 600 + i + 1; $mvc = 1; }; break;
+                            case 10000000: if (uyinchilar[700 + i + 1].Length < 9) { MainData.GroupNumber = 700 + i + 1; $mvc = 1; }; break;
+                            case 100000000: if (uyinchilar[800 + i + 1].Length < 9) { MainData.GroupNumber = 800 + i + 1; $mvc = 1; }; break;
+                            case 200000000: if (uyinchilar[900 + i + 1].Length < 9) { MainData.GroupNumber = 9000 + i + 1; $mvc = 1; }; break;
+                            case 400000000: if (uyinchilar[1000 + i + 1].Length < 9) { MainData.GroupNumber = 1000 + i + 1; $mvc = 1; }; break;
+                            case 1000000000: if (uyinchilar[1100 + i + 1].Length < 9) { MainData.GroupNumber = 1100 + i + 1; $mvc = 1; }; break;
+                            case 2000000000: if (uyinchilar[1200 + i + 1].Length < 9) { MainData.GroupNumber = 1200 + i + 1; $mvc = 1; }; break;
                         }
-                        if (mvc == 1) {  break; }
+                        if ($mvc == 1) {  break; }
                     }
                 }
         }
