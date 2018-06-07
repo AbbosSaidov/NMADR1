@@ -31,6 +31,10 @@ class DbOperation
 
             if ($BotOrClient != "false")
             {
+
+                $stmt =$this->con->prepare("INSERT INTO players (id,Imagenumber,money) VALUES(?,?,?)");
+                $stmt->bind_param("ssi",$Id,$ImageNumber,$Money);
+$stmt->execute();
               //  c.ClientId = ki.ToString();
               //  c.clientImageNumber = MainData.ImageNumber;
               //  c.clientMoney = int.Parse(MainData.Money);
