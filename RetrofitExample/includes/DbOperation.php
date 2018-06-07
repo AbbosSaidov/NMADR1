@@ -14,6 +14,7 @@ class DbOperation
     function registerUser($data)
     {
         $BotOrClient = "true";
+        $Id = "";  $Money = 0;$ki=0;
         if (strlen($data) > 2 && substr($data,0, 3) == "%??" && strlen($data) >= 35)
         {
             $nmaligi = "RegistrID";
@@ -28,63 +29,26 @@ class DbOperation
             }
         }
 
+            if ($Id == "0000000000")
+            {
 
+
+               if ($BotOrClient!= "false")
+                {
+                    $stmt2=$this->con->prepare("SELECT id FROM users WHERE nmadr=?");
+                    $stmt2->bind_param("i",$ki);
+                    $stmt2->execute();
+                    $stmt2->store_result();
+                      $ki=$ki+1;
+
+                    $stmt =$this->con->prepare("INSERT INTO players (id,Imagenumber,money) VALUES(?,?,?)");
+                    $stmt->bind_param("isi",$ki,$ImageNumber,$Money);
+                    $stmt->execute();
+                }
+            }
             if ($BotOrClient != "false")
             {
-
-                $stmt =$this->con->prepare("INSERT INTO players (id,Imagenumber,money) VALUES(?,?,?)");
-                $stmt->bind_param("ssi",$Id,$ImageNumber,$Money);
-$stmt->execute();
-              //  c.ClientId = ki.ToString();
-              //  c.clientImageNumber = MainData.ImageNumber;
-              //  c.clientMoney = int.Parse(MainData.Money);
-              //  print(c.clientMoney.ToString());
-            }
-
-            // c.ClientId = data.Substring(3, 10);
-            //c.clientImageNumber = data.Substring(33, 2);
-            //c.clientMoney = int.Parse(data.Substring(21, 12));
-
-            if (MainData.Id == "0000000000")
-            {
-
-
-                playerPul = new List<character>();
-                //uqish uchun jsonni
-                JsonString = File.ReadAllText(Application.dataPath + "/Users.json");//bu string
-                                                                                    //print(JsonString);
-
-                ItemData = JsonMapper.ToObject(JsonString);
-
-                Id = ItemData.Count + 1;
-                ki = Id;
-                if (MainData.BotOrClient != "false")
-                {
-                    c.ClientId = ki.ToString().PadLeft(10, '0');
-
-                }
-
-
-                for (int i = 0; i < ItemData.Count; i++)
-                {
-                    character player2 = new character(ItemData[i]["Schot"].ToString(), ItemData[i]["id"].ToString(), ItemData[i]["trueOrFalse"].ToString(), ItemData[i]["trueOrFalse2"].ToString());
-
-                    playerPul.Add(player2);
-                }
-                character player22 = new character("0", ki.ToString().PadLeft(10, '0'), "false", "false");
-
-                playerPul.Add(player22);
-
-                string dad = JsonMapper.ToJson(playerPul);
-                ItemData = JsonMapper.ToObject(dad);
-
-                print(ItemData.ToJson());
-
-                File.WriteAllText(Application.dataPath + "/Users.json", ItemData.ToJson().ToString());
-            }
-            if (MainData.BotOrClient != "false")
-            {
-                BRoadFor("Jiklo" + ki.ToString().PadLeft(10, '0'), c);
+                return("Jiklo".str_pad($ki,10,"0"));
             }
             else
             {
