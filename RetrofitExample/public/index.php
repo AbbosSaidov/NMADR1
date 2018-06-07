@@ -41,7 +41,32 @@ $app->post('/register', function (Request $request, Response $response) {
     }
 });
 
+$app->post('/uyingKirish', function (Request $request, Response $response) {
+    if (isTheseParametersAvailable(array('registerId'))) {
+        $requestData = $request->getParsedBody();
+        $name = $requestData['UyingKirish'];
 
+        $db = new DbOperation();
+        $responseData = array();
+
+        $result = $db->UyingaKirish($name);
+
+        if ($result == USER_CREATED) {
+            $responseData['error'] = false;
+            $responseData['message'] = 'Registered successfully';
+        } elseif ($result == USER_CREATION_FAILED) {
+            $responseData['error'] = true;
+            $responseData['message'] = 'Some error occurred';
+        } elseif ($result == USER_EXIST) {
+            $responseData['error'] = true;
+            $responseData['message'] = 'This email already exist, please login';
+        }else{
+            $responseData['UyingKirish'] = $result;
+        }
+
+        $response->getBody()->write(json_encode($responseData));
+    }
+});
 
 
 

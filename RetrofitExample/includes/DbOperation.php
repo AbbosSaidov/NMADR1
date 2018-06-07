@@ -17,9 +17,7 @@ class DbOperation
         $Id = "";  $Money = 0;$ki=0;
         if (strlen($data) > 2 && substr($data,0, 3) == "%??" && strlen($data) >= 35)
         {
-            $nmaligi = "RegistrID";
             $Id = substr($data,3, 10);
-            $Name = substr($data,11, 18);
             $Money = substr($data,21, 12);
             $ImageNumber = substr($data,33, 2);
             if (strlen($data)>40&&substr($data,35, 1) == "f")
@@ -31,8 +29,6 @@ class DbOperation
 
             if ($Id == "0000000000")
             {
-
-
                if ($BotOrClient!= "false")
                 {
                     $stmt2=$this->con->prepare("SELECT id FROM users WHERE nmadr=?");
@@ -52,12 +48,19 @@ class DbOperation
             }
             else
             {
-                OnIncomBot("Jiklo" + ki.ToString().PadLeft(10, '0'), int.Parse(MainData.BotlistNumber));
+           //     OnIncomBot("Jiklo" + ki.ToString().PadLeft(10, '0'), int.Parse(MainData.BotlistNumber));
             }
 
-        return 0;
+        return true;
     }
 
+    function UyingaKirish($data){
+
+
+
+
+        return true;
+    }
 
 
 
