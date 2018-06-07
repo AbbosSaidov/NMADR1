@@ -73,18 +73,24 @@ class DbOperation
                 $BotOrClient = "false";
             }
         }
+        $ki=$GroupNumber;
+        $stmt2=$this->con->prepare("SELECT HowmanyPlayer FROM players WHERE GroupNumber=?");
+        $stmt2->bind_param("i",$ki);
+        $stmt2->execute();
+        $stmt2->store_result();
+
 
         if ($GroupNumber > 2100)
         {
-            for(int i = 0; i < 100; i = i + 2)
-                {
-                    if (Grop2help[MainData.GroupNumber + i])
+            for($i = 0; $i < 100; $i = $i + 2)
+            {
+                if ()
                     {
-                        MainData.GroupNumber = MainData.GroupNumber + i;
+                        $GroupNumber = $GroupNumber+ $i;
                         break;
                     }
-                }
             }
+        }
         else
         {/**/
             if (MainData.GroupNumber.ToString().PadLeft(4,'0') == "0001")
