@@ -84,11 +84,17 @@ class DbOperation
         {
             for($i = 0; $i < 100; $i = $i + 2)
             {
-                if ()
+                if ( $GroupNumber%2==0 &&$ki==5)
+                    {
+                        $GroupNumber = $GroupNumber+ $i;
+                        break;
+                    }else{
+                    if ( $GroupNumber%2==1 &&$ki==9)
                     {
                         $GroupNumber = $GroupNumber+ $i;
                         break;
                     }
+                }
             }
         }
         else
