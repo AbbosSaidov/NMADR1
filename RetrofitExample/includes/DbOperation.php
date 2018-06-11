@@ -65,70 +65,69 @@ class DbOperation
             return $ki1;
         }
 
-        function uyinchiniGruppgaQushish($data){
+        function uyinchiniGruppgaQushish($data,$GroupNumber){
 
 
 
-            private int TurnLk(int lk)
+            function TurnLk($lk)
     {
-        int m = 0;
+        $m = 0;
         //lobbi
-        if (lk > 0) { m = 10; }
-        if (lk > 100) { m = 50; }
-        if (lk > 200) { m = 200; }
-        if (lk > 300) { m = 1000; }
-        if (lk > 400) { m = 4000; }
-        if (lk > 500) { m = 20000; }
-        if (lk > 600) { m = 100000; }
-        if (lk > 700) { m = 500000; }
-        if (lk > 800) { m = 1000000; }
-        if (lk > 900) { m = 2000000; }
-        if (lk > 1000) { m = 10000000; }
-        if (lk > 1100) { m = 200000000; }
-        if (lk > 1200) { m = 500000000; }
-        if (lk > 1300) { m = 1000000000; }
-        if (lk > 1400) { m = 500000; }
-        if (lk > 1500) { m = 1000000; }
-        if (lk > 1600) { m = 2000000; }
-        if (lk > 1700) { m = 10000000; }
-        if (lk > 1800) { m = 200000000; }
-        if (lk > 1900) { m = 500000000; }
-        if (lk > 2000) { m = 1000000000; }
+        if ($lk > 0) { $m = 10; }
+        if ($lk > 100) { $m = 50; }
+        if ($lk > 200) { $m = 200; }
+        if ($lk > 300) { $m = 1000; }
+        if ($lk > 400) { $m = 4000; }
+        if ($lk > 500) { $m = 20000; }
+        if ($lk > 600) { $m = 100000; }
+        if ($lk > 700) { $m = 500000; }
+        if ($lk > 800) { $m = 1000000; }
+        if ($lk > 900) { $m = 2000000; }
+        if ($lk > 1000) { $m = 10000000; }
+        if ($lk > 1100) { $m = 200000000; }
+        if ($lk > 1200) { $m = 500000000; }
+        if ($lk > 1300) { $m = 1000000000; }
+        if ($lk > 1400) { $m = 500000; }
+        if ($lk > 1500) { $m = 1000000; }
+        if ($lk > 1600) { $m = 2000000; }
+        if ($lk > 1700) { $m = 10000000; }
+        if ($lk > 1800) { $m = 200000000; }
+        if ($lk > 1900) { $m = 500000000; }
+        if ($lk > 2000) { $m = 1000000000; }
         //turnir
-        if (lk > 2100) { m = 20; }
-        if (lk > 2200) { m = 20; }
-        if (lk > 2300) { m = 20; }
-        if (lk > 2400) { m = 20; }
-        if (lk > 2500) { m = 20; }
-        if (lk > 2600) { m = 20; }
-        if (lk > 2700) { m = 20; }
-        if (lk > 2800) { m = 20; }
+        if ($lk > 2100) { $m = 20; }
+        if ($lk > 2200) { $m = 20; }
+        if ($lk > 2300) { $m = 20; }
+        if ($lk > 2400) { $m = 20; }
+        if ($lk > 2500) { $m = 20; }
+        if ($lk > 2600) { $m = 20; }
+        if ($lk > 2700) { $m = 20; }
+        if ($lk > 2800) { $m = 20; }
 
         //3roundli
-        if (lk > 2900) { m = 20; }
-        if (lk > 3000) { m = 20; }
-        if (lk > 3100) { m = 20; }
+        if ($lk > 2900) { $m = 20; }
+        if ($lk > 3000) { $m = 20; }
+        if ($lk > 3100) { $m = 20; }
 
-        return m;
+        return $m;
     }
 
 
-            NechtasiBorliginiAniqlash(Maindata.GroupNumber);
+      //      NechtasiBorliginiAniqlash($GroupNumber);
 
-        ChiqqanBusaChiqaribYuborish(Maindata.GroupNumber);
-        int minStavka = TurnLk(Maindata.GroupNumber);
-        GruppadagiAktivOdamlarSoni[Maindata.GroupNumber] = 0;
-        for (int i = 0; i < uyinchilar[Maindata.GroupNumber].Length; i++)
+    //    ChiqqanBusaChiqaribYuborish($GroupNumber);
+        $minStavka = TurnLk($GroupNumber);
+
+            $gruppdagaiOdamlariSoni=0;
+        for ($i = 0; $i < uyinchilar[Maindata.GroupNumber].Length; $i++)
         {
             // print(OxirgiZapisplar[Maindata.GroupNumber, int.Parse(uyinchilar[Maindata.GroupNumber].Substring(i, 1))]);
             if (int.Parse(OxirgiZapisplar[Maindata.GroupNumber, int.Parse(uyinchilar[Maindata.GroupNumber].Substring(i, 1))].Substring(14, 12)) >= minStavka)
             {
-                GruppadagiAktivOdamlarSoni[Maindata.GroupNumber] = GruppadagiAktivOdamlarSoni[Maindata.GroupNumber] + 1;
+                $gruppdagaiOdamlariSoni = $gruppdagaiOdamlariSoni + 1;
             }
         }
-        print(GruppadagiAktivOdamlarSoni[Maindata.GroupNumber] + "son uyinchila=" + uyinchilar[Maindata.GroupNumber]);
 
-        // data = data.Substring(0, 10) + Maindata.GroupNumber.ToString().PadLeft(4, '0') + data.Substring(14, data.Length - 14);
         grop22[Maindata.GroupNumber].Add(new Grop22());
 
 
