@@ -112,6 +112,14 @@ class DbOperation
         return $m;
     }
 
+            function uyinchilar($grouppade){
+
+                $stmt2=$this->con->prepare("SELECT uyinchilar FROM players WHERE GroupNumber=?");
+                $stmt2->bind_param("i",$grouppade);
+                $stmt2->execute();
+                $stmt2->store_result();
+                return $grouppade;
+            }
 
       //      NechtasiBorliginiAniqlash($GroupNumber);
 
@@ -119,10 +127,9 @@ class DbOperation
         $minStavka = TurnLk($GroupNumber);
 
             $gruppdagaiOdamlariSoni=0;
-        for ($i = 0; $i < uyinchilar[Maindata.GroupNumber].Length; $i++)
+        for ($i = 0; $i < Tekshir($GroupNumber); $i++)
         {
-            // print(OxirgiZapisplar[Maindata.GroupNumber, int.Parse(uyinchilar[Maindata.GroupNumber].Substring(i, 1))]);
-            if (int.Parse(OxirgiZapisplar[Maindata.GroupNumber, int.Parse(uyinchilar[Maindata.GroupNumber].Substring(i, 1))].Substring(14, 12)) >= minStavka)
+            if (int.Parse(OxirgiZapisplar[$GroupNumber, int.Parse(uyinchilar[$GroupNumber].Substring(i, 1))].Substring(14, 12)) >= $minStavka)
             {
                 $gruppdagaiOdamlariSoni = $gruppdagaiOdamlariSoni + 1;
             }
