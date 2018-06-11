@@ -37,7 +37,7 @@ class DbOperation
                     $stmt2->store_result();
                       $ki=$ki+1;
 
-                    $stmt =$this->con->prepare("INSERT INTO players (id,Imagenumber,money) VALUES(?,?,?)");
+                    $stmt =$this->con->prepare("INSERT INTO users (id,Imagenumber,money) VALUES(?,?,?)");
                     $stmt->bind_param("isi",$ki,$ImageNumber,$Money);
                     $stmt->execute();
                 }
@@ -65,7 +65,49 @@ class DbOperation
             return $ki1;
         }
 
-        function uyinchiniGruppgaQushish($data,$GroupNumber){
+        function uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient){
+
+
+
+            //  grop22[Maindata.GroupNumber].Add(new Grop22());
+
+
+
+            if ($BotOrClient != "false")
+            {
+
+                $stmt =$this->con->prepare("INSERT INTO users (id,Imagenumber,money) VALUES(?,?,?)");
+                $stmt->bind_param("isi",$ki,$ImageNumber,$Money);
+                $stmt->execute();
+
+                c.clientName= "person" + GruppadagiAktivOdamlarSoni[Maindata.GroupNumber];
+            grop2[Maindata.GroupNumber].Add(c);
+
+            //   grop2[Maindata.GroupNumber][GruppadagiAktivOdamlarSoni[Maindata.GroupNumber]].clientName = "person" + GruppadagiAktivOdamlarSoni[Maindata.GroupNumber];
+            }
+            if (Maindata.GroupNumber % 2 == 0)
+            {
+                uyinchilarade2(Maindata.GroupNumber);
+            }
+            else
+            {
+                uyinchilarade(Maindata.GroupNumber);
+            }
+            if (Maindata.BotOrClient != "false")
+            {
+                c.ClientGroup = Maindata.GroupNumber.ToString().PadLeft(4, '0');
+                c.ClientLevel = Maindata.Level;
+                c.indexClient = int.Parse(uyinchilar[Maindata.GroupNumber].Substring(uyinchilar[Maindata.GroupNumber].Length - 1, 1));
+        }
+            else
+            {
+                grop22[Maindata.GroupNumber][grop22[Maindata.GroupNumber].Count - 1].BotOrClient = false;
+            }
+
+            grop22[Maindata.GroupNumber][grop22[Maindata.GroupNumber].Count - 1].ClientGroup = Maindata.GroupNumber.ToString().PadLeft(4, '0');
+        grop22[Maindata.GroupNumber][grop22[Maindata.GroupNumber].Count - 1].ClientLevel = Maindata.Level;
+        grop22[Maindata.GroupNumber][grop22[Maindata.GroupNumber].Count - 1].indexClient = int.Parse(uyinchilar[Maindata.GroupNumber].Substring(uyinchilar[Maindata.GroupNumber].Length - 1, 1));
+        grop22[Maindata.GroupNumber][grop22[Maindata.GroupNumber].Count - 1].TikilganPullar = "0";
 
 
 
@@ -115,59 +157,74 @@ class DbOperation
             function uyinchilar($grouppade){
 
                 $stmt2=$this->con->prepare("SELECT uyinchilar FROM players WHERE GroupNumber=?");
-                $stmt2->bind_param("i",$grouppade);
+                $stmt2->bind_param("s",$grouppade);
                 $stmt2->execute();
                 $stmt2->store_result();
                 return $grouppade;
             }
 
+            function OxirgiZapisplar($GroupNumber ,$OxirgiZapis){
+                $stmt2=$this->con->prepare("SELECT $OxirgiZapis FROM players WHERE GroupNumber=?");
+                $stmt2->bind_param("s",$GroupNumber);
+                $stmt2->execute();
+                $stmt2->store_result();
+
+                return $GroupNumber;
+            }
+
       //      NechtasiBorliginiAniqlash($GroupNumber);
 
-    //    ChiqqanBusaChiqaribYuborish($GroupNumber);
+     //       ChiqqanBusaChiqaribYuborish($GroupNumber);
+
         $minStavka = TurnLk($GroupNumber);
 
             $gruppdagaiOdamlariSoni=0;
         for ($i = 0; $i < Tekshir($GroupNumber); $i++)
         {
-            if (int.Parse(OxirgiZapisplar[$GroupNumber, int.Parse(uyinchilar[$GroupNumber].Substring(i, 1))].Substring(14, 12)) >= $minStavka)
+          switch(substr(uyinchilar($GroupNumber),$i, 1)){
+              case 0 :  if ((int)substr(OxirgiZapisplar($GroupNumber,"OxirgiZapis0"),14, 12) >= $minStavka)
             {
                 $gruppdagaiOdamlariSoni = $gruppdagaiOdamlariSoni + 1;
             }
+             break;
+              case 1 :  if ((int)substr(OxirgiZapisplar($GroupNumber,"OxirgiZapis1"),14, 12) >= $minStavka)
+              {
+                  $gruppdagaiOdamlariSoni = $gruppdagaiOdamlariSoni + 1;
+              } break;
+              case 2 :  if ((int)substr(OxirgiZapisplar($GroupNumber,"OxirgiZapis2"),14, 12) >= $minStavka)
+              {
+                  $gruppdagaiOdamlariSoni = $gruppdagaiOdamlariSoni + 1;
+              } break;
+              case 3 :  if ((int)substr(OxirgiZapisplar($GroupNumber,"OxirgiZapis3"),14, 12) >= $minStavka)
+              {
+                  $gruppdagaiOdamlariSoni = $gruppdagaiOdamlariSoni + 1;
+              } break;
+              case 4 :   if ((int)substr(OxirgiZapisplar($GroupNumber,"OxirgiZapis4"),14, 12) >= $minStavka)
+              {
+                  $gruppdagaiOdamlariSoni = $gruppdagaiOdamlariSoni + 1;
+              }break;
+              case 5 :  if ((int)substr(OxirgiZapisplar($GroupNumber,"OxirgiZapis5"),14, 12) >= $minStavka)
+              {
+                  $gruppdagaiOdamlariSoni = $gruppdagaiOdamlariSoni + 1;
+              } break;
+              case 6 :  if ((int)substr(OxirgiZapisplar($GroupNumber,"OxirgiZapis6"),14, 12) >= $minStavka)
+              {
+                  $gruppdagaiOdamlariSoni = $gruppdagaiOdamlariSoni + 1;
+              } break;
+              case 7 :  if ((int)substr(OxirgiZapisplar($GroupNumber,"OxirgiZapis7"),14, 12) >= $minStavka)
+              {
+                  $gruppdagaiOdamlariSoni = $gruppdagaiOdamlariSoni + 1;
+              } break;
+              case 8 :  if ((int)substr(OxirgiZapisplar($GroupNumber,"OxirgiZapis8"),14, 12) >= $minStavka)
+              {
+                  $gruppdagaiOdamlariSoni = $gruppdagaiOdamlariSoni + 1;
+              } break;
+          }
         }
 
-        grop22[Maindata.GroupNumber].Add(new Grop22());
 
 
-        if (Maindata.BotOrClient != "false")
-        {c.clientName= "person" + GruppadagiAktivOdamlarSoni[Maindata.GroupNumber];
-            grop2[Maindata.GroupNumber].Add(c);
 
-         //   grop2[Maindata.GroupNumber][GruppadagiAktivOdamlarSoni[Maindata.GroupNumber]].clientName = "person" + GruppadagiAktivOdamlarSoni[Maindata.GroupNumber];
-
-        }
-        if (Maindata.GroupNumber % 2 == 0)
-        {
-            uyinchilarade2(Maindata.GroupNumber);
-        }
-        else
-        {
-            uyinchilarade(Maindata.GroupNumber);
-        }
-        if (Maindata.BotOrClient != "false")
-        {
-            c.ClientGroup = Maindata.GroupNumber.ToString().PadLeft(4, '0');
-            c.ClientLevel = Maindata.Level;
-            c.indexClient = int.Parse(uyinchilar[Maindata.GroupNumber].Substring(uyinchilar[Maindata.GroupNumber].Length - 1, 1));
-        }
-        else
-        {
-            grop22[Maindata.GroupNumber][grop22[Maindata.GroupNumber].Count - 1].BotOrClient = false;
-        }
-
-        grop22[Maindata.GroupNumber][grop22[Maindata.GroupNumber].Count - 1].ClientGroup = Maindata.GroupNumber.ToString().PadLeft(4, '0');
-        grop22[Maindata.GroupNumber][grop22[Maindata.GroupNumber].Count - 1].ClientLevel = Maindata.Level;
-        grop22[Maindata.GroupNumber][grop22[Maindata.GroupNumber].Count - 1].indexClient = int.Parse(uyinchilar[Maindata.GroupNumber].Substring(uyinchilar[Maindata.GroupNumber].Length - 1, 1));
-        grop22[Maindata.GroupNumber][grop22[Maindata.GroupNumber].Count - 1].TikilganPullar = "0";
 
         string data = "%%" + Maindata.Name + Maindata.GroupNumber.ToString().PadLeft(4, '0') + Maindata.pul + "$" + Maindata.yol
                 + Maindata.Level + Maindata.Money + "xb" + Maindata.Id;
@@ -236,7 +293,6 @@ class DbOperation
                 $mvc = 0;
                     for($i = 2; $i < 100; $i=$i+2)
                     {
-
                         //  print("1");
                         switch ((int)$pul)
                         {
@@ -293,12 +349,12 @@ class DbOperation
                     {
                         if (Grop2help($GroupNumber)=="true")
                         {
-                            uyinchiniGruppgaQushish($data);
+                            uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient);
                         }
                     }
                     else
                     {
-                        uyinchiniGruppgaQushish($data);
+                        uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient);
                     }
                 }
             }
@@ -317,12 +373,12 @@ class DbOperation
                     {
                         if (Grop2help($GroupNumber)=="true")
                         {
-                            uyinchiniGruppgaQushish( $data);
+                            uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient);
                         }
                     }
                     else
                     {
-                        uyinchiniGruppgaQushish($data);
+                        uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient);
                     }
                 }
             }
