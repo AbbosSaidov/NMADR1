@@ -372,8 +372,37 @@ class DbOperation
                 .$Level .$Money."xb".$Id;
         //%%NameByMe\Ism\0001\gruppa\00000001000$\pul\000000000000\yul\00000\level\000000001000\pul\xb0000000000\id\
 
-        OxirgiZapisplar[$GroupNumber, substr(uyinchilar($GroupNumber),strlen(uyinchilar($GroupNumber)), 1)]
-            = $data.substr(uyinchilar($GroupNumber),strlen(uyinchilar($GroupNumber)), 1);
+            switch(substr(uyinchilar($GroupNumber),strlen(uyinchilar($GroupNumber)), 1)){
+                case 0;  $stmt =$this->con->prepare("UPDATE Players SET OxirgiZapislar0 = ? WHERE CustomerID =$Id")
+                    $fd=$data.substr(uyinchilar($GroupNumber),strlen(uyinchilar($GroupNumber)), 1);
+                    $stmt->bind_param("s",$fd);
+                    $stmt->execute();  break;
+                case 1;  $stmt =$this->con->prepare("UPDATE Players SET OxirgiZapislar1 = ? WHERE CustomerID =$Id");
+                    $fd=$data.substr(uyinchilar($GroupNumber),strlen(uyinchilar($GroupNumber)), 1);
+                    $stmt->bind_param("s",$fd);                    $stmt->execute();  break;
+                case 2;  $stmt =$this->con->prepare("UPDATE Players SET OxirgiZapislar2 = ? WHERE CustomerID =$Id");
+                    $fd=$data.substr(uyinchilar($GroupNumber),strlen(uyinchilar($GroupNumber)), 1);
+                    $stmt->bind_param("s",$fd);                    $stmt->execute();  break;
+                case 3;  $stmt =$this->con->prepare("UPDATE Players SET OxirgiZapislar3 = ? WHERE CustomerID =$Id");
+                    $fd=$data.substr(uyinchilar($GroupNumber),strlen(uyinchilar($GroupNumber)), 1);
+                    $stmt->bind_param("s",$fd);                    $stmt->execute();  break;
+                case 4;  $stmt =$this->con->prepare("UPDATE Players SET OxirgiZapislar4 = ? WHERE CustomerID =$Id");
+                    $fd=$data.substr(uyinchilar($GroupNumber),strlen(uyinchilar($GroupNumber)), 1);
+                    $stmt->bind_param("s",$fd);                    $stmt->execute();  break;
+                case 5;  $stmt =$this->con->prepare("UPDATE Players SET OxirgiZapislar5 = ? WHERE CustomerID =$Id");
+                    $fd=$data.substr(uyinchilar($GroupNumber),strlen(uyinchilar($GroupNumber)), 1);
+                    $stmt->bind_param("s",$fd);                    $stmt->execute();  break;
+                case 6;  $stmt =$this->con->prepare("UPDATE Players SET OxirgiZapislar6 = ? WHERE CustomerID =$Id");
+                    $fd=$data.substr(uyinchilar($GroupNumber),strlen(uyinchilar($GroupNumber)), 1);
+                    $stmt->bind_param("s",$fd);                    $stmt->execute();  break;
+                case 7;  $stmt =$this->con->prepare("UPDATE Players SET OxirgiZapislar7 = ? WHERE CustomerID =$Id");
+                    $fd=$data.substr(uyinchilar($GroupNumber),strlen(uyinchilar($GroupNumber)), 1);
+                    $stmt->bind_param("s",$fd);                    $stmt->execute();  break;
+                case 8;  $stmt =$this->con->prepare("UPDATE Players SET OxirgiZapislar8 = ? WHERE CustomerID =$Id");
+                    $fd=$data.substr(uyinchilar($GroupNumber),strlen(uyinchilar($GroupNumber)), 1);
+                    $stmt->bind_param("s",$fd);                    $stmt->execute();  break;
+            }
+
 
         $kil = "";
         for($m = 0; $m < (Tekshir($GroupNumber) - 1); $m++)
