@@ -68,6 +68,189 @@ class DbOperation
         function uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient,$Id){
 
 
+            function uyinchilarade($son)
+    {$st=uyinchilar($son);
+
+        if (!strpos($st, '1') !== false)
+        {
+               $stmt =$this->con->prepare("UPDATE players SET uyinchilar = ? WHERE GroupNumber =$son");
+                $ki=$st."1";
+                $stmt->bind_param("s",$ki);
+                $stmt->execute();
+        }
+        else
+        {
+            if (!strpos($st, '4') !== false)
+            {
+                $stmt =$this->con->prepare("UPDATE players SET uyinchilar = ? WHERE GroupNumber =$son");
+                $ki=$st."4";
+                $stmt->bind_param("s",$ki);
+                $stmt->execute();
+            }
+            else
+            {
+                if (!strpos($st, '2') !== false)
+                {
+                    $stmt =$this->con->prepare("UPDATE players SET uyinchilar = ? WHERE GroupNumber =$son");
+                    $ki=$st."2";
+                    $stmt->bind_param("s",$ki);
+                    $stmt->execute();
+                }
+                else
+                {
+                    if (!strpos($st, '6') !== false)
+                    {
+                        $stmt =$this->con->prepare("UPDATE players SET uyinchilar = ? WHERE GroupNumber =$son");
+                        $ki=$st."6";
+                        $stmt->bind_param("s",$ki);
+                        $stmt->execute();
+                    }
+                    else
+                    {
+                        if (!strpos($st, '3') !== false)
+                        {
+                            $stmt =$this->con->prepare("UPDATE players SET uyinchilar = ? WHERE GroupNumber =$son");
+                            $ki=$st."3";
+                            $stmt->bind_param("s",$ki);
+                            $stmt->execute();
+                        }
+                        else
+                        {
+                            if (!strpos($st, '5') !== false)
+                            {
+                                $stmt =$this->con->prepare("UPDATE players SET uyinchilar = ? WHERE GroupNumber =$son");
+                                $ki=$st."5";
+                                $stmt->bind_param("s",$ki);
+                                $stmt->execute();
+                            }
+                            else
+                            {
+                                if (!strpos($st, '9') !== false)
+                                {
+                                    $stmt =$this->con->prepare("UPDATE players SET uyinchilar = ? WHERE GroupNumber =$son");
+                                    $ki=$st."9";
+                                    $stmt->bind_param("s",$ki);
+                                    $stmt->execute();
+                                }
+                                else
+                                {
+                                    if (!strpos($st, '8') !== false)
+                                    {
+                                        $stmt =$this->con->prepare("UPDATE players SET uyinchilar = ? WHERE GroupNumber =$son");
+                                        $ki=$st."8";
+                                        $stmt->bind_param("s",$ki);
+                                        $stmt->execute();
+                                    }
+                                    else
+                                    {
+                                        if (!strpos($st, '7') !== false)
+                                        {
+                                            $stmt =$this->con->prepare("UPDATE players SET uyinchilar = ? WHERE GroupNumber =$son");
+                                            $ki=$st."7";
+                                            $stmt->bind_param("s",$ki);
+                                            $stmt->execute();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    function uyinchilarade2($son)
+    {
+        $st=uyinchilar($son);
+
+        if (!strpos($st, '1') !== false)
+        {
+            $stmt =$this->con->prepare("UPDATE players SET uyinchilar = ? WHERE GroupNumber =$son");
+            $ki=$st."1";
+            $stmt->bind_param("s",$ki);
+            $stmt->execute();
+        }
+        else
+        {
+            if (!strpos($st, '4') !== false)
+            {
+                $stmt =$this->con->prepare("UPDATE players SET uyinchilar = ? WHERE GroupNumber =$son");
+                $ki=$st."4";
+                $stmt->bind_param("s",$ki);
+                $stmt->execute();
+            }
+            else
+            {
+                if (!strpos($st, '2') !== false)
+                {
+                    $stmt =$this->con->prepare("UPDATE players SET uyinchilar = ? WHERE GroupNumber =$son");
+                    $ki=$st."2";
+                    $stmt->bind_param("s",$ki);
+                    $stmt->execute();
+                }
+                else
+                {
+                    if (!strpos($st, '6') !== false)
+                    {
+                        $stmt =$this->con->prepare("UPDATE players SET uyinchilar = ? WHERE GroupNumber =$son");
+                        $ki=$st."6";
+                        $stmt->bind_param("s",$ki);
+                        $stmt->execute();
+                    }
+                    else
+                    {
+                        if (!strpos($st, '3') !== false)
+                        {
+                            $stmt =$this->con->prepare("UPDATE players SET uyinchilar = ? WHERE GroupNumber =$son");
+                            $ki=$st."3";
+                            $stmt->bind_param("s",$ki);
+                            $stmt->execute();
+                        }
+                        else
+                        {
+                            if (!strpos($st, '5') !== false)
+                            {
+                                $stmt =$this->con->prepare("UPDATE players SET uyinchilar = ? WHERE GroupNumber =$son");
+                                $ki=$st."5";
+                                $stmt->bind_param("s",$ki);
+                                $stmt->execute();
+                            }
+                            else
+                            {
+                                if (!strpos($st, '9') !== false)
+                                {
+                                    $stmt =$this->con->prepare("UPDATE players SET uyinchilar = ? WHERE GroupNumber =$son");
+                                    $ki=$st."9";
+                                    $stmt->bind_param("s",$ki);
+                                    $stmt->execute();
+                                }
+                                else
+                                {
+                                    if (!strpos($st, '8') !== false)
+                                    {
+                                        $stmt =$this->con->prepare("UPDATE players SET uyinchilar = ? WHERE GroupNumber =$son");
+                                        $ki=$st."8";
+                                        $stmt->bind_param("s",$ki);
+                                        $stmt->execute();
+                                    }
+                                    else
+                                    {
+                                        if (!strpos($st, '7') !== false)
+                                        {
+                                            $stmt =$this->con->prepare("UPDATE players SET uyinchilar = ? WHERE GroupNumber =$son");
+                                            $ki=$st."7";
+                                            $stmt->bind_param("s",$ki);
+                                            $stmt->execute();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
             //  grop22[Maindata.GroupNumber].Add(new Grop22());
 
@@ -87,11 +270,11 @@ class DbOperation
             }
             if ($GroupNumber % 2 == 0)
             {
-                uyinchilarade2(Maindata.GroupNumber);
+                uyinchilarade2($GroupNumber);
             }
             else
             {
-                uyinchilarade(Maindata.GroupNumber);
+                uyinchilarade($GroupNumber);
             }
             if (Maindata.BotOrClient != "false")
             {
