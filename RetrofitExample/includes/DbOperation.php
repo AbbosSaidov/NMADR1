@@ -65,7 +65,7 @@ class DbOperation
             return $ki1;
         }
 
-        function uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient){
+        function uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient,$Id){
 
 
 
@@ -76,16 +76,16 @@ class DbOperation
             if ($BotOrClient != "false")
             {
 
-                $stmt =$this->con->prepare("INSERT INTO users (id,Imagenumber,money) VALUES(?,?,?)");
-                $stmt->bind_param("isi",$ki,$ImageNumber,$Money);
+                $stmt =$this->con->prepare("UPDATE users SET ContactName = ? WHERE CustomerID =$Id");
+                $ki="person".Tekshir($GroupNumber);
+                $stmt->bind_param("s",$ki);
                 $stmt->execute();
 
-                c.clientName= "person" + GruppadagiAktivOdamlarSoni[Maindata.GroupNumber];
-            grop2[Maindata.GroupNumber].Add(c);
+
 
             //   grop2[Maindata.GroupNumber][GruppadagiAktivOdamlarSoni[Maindata.GroupNumber]].clientName = "person" + GruppadagiAktivOdamlarSoni[Maindata.GroupNumber];
             }
-            if (Maindata.GroupNumber % 2 == 0)
+            if ($GroupNumber % 2 == 0)
             {
                 uyinchilarade2(Maindata.GroupNumber);
             }
@@ -98,7 +98,7 @@ class DbOperation
                 c.ClientGroup = Maindata.GroupNumber.ToString().PadLeft(4, '0');
                 c.ClientLevel = Maindata.Level;
                 c.indexClient = int.Parse(uyinchilar[Maindata.GroupNumber].Substring(uyinchilar[Maindata.GroupNumber].Length - 1, 1));
-        }
+            }
             else
             {
                 grop22[Maindata.GroupNumber][grop22[Maindata.GroupNumber].Count - 1].BotOrClient = false;
@@ -349,12 +349,12 @@ class DbOperation
                     {
                         if (Grop2help($GroupNumber)=="true")
                         {
-                            uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient);
+                            uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient,$Id);
                         }
                     }
                     else
                     {
-                        uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient);
+                        uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient,$Id);
                     }
                 }
             }
@@ -373,12 +373,12 @@ class DbOperation
                     {
                         if (Grop2help($GroupNumber)=="true")
                         {
-                            uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient);
+                            uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient,$Id);
                         }
                     }
                     else
                     {
-                        uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient);
+                        uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient,$Id);
                     }
                 }
             }
