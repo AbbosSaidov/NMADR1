@@ -65,7 +65,7 @@ class DbOperation
             return $ki1;
         }
 
-        function uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient,$Id){
+        function uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient,$Id,$Level,$Money,$Name,$pul,$yol){
 
 
             function uyinchilarade($son)
@@ -159,7 +159,8 @@ class DbOperation
             }
         }
     }
-    function uyinchilarade2($son)
+
+            function uyinchilarade2($son)
     {
         $st=uyinchilar($son);
 
@@ -172,7 +173,7 @@ class DbOperation
         }
         else
         {
-            if (!strpos($st, '4') !== false)
+            if (!strpos($st, '3') !== false)
             {
                 $stmt =$this->con->prepare("UPDATE players SET uyinchilar = ? WHERE GroupNumber =$son");
                 $ki=$st."4";
@@ -181,7 +182,7 @@ class DbOperation
             }
             else
             {
-                if (!strpos($st, '2') !== false)
+                if (!strpos($st, '5') !== false)
                 {
                     $stmt =$this->con->prepare("UPDATE players SET uyinchilar = ? WHERE GroupNumber =$son");
                     $ki=$st."2";
@@ -190,7 +191,7 @@ class DbOperation
                 }
                 else
                 {
-                    if (!strpos($st, '6') !== false)
+                    if (!strpos($st, '7') !== false)
                     {
                         $stmt =$this->con->prepare("UPDATE players SET uyinchilar = ? WHERE GroupNumber =$son");
                         $ki=$st."6";
@@ -199,52 +200,12 @@ class DbOperation
                     }
                     else
                     {
-                        if (!strpos($st, '3') !== false)
+                        if (!strpos($st, '9') !== false)
                         {
                             $stmt =$this->con->prepare("UPDATE players SET uyinchilar = ? WHERE GroupNumber =$son");
                             $ki=$st."3";
                             $stmt->bind_param("s",$ki);
                             $stmt->execute();
-                        }
-                        else
-                        {
-                            if (!strpos($st, '5') !== false)
-                            {
-                                $stmt =$this->con->prepare("UPDATE players SET uyinchilar = ? WHERE GroupNumber =$son");
-                                $ki=$st."5";
-                                $stmt->bind_param("s",$ki);
-                                $stmt->execute();
-                            }
-                            else
-                            {
-                                if (!strpos($st, '9') !== false)
-                                {
-                                    $stmt =$this->con->prepare("UPDATE players SET uyinchilar = ? WHERE GroupNumber =$son");
-                                    $ki=$st."9";
-                                    $stmt->bind_param("s",$ki);
-                                    $stmt->execute();
-                                }
-                                else
-                                {
-                                    if (!strpos($st, '8') !== false)
-                                    {
-                                        $stmt =$this->con->prepare("UPDATE players SET uyinchilar = ? WHERE GroupNumber =$son");
-                                        $ki=$st."8";
-                                        $stmt->bind_param("s",$ki);
-                                        $stmt->execute();
-                                    }
-                                    else
-                                    {
-                                        if (!strpos($st, '7') !== false)
-                                        {
-                                            $stmt =$this->con->prepare("UPDATE players SET uyinchilar = ? WHERE GroupNumber =$son");
-                                            $ki=$st."7";
-                                            $stmt->bind_param("s",$ki);
-                                            $stmt->execute();
-                                        }
-                                    }
-                                }
-                            }
                         }
                     }
                 }
@@ -263,9 +224,6 @@ class DbOperation
                 $ki="person".Tekshir($GroupNumber);
                 $stmt->bind_param("s",$ki);
                 $stmt->execute();
-
-
-
             //   grop2[Maindata.GroupNumber][GruppadagiAktivOdamlarSoni[Maindata.GroupNumber]].clientName = "person" + GruppadagiAktivOdamlarSoni[Maindata.GroupNumber];
             }
             if ($GroupNumber % 2 == 0)
@@ -276,21 +234,22 @@ class DbOperation
             {
                 uyinchilarade($GroupNumber);
             }
-            if (Maindata.BotOrClient != "false")
+            if ($BotOrClient != "false")
             {
-                c.ClientGroup = Maindata.GroupNumber.ToString().PadLeft(4, '0');
-                c.ClientLevel = Maindata.Level;
-                c.indexClient = int.Parse(uyinchilar[Maindata.GroupNumber].Substring(uyinchilar[Maindata.GroupNumber].Length - 1, 1));
+                $stmt =$this->con->prepare("UPDATE users SET Index = ?,groupnamer = ?,Levelde = ?,Tikilgan='0' WHERE CustomerID =$Id");
+
+                $stmt->bind_param("iii",substr(uyinchilar($GroupNumber),strlen(uyinchilar($GroupNumber)), 1),$GroupNumber,$Level);
+                $stmt->execute();
             }
             else
             {
-                grop22[Maindata.GroupNumber][grop22[Maindata.GroupNumber].Count - 1].BotOrClient = false;
+               // grop22[Maindata.GroupNumber][grop22[Maindata.GroupNumber].Count - 1].BotOrClient = false;
             }
 
-            grop22[Maindata.GroupNumber][grop22[Maindata.GroupNumber].Count - 1].ClientGroup = Maindata.GroupNumber.ToString().PadLeft(4, '0');
-        grop22[Maindata.GroupNumber][grop22[Maindata.GroupNumber].Count - 1].ClientLevel = Maindata.Level;
-        grop22[Maindata.GroupNumber][grop22[Maindata.GroupNumber].Count - 1].indexClient = int.Parse(uyinchilar[Maindata.GroupNumber].Substring(uyinchilar[Maindata.GroupNumber].Length - 1, 1));
-        grop22[Maindata.GroupNumber][grop22[Maindata.GroupNumber].Count - 1].TikilganPullar = "0";
+      //  grop22[Maindata.GroupNumber][grop22[Maindata.GroupNumber].Count - 1].ClientGroup = Maindata.GroupNumber.ToString().PadLeft(4, '0');
+      //  grop22[Maindata.GroupNumber][grop22[Maindata.GroupNumber].Count - 1].ClientLevel = Maindata.Level;
+      //  grop22[Maindata.GroupNumber][grop22[Maindata.GroupNumber].Count - 1].indexClient = int.Parse(uyinchilar[Maindata.GroupNumber].Substring(uyinchilar[Maindata.GroupNumber].Length - 1, 1));
+      //  grop22[Maindata.GroupNumber][grop22[Maindata.GroupNumber].Count - 1].TikilganPullar = "0";
 
 
 
@@ -409,16 +368,18 @@ class DbOperation
 
 
 
-        string data = "%%" + Maindata.Name + Maindata.GroupNumber.ToString().PadLeft(4, '0') + Maindata.pul + "$" + Maindata.yol
-                + Maindata.Level + Maindata.Money + "xb" + Maindata.Id;
+        $data = "%%".$Name .str_pad((string)$GroupNumber,4,"0").$pul."$" .$yol
+                .$Level .$Money."xb".$Id;
         //%%NameByMe\Ism\0001\gruppa\00000001000$\pul\000000000000\yul\00000\level\000000001000\pul\xb0000000000\id\
-        OxirgiZapisplar[Maindata.GroupNumber, int.Parse(uyinchilar[Maindata.GroupNumber].Substring(uyinchilar[Maindata.GroupNumber].Length - 1, 1))] =
-        data + uyinchilar[Maindata.GroupNumber].Substring(uyinchilar[Maindata.GroupNumber].Length - 1, 1);
-        string kil = "";
-        for(int m = 0; m < (uyinchilar[Maindata.GroupNumber].Length - 1); m++)
+
+        OxirgiZapisplar[$GroupNumber, substr(uyinchilar($GroupNumber),strlen(uyinchilar($GroupNumber)), 1)]
+            = $data.substr(uyinchilar($GroupNumber),strlen(uyinchilar($GroupNumber)), 1);
+
+        $kil = "";
+        for($m = 0; $m < (Tekshir($GroupNumber) - 1); $m++)
         {
             if(OxirgiZapisplar[Maindata.GroupNumber, int.Parse(uyinchilar[Maindata.GroupNumber].Substring(m, 1))] != "")
-            { kil = kil + OxirgiZapisplar[Maindata.GroupNumber, int.Parse(uyinchilar[Maindata.GroupNumber].Substring(m, 1))]; }
+            { $kil = $kil.OxirgiZapisplar[Maindata.GroupNumber, int.Parse(uyinchilar[Maindata.GroupNumber].Substring(m, 1))]; }
         }
         GruppadagiAktivOdamlarSoni[Maindata.GroupNumber] = GruppadagiAktivOdamlarSoni[Maindata.GroupNumber] + 1;
         StartCoroutine(PlayerdaKartaniTarqatish(data, kil, Maindata.GroupNumber));
@@ -442,6 +403,10 @@ class DbOperation
         $BotOrClient = "true";
         $GroupNumber = 0;
         $pul = "";
+        $Id = "";
+        $Level = "";
+        $Money = "";
+        $yol = "";    $Name = "";
         if(strlen($data)>2 && substr($data,0, 2) == "%%" && strlen($data)>=69)
         {
             $GroupNumber = substr($data,10, 4);
@@ -532,12 +497,12 @@ class DbOperation
                     {
                         if (Grop2help($GroupNumber)=="true")
                         {
-                            uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient,$Id);
+                            uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient,$Id,$Level,$Money,$Name,$pul,$yol);
                         }
                     }
                     else
                     {
-                        uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient,$Id);
+                        uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient,$Id,$Level,$Money,$Name,$pul,$yol);
                     }
                 }
             }
@@ -556,12 +521,12 @@ class DbOperation
                     {
                         if (Grop2help($GroupNumber)=="true")
                         {
-                            uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient,$Id);
+                            uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient,$Id,$Level,$Money,$Name,$pul,$yol);
                         }
                     }
                     else
                     {
-                        uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient,$Id);
+                        uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient,$Id,$Level,$Money,$Name,$pul,$yol);
                     }
                 }
             }
