@@ -556,9 +556,6 @@ class DbOperation
         }
 
 
-
-
-
         $data = "%%".$Name .str_pad((string)$GroupNumber,4,"0").$pul."$" .$yol
                 .$Level .$Money."xb".$Id;
         //%%NameByMe\Ism\0001\gruppa\00000001000$\pul\000000000000\yul\00000\level\000000001000\pul\xb0000000000\id\
@@ -601,8 +598,8 @@ $index =substr(uyinchilar($GroupNumber),strlen(uyinchilar($GroupNumber)), 1)
             if(OxirgiZapisplar[Maindata.GroupNumber, int.Parse(uyinchilar[Maindata.GroupNumber].Substring(m, 1))] != "")
             { $kil = $kil.OxirgiZapisplar[Maindata.GroupNumber, int.Parse(uyinchilar[Maindata.GroupNumber].Substring(m, 1))]; }
         }
-     //   GruppadagiAktivOdamlarSoni[Maindata.GroupNumber] = GruppadagiAktivOdamlarSoni[Maindata.GroupNumber] + 1;
-        PlayerdaKartaniTarqatish($data, $kil, $GroupNumber,$index);
+        // GruppadagiAktivOdamlarSoni[Maindata.GroupNumber] = GruppadagiAktivOdamlarSoni[Maindata.GroupNumber] + 1;
+        PlayerdaKartaniTarqatish($data, $kil, $GroupNumber,$index,Tekshir($GroupNumber));
 
 
 
