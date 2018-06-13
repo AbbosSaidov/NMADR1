@@ -321,7 +321,7 @@ class DbOperation
           //  ChiqqanBusaChiqaribYuborish( lk);
             $trt = -1;
             if ($koo == "false")
-            {
+            {/*
                 for ($i = 0; $i < ChiqaribYuborish.Count; $i++)
                 {
                     if (ChiqaribYuborish[i].lk1 == lk)
@@ -338,17 +338,16 @@ class DbOperation
                 if ($trt == -1)
                 {
                     ChiqaribYuborish.Add(new RRniKItish(lk));
-                }
-                GruppadagiAktivOdamlarSoni[lk] = 0;
-                for (int i = 0; i < uyinchilar[lk].Length; i++)
+                }*/
+                $dssad = 0;
+                for ($i = 0; $i < Tekshir($lk); $i++)
                 {
                     if (int.Parse(OxirgiZapisplar[lk, int.Parse(uyinchilar[lk].Substring(i, 1))].Substring(14, 12)) +
                 int.Parse(OxirgiZapisplar[lk, int.Parse(uyinchilar[lk].Substring(i, 1))].Substring(27, 12)) >= minSatck)
                     {
-                        GruppadagiAktivOdamlarSoni[lk] = GruppadagiAktivOdamlarSoni[lk] + 1;
+                        $dssad = $dssad + 1;
                     }
                 }
-                print(GruppadagiAktivOdamlarSoni[lk] + "son uyinchila=" + uyinchilar[lk]);
                 huy[lk] = GruppadagiAktivOdamlarSoni[lk];
                 string ttt4 = "";
                 YurishKimmiki[lk] = uyinchilar[lk];
@@ -363,13 +362,13 @@ class DbOperation
                 YurishKimmiki[lk] = ttt4;
                 print("Yurish =" + YurishKimmiki[lk]);
                 // YurishKimmiki[lk] = YurishKimmiki[lk].Substring(0,1) + YurishKimmiki[lk];
-                mkj = "";
-                for (int i = 1; i < 10; i++)
+                $mkj = "";
+                for ($i = 1; $i < 10; $i++)
                 {
-                    int gd = KimBoshlashi[lk] + i;
-                    if (gd > 9)
+                    $gd = KimBoshlashi[lk] + i;
+                    if ($gd > 9)
                     {
-                        gd = gd - 9;
+                        $gd = $gd - 9;
                     }
 
                     if (YurishKimmiki[lk].Contains((gd).ToString()))
@@ -382,7 +381,6 @@ class DbOperation
             }
             if (BotGrouplar[lk].Count + grop2[lk].Count != grop22[lk].Count)
             {
-                print("QWASosi" + BotGrouplar[lk].Count + " " + grop2[lk].Count);
                 for (int i = 0; i < grop2[lk].Count; i++)
                 {
                     int mkdsd = BotGrouplar[lk].Count;
@@ -396,7 +394,6 @@ class DbOperation
                         }
                     }
                 }
-                print("QWASosi" + BotGrouplar[lk].Count + " " + grop2[lk].Count);
             }
             if (GruppadagiAktivOdamlarSoni[lk] >= soni && KartaTarqatildi[lk] == false)
             {
