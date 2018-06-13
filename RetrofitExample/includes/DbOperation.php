@@ -296,6 +296,199 @@ class DbOperation
         return $m;
     }
 
+            function YurishAsosiy(int lk, int minSatck,int soni){
+                if (KartaTarqatildi[lk] == false)
+        {
+            if (lk > 2100)
+            {
+                Grop2help[lk] = false;
+            }
+
+            yield return new WaitForSeconds(2);
+
+
+            print("Uyin ketvotti ft pulini tekshirish qoldi");
+
+            NechtasiBorliginiAniqlash( lk);
+
+
+            ChiqqanBusaChiqaribYuborish( lk);
+            int trt = -1;
+            if (KartaTarqatildi[lk] == false)
+            {
+
+                for (int i = 0; i < ChiqaribYuborish.Count; i++)
+                {
+                    if (ChiqaribYuborish[i].lk1 == lk)
+                    {
+                        if (ChiqaribYuborish[i].Timer.IsRunning)
+                        {
+                            ChiqaribYuborish[i].Timer.Stop();
+                            ChiqaribYuborish[i].Timer.Reset();
+                            print("Boshlandi" + ChiqaribYuborish[i].Timer.ElapsedMilliseconds + " " + i);
+                        }
+                        trt = i;
+
+                        break;
+                    }
+                }
+                if (trt == -1)
+                {
+                    ChiqaribYuborish.Add(new RRniKItish(lk));
+                }
+                GruppadagiAktivOdamlarSoni[lk] = 0;
+                for (int i = 0; i < uyinchilar[lk].Length; i++)
+                {
+                    if (int.Parse(OxirgiZapisplar[lk, int.Parse(uyinchilar[lk].Substring(i, 1))].Substring(14, 12)) +
+                int.Parse(OxirgiZapisplar[lk, int.Parse(uyinchilar[lk].Substring(i, 1))].Substring(27, 12)) >= minSatck)
+                    {
+                        GruppadagiAktivOdamlarSoni[lk] = GruppadagiAktivOdamlarSoni[lk] + 1;
+                    }
+                }
+                print(GruppadagiAktivOdamlarSoni[lk] + "son uyinchila=" + uyinchilar[lk]);
+                huy[lk] = GruppadagiAktivOdamlarSoni[lk];
+                string ttt4 = "";
+                YurishKimmiki[lk] = uyinchilar[lk];
+                for (int i = 0; i < 9; i++)
+                {
+                    if (uyinchilar[lk].Contains((i + 1).ToString()) && int.Parse(OxirgiZapisplar[lk, i + 1].Substring(14, 12)) +
+                int.Parse(OxirgiZapisplar[lk, i + 1].Substring(27, 12)) >= minSatck)
+                    {
+                        ttt4 = ttt4 + (i + 1).ToString();
+                    }
+                }
+                YurishKimmiki[lk] = ttt4;
+                print("Yurish =" + YurishKimmiki[lk]);
+                // YurishKimmiki[lk] = YurishKimmiki[lk].Substring(0,1) + YurishKimmiki[lk];
+                mkj = "";
+                for (int i = 1; i < 10; i++)
+                {
+                    int gd = KimBoshlashi[lk] + i;
+                    if (gd > 9)
+                    {
+                        gd = gd - 9;
+                    }
+
+                    if (YurishKimmiki[lk].Contains((gd).ToString()))
+                    {
+                        YurishKimmiki[lk] = (gd).ToString() + YurishKimmiki[lk];
+                        KimBoshlashi[lk] = gd;
+                        break;
+                    }
+                }
+                print(GruppadagiAktivOdamlarSoni[lk] + "QQQQQQ");
+                print((YurishKimmiki[lk].Length - 1) + " ta odam " + YurishKimmiki[lk]);
+            }
+            if (BotGrouplar[lk].Count + grop2[lk].Count != grop22[lk].Count)
+            {
+                print("QWASosi" + BotGrouplar[lk].Count + " " + grop2[lk].Count);
+                for (int i = 0; i < grop2[lk].Count; i++)
+                {
+                    int mkdsd = BotGrouplar[lk].Count;
+                    for (int l = 0; l < mkdsd; l++)
+                    {
+                        if (grop2[lk][i].indexClient.ToString() == BotGrouplar[lk][l].Index)
+                        {
+                            BotGrouplar[lk].RemoveAt(l);
+                            l = l - 1;
+                            mkdsd = mkdsd - 1;
+                        }
+                    }
+                }
+                print("QWASosi" + BotGrouplar[lk].Count + " " + grop2[lk].Count);
+            }
+            if (GruppadagiAktivOdamlarSoni[lk] >= soni && KartaTarqatildi[lk] == false)
+            {
+                KartaTarqatildi[lk] = true;
+                for (int i = 0; i < grop22[lk].Count; i++)
+                {
+                    grop22[lk][i].TikilganPullar = "0";
+                }
+
+                combinatsiya();
+                //Gruppalaga ajratiganda
+                XammaKartalar[lk] = cards[n[0]] + cards[n[1]] + cards[n[2]] + cards[n[3]] + cards[n[4]];
+                if (trt != -1) { ChiqaribYuborish[trt].Timer.Start(); }
+                try
+                {
+                    for (int i = 0; i < 9; i++)
+                    {
+                        uyinchilar[lk] = uyinchilar[lk].Substring(1, 1) +
+                    uyinchilar[lk].Substring(2, uyinchilar[lk].Length - 2) + uyinchilar[lk].Substring(0, 1);
+                        print(" " + uyinchilar[lk]);
+                        if (YurishKimmiki[lk].Contains(uyinchilar[lk].Substring(1, 1)) &&
+                            YurishKimmiki[lk].Contains(uyinchilar[lk].Substring(0, 1)))
+                        {
+                            break;
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    print(e.Message);
+                }
+                int totti = GruppadagiAktivOdamlarSoni[lk];
+                huy[lk] = totti;
+
+                for (int m = 0; m < totti; m++)
+                {
+
+                    print("Yurish " + m + grop2[lk].Count + " " + totti);
+                    int tott2 = -1, tott3 = 0; ;
+                    for (int o = 0; o < grop2[lk].Count; o++)
+                    {
+
+                        if (YurishKimmiki[lk].Length>m+1 && YurishKimmiki[lk].Substring(m + 1, 1) == grop2[lk][o].indexClient.ToString())
+                        {
+
+                            tott2 = o;  print("Yurish " + tott2);
+                            break;
+                        }
+                    }
+                    for (int o = 0; o < grop22[lk].Count; o++)
+                    {
+                        if (YurishKimmiki[lk].Length > m + 1 && YurishKimmiki[lk].Substring(m + 1, 1) == grop22[lk][o].indexClient.ToString())
+                        {
+                            tott3 = o;
+                            break;
+                        }
+                    }
+                    if (tott2 !=-1)
+                    {
+                        try
+                        {
+                            StreamWriter writer = new StreamWriter(grop2[lk][tott2].tcp.GetStream());
+                            writer.WriteLine(cards[g[m * 2]] + cards[g[m * 2 + 1]] + "" + YurishKimmiki[lk].Substring(0, 1) +
+                        (minSatck / 2).ToString().PadLeft(12, '0') + "!" + (minSatck).ToString().PadLeft(12, '0') +
+                        uyinchilar[lk] + grop22[lk][tott2].indexClient + grop22[lk][tott2].ClientGroup);
+                            writer.Flush();
+                            print("Toott= " + grop22[lk][tott2].indexClient + " " + grop2[lk][tott2].indexClient);
+                        }
+                        catch (ObjectDisposedException e)
+                        {
+                            print("ee uyinchi chiqibketti" + e.Message);
+                        }
+                    }
+                    else
+                    {
+                        int mop = 0;
+                        for(int i = 0; i < BotGrouplar[lk].Count; i++)
+                        {
+                            if(grop22[lk][tott3].indexClient.ToString()== BotGrouplar[lk][i].Index)
+                            {
+                                mop = i;
+                                break;
+                            }
+                        }
+                            OnIncomBot(cards[g[m * 2]] + cards[g[m * 2 + 1]] + "" + YurishKimmiki[lk].Substring(0, 1) +
+                    (minSatck / 2).ToString().PadLeft(12, '0') + "!" + (minSatck).ToString().PadLeft(12, '0') +
+                    uyinchilar[lk] + grop22[lk][tott3].indexClient + grop22[lk][tott3].ClientGroup, int.Parse(BotGrouplar[lk][mop].IdNumber));
+                    }
+                    yield return null;
+                }
+            }
+        }
+            }
             function uyinchilar($grouppade){
 
                 $stmt2=$this->con->prepare("SELECT uyinchilar FROM players WHERE GroupNumber=?");
@@ -371,8 +564,8 @@ class DbOperation
         $data = "%%".$Name .str_pad((string)$GroupNumber,4,"0").$pul."$" .$yol
                 .$Level .$Money."xb".$Id;
         //%%NameByMe\Ism\0001\gruppa\00000001000$\pul\000000000000\yul\00000\level\000000001000\pul\xb0000000000\id\
-
-            switch(substr(uyinchilar($GroupNumber),strlen(uyinchilar($GroupNumber)), 1)){
+$index =substr(uyinchilar($GroupNumber),strlen(uyinchilar($GroupNumber)), 1)
+            switch($index){
                 case 0;  $stmt =$this->con->prepare("UPDATE Players SET OxirgiZapislar0 = ? WHERE CustomerID =$Id")
                     $fd=$data.substr(uyinchilar($GroupNumber),strlen(uyinchilar($GroupNumber)), 1);
                     $stmt->bind_param("s",$fd);
@@ -410,8 +603,51 @@ class DbOperation
             if(OxirgiZapisplar[Maindata.GroupNumber, int.Parse(uyinchilar[Maindata.GroupNumber].Substring(m, 1))] != "")
             { $kil = $kil.OxirgiZapisplar[Maindata.GroupNumber, int.Parse(uyinchilar[Maindata.GroupNumber].Substring(m, 1))]; }
         }
-        GruppadagiAktivOdamlarSoni[Maindata.GroupNumber] = GruppadagiAktivOdamlarSoni[Maindata.GroupNumber] + 1;
-        StartCoroutine(PlayerdaKartaniTarqatish(data, kil, Maindata.GroupNumber));
+     //   GruppadagiAktivOdamlarSoni[Maindata.GroupNumber] = GruppadagiAktivOdamlarSoni[Maindata.GroupNumber] + 1;
+        PlayerdaKartaniTarqatish($data, $kil, $GroupNumber,$index);
+
+
+
+
+
+            function PlayerdaKartaniTarqatish($data,$ass3,$lk,$index,$sonide)
+    {
+        $ass2 = $ass3;
+        $minSatck = TurnLk($lk);
+        //Gruppalaga ajratiganda
+        // NechtasiBorliginiAniqlash(lk);
+
+        //ChiqqanBusaChiqaribYuborish(lk);
+
+
+       // return $data.$index.$ass2;
+
+
+        if ($sonide == 2 && $lk <= 2100 )
+        {
+            YurishAsosiy($lk, $minSatck, 2);
+        }
+
+        //Turnir
+        if ($lk > 2000)
+        {
+            if ($lk % 2 == 0)
+            {
+                if ($sonide == 5)
+                {
+                  YurishAsosiy($lk, $minSatck, 5);
+                }
+            }
+            else
+            {
+
+                if ($sonide == 9)
+                {
+                   YurishAsosiy($lk, $minSatck, 9);
+                }
+            }
+        }
+    }
 
 
             return true;
