@@ -296,43 +296,46 @@ class DbOperation
         return $m;
     }
 
-            function YurishAsosiy(int lk, int minSatck,int soni){
-                if (KartaTarqatildi[lk] == false)
+            function YurishAsosiy($lk, $minSatck,$soni){
+                $koo=$lk;
+                $stmt2=$this->con->prepare("SELECT KartaTarqatildi FROM players WHERE groupnumber=?");
+                $stmt2->bind_param("s",$koo);
+                $stmt2->execute();
+                $stmt2->store_result();
+
+                if ($koo== "false")
         {
-            if (lk > 2100)
+            if ($lk > 2100)
             {
-                Grop2help[lk] = false;
+                $stmt =$this->con->prepare("UPDATE players SET group2help = ? WHERE gruberopnum =$lk");
+                $sad="false";
+                $stmt->bind_param("i",$sad);
+                $stmt->execute();
             }
 
-            yield return new WaitForSeconds(2);
+         //   yield return new WaitForSeconds(2);
+
+           // NechtasiBorliginiAniqlash( lk);
 
 
-            print("Uyin ketvotti ft pulini tekshirish qoldi");
-
-            NechtasiBorliginiAniqlash( lk);
-
-
-            ChiqqanBusaChiqaribYuborish( lk);
-            int trt = -1;
-            if (KartaTarqatildi[lk] == false)
+          //  ChiqqanBusaChiqaribYuborish( lk);
+            $trt = -1;
+            if ($koo == "false")
             {
-
-                for (int i = 0; i < ChiqaribYuborish.Count; i++)
+                for ($i = 0; $i < ChiqaribYuborish.Count; $i++)
                 {
                     if (ChiqaribYuborish[i].lk1 == lk)
                     {
-                        if (ChiqaribYuborish[i].Timer.IsRunning)
+                        if(ChiqaribYuborish[i].Timer.IsRunning)
                         {
                             ChiqaribYuborish[i].Timer.Stop();
                             ChiqaribYuborish[i].Timer.Reset();
-                            print("Boshlandi" + ChiqaribYuborish[i].Timer.ElapsedMilliseconds + " " + i);
                         }
-                        trt = i;
-
+                        $trt = $i;
                         break;
                     }
                 }
-                if (trt == -1)
+                if ($trt == -1)
                 {
                     ChiqaribYuborish.Add(new RRniKItish(lk));
                 }
@@ -376,8 +379,6 @@ class DbOperation
                         break;
                     }
                 }
-                print(GruppadagiAktivOdamlarSoni[lk] + "QQQQQQ");
-                print((YurishKimmiki[lk].Length - 1) + " ta odam " + YurishKimmiki[lk]);
             }
             if (BotGrouplar[lk].Count + grop2[lk].Count != grop22[lk].Count)
             {
