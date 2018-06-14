@@ -340,27 +340,34 @@ class DbOperation
                     ChiqaribYuborish.Add(new RRniKItish(lk));
                 }*/
                 $dssad = 0;
+                $ttt4 = "";
 
-                if( (int)substr(OxirgiZapisplar($lk,"Oxirgizapis0"),14,12)+(int)substr(OxirgiZapisplar($lk,"Oxirgizapis0"),27,12)>=$minSatck){
-                    $dssad = $dssad + 1;
+                  if( (int)substr(OxirgiZapisplar($lk,"Oxirgizapis0"),14,12)+(int)substr(OxirgiZapisplar($lk,"Oxirgizapis0"),27,12)>=$minSatck){
+                    $dssad = $dssad + 1; if(strpos(Tekshir($lk), (string)(0+ 1)) !== false){ $ttt4 = $ttt4.(string)(0+ 1);}
+                } if( (int)substr(OxirgiZapisplar($lk,"Oxirgizapis1"),14,12)+(int)substr(OxirgiZapisplar($lk,"Oxirgizapis1"),27,12)>=$minSatck){
+                    $dssad = $dssad + 1;if(strpos(Tekshir($lk), (string)(1+ 1)) !== false){ $ttt4 = $ttt4.(string)(1+ 1);}
+                } if( (int)substr(OxirgiZapisplar($lk,"Oxirgizapis2"),14,12)+(int)substr(OxirgiZapisplar($lk,"Oxirgizapis2"),27,12)>=$minSatck){
+                    $dssad = $dssad + 1;if(strpos(Tekshir($lk), (string)(2+ 1)) !== false){ $ttt4 = $ttt4.(string)(2+ 1);}
+                } if( (int)substr(OxirgiZapisplar($lk,"Oxirgizapis3"),14,12)+(int)substr(OxirgiZapisplar($lk,"Oxirgizapis3"),27,12)>=$minSatck){
+                    $dssad = $dssad + 1;if(strpos(Tekshir($lk), (string)(3+ 1)) !== false){ $ttt4 = $ttt4.(string)(3+ 1);}
+                } if( (int)substr(OxirgiZapisplar($lk,"Oxirgizapis4"),14,12)+(int)substr(OxirgiZapisplar($lk,"Oxirgizapis4"),27,12)>=$minSatck){
+                    $dssad = $dssad + 1;if(strpos(Tekshir($lk), (string)(4+ 1)) !== false){ $ttt4 = $ttt4.(string)(4+ 1);}
+                } if( (int)substr(OxirgiZapisplar($lk,"Oxirgizapis5"),14,12)+(int)substr(OxirgiZapisplar($lk,"Oxirgizapis5"),27,12)>=$minSatck){
+                    $dssad = $dssad + 1;if(strpos(Tekshir($lk), (string)(5+ 1)) !== false){ $ttt4 = $ttt4.(string)(5+ 1);}
+                } if( (int)substr(OxirgiZapisplar($lk,"Oxirgizapis6"),14,12)+(int)substr(OxirgiZapisplar($lk,"Oxirgizapis6"),27,12)>=$minSatck){
+                    $dssad = $dssad + 1;if(strpos(Tekshir($lk), (string)(6+ 1)) !== false){ $ttt4 = $ttt4.(string)(6+ 1);}
+                } if( (int)substr(OxirgiZapisplar($lk,"Oxirgizapis7"),14,12)+(int)substr(OxirgiZapisplar($lk,"Oxirgizapis7"),27,12)>=$minSatck){
+                    $dssad = $dssad + 1;if(strpos(Tekshir($lk), (string)(7+ 1)) !== false){ $ttt4 = $ttt4.(string)(7+ 1);}
+                } if( (int)substr(OxirgiZapisplar($lk,"Oxirgizapis8"),14,12)+(int)substr(OxirgiZapisplar($lk,"Oxirgizapis8"),27,12)>=$minSatck){
+                    $dssad = $dssad + 1;if(strpos(Tekshir($lk), (string)(8+ 1)) !== false){ $ttt4 = $ttt4.(string)(8+ 1);}
                 }
-                $stmt =$this->con->prepare("UPDATE players SET huy = ? WHERE gruberopnum =$lk");
-                $stmt->bind_param("i",$dssad);
+
+
+
+                $stmt =$this->con->prepare("UPDATE players SET huy = ?,yurishkimmi=? WHERE gruberopnum =$lk");
+                $stmt->bind_param("is",$dssad,$ttt4);
                 $stmt->execute();
 
-                $ttt4 = "";
-                YurishKimmiki[lk] = uyinchilar[lk];
-                for (int i = 0; i < 9; i++)
-                {
-                    if (uyinchilar[lk].Contains((i + 1).ToString()) && int.Parse(OxirgiZapisplar[lk, i + 1].Substring(14, 12)) +
-                int.Parse(OxirgiZapisplar[lk, i + 1].Substring(27, 12)) >= minSatck)
-                    {
-                        ttt4 = ttt4 + (i + 1).ToString();
-                    }
-                }
-                YurishKimmiki[lk] = ttt4;
-                print("Yurish =" + YurishKimmiki[lk]);
-                // YurishKimmiki[lk] = YurishKimmiki[lk].Substring(0,1) + YurishKimmiki[lk];
                 $mkj = "";
                 for ($i = 1; $i < 10; $i++)
                 {
