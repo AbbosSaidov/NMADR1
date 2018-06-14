@@ -449,7 +449,7 @@ class DbOperation
                 for (int m = 0; m < totti; m++)
                 {
 
-                    print("Yurish " + m + grop2[lk].Count + " " + totti);
+
                     int tott2 = -1, tott3 = 0; ;
                     for (int o = 0; o < grop2[lk].Count; o++)
                     {
