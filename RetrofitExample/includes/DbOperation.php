@@ -65,6 +65,22 @@ class DbOperation
             return $ki1;
         }
 
+        function SetTikilganPullar($nmaligi,$value,$GroupNumber){
+            $stmt =$this->con->prepare("UPDATE TiilganPullar SET $nmaligi = ? WHERE GroupNumber = $GroupNumber");
+            $stmt->bind_param("s",$value);
+            $stmt->execute();
+        }
+
+
+        function Kartatarqatildi($ki1){
+
+            $stmt2=$this->con->prepare("SELECT Kartatarqatildi FROM players WHERE GroupNumber=?");
+            $stmt2->bind_param("i",$ki1);
+            $stmt2->execute();
+            $stmt2->store_result();
+            return $ki1;
+        }
+
         function uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient,$Id,$Level,$Money,$Name,$pul,$yol){
 
 
@@ -251,7 +267,395 @@ class DbOperation
       //  grop22[Maindata.GroupNumber][grop22[Maindata.GroupNumber].Count - 1].indexClient = int.Parse(uyinchilar[Maindata.GroupNumber].Substring(uyinchilar[Maindata.GroupNumber].Length - 1, 1));
       //  grop22[Maindata.GroupNumber][grop22[Maindata.GroupNumber].Count - 1].TikilganPullar = "0";
 
+            function combinatsiya()
+            {
+        for ($i = 0; $i < 18; $i++)
+        {
+            $g[$i] = rand(11, 63);
+        }
+        for ($iop = 0; $iop < 5; $iop++)
+        {
+            $n[$iop] = rand(11, 63);
+        }
+        try
+        {
+            for ($t1 = 1; $t1 < 18; $t1++)
+            {
+                if ($t1 == 1)
+                {
+                    while ($g[1] == $g[0] ||
+                $g[1] == $g[2] || $g[1] == $g[3] ||
+                $g[1] == $g[4] || $g[1] == $g[5] ||
+                $g[1] == $g[6] || $g[1] == $g[7] ||
+                $g[1] == $g[8] || $g[1] == $g[9] ||
+                $g[1] == $g[10] || $g[1] == $g[11] ||
+                $g[1] == $g[12] || $g[1] == $g[13] ||
+                $g[1] == $g[14] || $g[1] == $g[15] ||
+                $g[1] == $g[16] || $g[1] == $g[17])
+                    {
+                        $g[$t1] = rand(11, 63);
+                    }
+                }
+                if ($t1 == 2)
+                {
+                    while ($g[2] == $g[0] ||
+                $g[2] == $g[1] || $g[2] == $g[3] ||
+                $g[2] == $g[4] || $g[2] == $g[5] ||
+                $g[2] == $g[6] || $g[2] == $g[7] ||
+                $g[2] == $g[8] || $g[2] == $g[9] ||
+                $g[2] == $g[10] || $g[2] == $g[11] ||
+                $g[2] == $g[12] || $g[2] == $g[13] ||
+                $g[2] == $g[14] || $g[2] == $g[15] ||
+                $g[2] == $g[16] || $g[2] == $g[17])
+                    {
+                        $g[$t1] = rand(11, 63);
+                    }
+                }
+                if (t1 == 3)
+                {
+                    while ($g[3] == $g[0] ||
+                $g[3] == $g[1] || $g[3] == $g[2] ||
+                $g[3] == $g[4] || $g[3] == $g[5] ||
+                $g[3] == $g[6] || $g[3] == $g[7] ||
+                $g[3] == $g[8] || $g[3] == $g[9] ||
+                $g[3] == $g[10] || $g[3] == $g[11] ||
+                $g[3] == $g[12] || $g[3] == $g[13] ||
+                $g[3] == $g[14] || $g[3] == $g[15] ||
+                $g[3] == $g[16] || $g[3] == $g[17])
+                    {
+                        $g[$t1] = rand(11, 63);
+                    }
+                }
+                if ($t1 == 4)
+                {
+                    while ($g[4] == $g[0] ||
+                $g[4] == $g[1] || $g[4] == $g[3] ||
+                $g[4] == $g[2] || $g[4] == $g[5] ||
+                $g[4] == $g[6] || $g[4] == $g[7] ||
+                $g[4] == $g[8] || $g[4] == $g[9] ||
+                $g[4] == $g[10] || $g[4] == $g[11] ||
+                $g[4] == $g[12] || $g[4] == $g[13] ||
+                $g[4] == $g[14] || $g[4] == $g[15] ||
+                $g[4] == $g[16] || $g[4] == $g[17])
+                    {
+                        $g[$t1] = rand(11, 63);
+                    }
+                }
+                if ($t1 == 5)
+                {
+                    while ($g[5] == $g[0] ||
+                $g[5] == $g[1] || $g[5] == $g[3] ||
+                $g[5] == $g[4] || $g[5] == $g[2] ||
+                $g[5] == $g[6] || $g[5] == $g[7] ||
+                $g[5] == $g[8] || $g[5] == $g[9] ||
+                $g[5] == $g[10] || $g[5] == $g[11] ||
+                $g[5] == $g[12] || $g[5] == $g[13] ||
+                $g[5] == $g[14] || $g[5] == $g[15] ||
+                $g[5] == $g[16] || $g[5] == $g[17])
+                    {
+                        $g[$t1] = rand(11, 63);
+                    }
+                }
+                if ($t1 == 6)
+                {
+                    while ($g[6] == $g[0] ||
+                $g[6] == $g[1] || $g[6] == $g[3] ||
+                $g[6] == $g[4] || $g[6] == $g[5] ||
+                $g[6] == $g[2] || $g[6] == $g[7] ||
+                $g[6] == $g[8] || $g[6] == $g[9] ||
+                $g[6] == $g[10] || $g[6] == $g[11] ||
+                $g[6] == $g[12] || $g[6] == $g[13] ||
+                $g[6] == $g[14] || $g[6] == $g[15] ||
+                $g[6] == $g[16] || $g[6] == $g[17])
+                    {
+                        $g[$t1] = rand(11, 63);
+                    }
+                }
+                if ($t1 == 7)
+                {
+                    while ($g[7] == $g[0] ||
+                $g[7] == $g[1] || $g[7] == $g[3] ||
+                $g[7] == $g[4] || $g[7] == $g[5] ||
+                $g[7] == $g[6] || $g[7] == $g[2] ||
+                $g[7] == $g[8] || $g[7] == $g[9] ||
+                $g[7] == $g[10] || $g[7] == $g[11] ||
+                $g[7] == $g[12] || $g[7] == $g[13] ||
+                $g[7] == $g[14] || $g[7] == $g[15] ||
+                $g[7] == $g[16] || $g[7] == $g[17])
+                    {
+                        $g[$t1] = rand(11, 63);
+                    }
+                }
+                if ($t1 == 8)
+                {
+                    while ($g[8] == $g[0] ||
+                $g[8] == $g[1] || $g[8] == $g[3] ||
+                $g[8] == $g[4] || $g[8] == $g[5] ||
+                $g[8] == $g[6] || $g[8] == $g[2] ||
+                $g[8] == $g[7] || $g[8] == $g[9] ||
+                $g[8] == $g[10] ||$g[8] == $g[11] ||
+                $g[8] == $g[12] || $g[8] == $g[13] ||
+                $g[8] == $g[14] || $g[8] == $g[15] ||
+                $g[8] == $g[16] || $g[8] == $g[17])
+                    {
+                        $g[$t1] = rand(11, 63);
+                    }
+                }
+                if ($t1 == 9)
+                {
+                    while ($g[9] == $g[0] ||
+                $g[9] == $g[1] || $g[9] == $g[3] ||
+                $g[9] == $g[4] || $g[9] == $g[5] ||
+                $g[9] == $g[6] || $g[9] == $g[2] ||
+                $g[9] == $g[8] || $g[9] == $g[7] ||
+                $g[9] == $g[10] || $g[9] == $g[11] ||
+                $g[9] == $g[12] || $g[9] == $g[13] ||
+                $g[9] == $g[14] || $g[9] == $g[15] ||
+                $g[9] == $g[16] || $g[9] == $g[17])
+                    {
+                        $g[$t1] = rand(11, 63);
+                    }
+                }
+                if ($t1 == 10)
+                {
+                    while ($g[10] == $g[0] ||
+                $g[10] == $g[1] || $g[10] == $g[3] ||
+                $g[10] == $g[4] || $g[10] == $g[5] ||
+                $g[10] == $g[6] || $g[10] == $g[2] ||
+                $g[10] == $g[8] || $g[10] == $g[7] ||
+                $g[10] == $g[9] || $g[10] == $g[11] ||
+                $g[10] == $g[12] || $g[10] == $g[13] ||
+                $g[10] == $g[14] || $g[10] == $g[15] ||
+                $g[10] == $g[16] || $g[10] == $g[17])
+                    {
+                        $g[$t1] = rand(11, 63);
+                    }
+                }
+                if ($t1 == 11)
+                {
+                    while ($g[11] == $g[0] ||
+                        $g[11] == $g[1] || $g[11] == $g[3] ||
+                        $g[11] == $g[4] || $g[11] == $g[5] ||
+                        $g[11] == $g[6] || $g[11] == $g[2] ||
+                        $g[11] == $g[8] || $g[11] == $g[7] ||
+                        $g[11] == $g[9] || $g[11] == $g[10] ||
+                        $g[11] == $g[12] || $g[11] == $g[13] ||
+                        $g[11] == $g[14] || $g[11] == $g[15] ||
+                        $g[11] == $g[16] || $g[11] == $g[17])
+                    {
+                        $g[$t1] = rand(11, 63);
+                    }
+                }
+                if ($t1 == 12)
+                {
+                    while ($g[12] == $g[0] ||
+                        $g[12] == $g[1] || $g[12] == $g[3] ||
+                        $g[12] == $g[4] || $g[12] == $g[5] ||
+                        $g[12] == $g[6] || $g[12] == $g[2] ||
+                        $g[12] == $g[8] || $g[12] == $g[7] ||
+                        $g[12] == $g[9] || $g[12] == $g[10] ||
+                        $g[12] == $g[11] || $g[12] == $g[13] ||
+                        $g[12] == $g[14] || $g[12] == $g[15] ||
+                        $g[12] == $g[16] || $g[12] == $g[17])
+                    {
+                        $g[$t1] = rand(11, 63);
+                    }
+                }
+                if ($t1 == 13)
+                {
+                    while ($g[13] == $g[0] ||
+                        $g[13] == $g[1] || $g[13] == $g[3] ||
+                        $g[13] == $g[4] || $g[13] == $g[5] ||
+                        $g[13] == $g[6] || $g[13] == $g[2] ||
+                        $g[13] == $g[8] || $g[13] == $g[7] ||
+                        $g[13] == $g[9] || $g[13] == $g[10] ||
+                        $g[13] == $g[11] || $g[13] == $g[12] ||
+                        $g[13] == $g[14] || $g[13] == $g[15] ||
+                        $g[13] == $g[16] || $g[13] == $g[17])
+                    {
+                        $g[$t1] = rand(11, 63);
+                    }
+                }
+                if ($t1 == 14)
+                {
+                    while ($g[14] == $g[0] ||
+                        $g[14] == $g[1] || $g[14] == $g[3] ||
+                        $g[14] == $g[4] || $g[14] == $g[5] ||
+                        $g[14] == $g[6] || $g[14] == $g[2] ||
+                        $g[14] == $g[8] || $g[14] == $g[7] ||
+                        $g[14] == $g[9] || $g[14] == $g[10] ||
+                        $g[14] == $g[11] || $g[14] == $g[12] ||
+                        $g[14] == $g[13] || $g[14] == $g[15] ||
+                        $g[14] == $g[16] || $g[14] == $g[17])
+                    {
+                        $g[$t1] = rand(11, 63);
+                    }
+                }
+                if ($t1 == 15)
+                {
+                    while ($g[15] == $g[0] ||
+                        $g[15] == $g[1] || $g[15] == $g[3] ||
+                        $g[15] == $g[4] || $g[15] == $g[5] ||
+                        $g[15] == $g[6] || $g[15] == $g[2] ||
+                        $g[15] == $g[8] || $g[15] == $g[7] ||
+                        $g[15] == $g[9] || $g[15] == $g[10] ||
+                        $g[15] == $g[11] || $g[15] == $g[12] ||
+                        $g[15] == $g[13] || $g[15] == $g[15] ||
+                        $g[15] == $g[16] || $g[15] == $g[17])
+                    {
+                        $g[$t1] = rand(11, 63);
+                    }
+                }
+                if (t1 == 16)
+                {
+                    while (g[16] == g[0] ||
+                g[16] == g[1] || g[16] == g[3] ||
+                g[16] == g[4] || g[16] == g[5] ||
+                g[16] == g[6] || g[16] == g[2] ||
+                g[16] == g[8] || g[16] == g[7] ||
+                g[16] == g[10] || g[16] == g[11] ||
+                g[16] == g[12] || g[16] == g[13] ||
+                g[16] == g[14] || g[16] == g[15] ||
+                g[16] == g[9] || g[16] == g[17])
+                    {
+                        g[t1] = UnityEngine.Random.Range(11, 63);
+                    }
+                }
+                if (t1 == 17)
+                {
+                    while (g[17] == g[0] ||
+                g[17] == g[1] || g[17] == g[3] ||
+                g[17] == g[4] || g[17] == g[5] ||
+                g[17] == g[6] || g[17] == g[2] ||
+                g[17] == g[8] || g[17] == g[7] ||
+                g[17] == g[10] || g[17] == g[11] ||
+                g[17] == g[12] || g[17] == g[13] ||
+                g[17] == g[14] || g[17] == g[15] ||
+                g[17] == g[16] || g[17] == g[9])
+                    {
+                        g[t1] = UnityEngine.Random.Range(11, 63);
+                    }
+                }
+            }
 
+            for (int yu = 0; yu < 5; yu++)
+            {
+                if (yu == 0)
+                {
+                    while (n[yu] == g[0] || n[yu] == g[7] ||
+                n[yu] == g[1] || n[yu] == g[3] ||
+                n[yu] == g[4] || n[yu] == g[5] ||
+                n[yu] == g[6] || n[yu] == g[2] ||
+                n[yu] == g[8] || n[yu] == g[9] ||
+                n[yu] == g[10] || n[yu] == g[11] ||
+                n[yu] == g[12] || n[yu] == g[13] ||
+                n[yu] == g[14] || n[yu] == g[15] ||
+                n[yu] == g[16] || n[yu] == g[17] ||
+                n[yu] == n[1] || n[yu] == n[2] ||
+                n[yu] == n[3] || n[yu] == n[4]
+          )
+                    {
+                        n[yu] = UnityEngine.Random.Range(11, 63);
+                    }
+                }
+                if (yu == 1)
+                {
+                    while (n[yu] == g[0] || n[yu] == g[7] ||
+                n[yu] == g[1] || n[yu] == g[3] ||
+                n[yu] == g[4] || n[yu] == g[5] ||
+                n[yu] == g[6] || n[yu] == g[2] ||
+                n[yu] == g[8] || n[yu] == g[9] ||
+                n[yu] == g[10] || n[yu] == g[11] ||
+                n[yu] == g[12] || n[yu] == g[13] ||
+                n[yu] == g[14] || n[yu] == g[15] ||
+                n[yu] == g[16] || n[yu] == g[17] ||
+                n[yu] == n[0] || n[yu] == n[2] ||
+                n[yu] == n[3] || n[yu] == n[4]
+          )
+                    {
+                        n[yu] = UnityEngine.Random.Range(11, 63);
+                    }
+                }
+                if (yu == 2)
+                {
+                    while (n[yu] == g[0] || n[yu] == g[7] ||
+                n[yu] == g[1] || n[yu] == g[3] ||
+                n[yu] == g[4] || n[yu] == g[5] ||
+                n[yu] == g[6] || n[yu] == g[2] ||
+                n[yu] == g[8] || n[yu] == g[9] ||
+                n[yu] == g[10] || n[yu] == g[11] ||
+                n[yu] == g[12] || n[yu] == g[13] ||
+                n[yu] == g[14] || n[yu] == g[15] ||
+                n[yu] == g[16] || n[yu] == g[17] ||
+                n[yu] == n[1] || n[yu] == n[0] ||
+                n[yu] == n[3] || n[yu] == n[4]
+          )
+                    {
+                        n[yu] = UnityEngine.Random.Range(11, 63);
+                    }
+                }
+                if (yu == 3)
+                {
+                    while (n[yu] == g[0] || n[yu] == g[7] ||
+                n[yu] == g[1] || n[yu] == g[3] ||
+                n[yu] == g[4] || n[yu] == g[5] ||
+                n[yu] == g[6] || n[yu] == g[2] ||
+                n[yu] == g[8] || n[yu] == g[9] ||
+                n[yu] == g[10] || n[yu] == g[11] ||
+                n[yu] == g[12] || n[yu] == g[13] ||
+                n[yu] == g[14] || n[yu] == g[15] ||
+                n[yu] == g[16] || n[yu] == g[17] ||
+                n[yu] == n[1] || n[yu] == n[2] ||
+                n[yu] == n[0] || n[yu] == n[4]
+          )
+                    {
+                        n[yu] = UnityEngine.Random.Range(11, 63);
+                    }
+                }
+                if (yu == 4)
+                {
+                    while (n[yu] == g[0] || n[yu] == g[7] ||
+                n[yu] == g[1] || n[yu] == g[3] ||
+                n[yu] == g[4] || n[yu] == g[5] ||
+                n[yu] == g[6] || n[yu] == g[2] ||
+                n[yu] == g[8] || n[yu] == g[9] ||
+                n[yu] == g[10] || n[yu] == g[11] ||
+                n[yu] == g[12] || n[yu] == g[13] ||
+                n[yu] == g[14] || n[yu] == g[15] ||
+                n[yu] == g[16] || n[yu] == g[17] ||
+                n[yu] == n[1] || n[yu] == n[2] ||
+                n[yu] == n[3] || n[yu] == n[0]
+          )
+                    {
+                        n[yu] = UnityEngine.Random.Range(11, 63);
+                    }
+                }
+            }
+            //flesh test
+
+          //  g[1] = 12; g[0] = 13; n[0] = 14; n[1] = 15; n[2] = 50; n[3] = 56; n[4] = 17;
+          //  g[2] = 12; g[3] = 13;
+          //Strit
+          //    g[2] = 33; g[3] = 35;
+          //n[0] = 18;n[1] = 16;n[2] = 49;n[3] = 45;n[4] = 47;
+          // g[1] = 26; g[0] = 17;
+          //para
+          //  g[2] = 23; g[3] = 36; n[0] =26; n[1] = 17; n[2] = 48; n[3] = 35; n[4] = 51;
+          //   g[0] = 23; g[1] = 36;
+          //g[4] = 23; g[5] = 36;
+
+          //kikerets;
+          //  g[0] = 11; g[1] = 12; n[0] =31; n[1] = 56; n[2] = 48; n[3] = 35; n[4] = 57;
+          // g[2] = 13; g[3] = 14;
+          //set
+          // g[1] = 32; g[0] = 37; n[0] =25; n[1] = 43; n[2] = 11; n[3] = 24; n[4] = 58;
+           // g[2] = 45; g[3] = 50;
+        }
+        catch (Exception $e)
+        {
+            print($e->getMessage());
+        }
+    }
 
             function TurnLk($lk)
     {
@@ -413,13 +817,24 @@ class DbOperation
                            }
                        }
                    }*/
-            if (GruppadagiAktivOdamlarSoni[lk] >= soni && KartaTarqatildi[lk] == false)
+
+            if (Tekshir($lk) >= $soni && Kartatarqatildi($lk) == "false")
             {
-                KartaTarqatildi[lk] = true;
-                for (int i = 0; i < grop22[lk].Count; i++)
-                {
-                    grop22[lk][i].TikilganPullar = "0";
-                }
+                $stmt =$this->con->prepare("UPDATE players SET KartaTarqatildi = ? WHERE gruopnumber =$lk");
+                $dsfds="true";
+                $stmt->bind_param("i",$dsfds);
+                $stmt->execute();
+                SetTikilganPullar("Tikilganpullar0","0",$lk);
+                SetTikilganPullar("Tikilganpullar1","1",$lk);
+                SetTikilganPullar("Tikilganpullar2","2",$lk);
+                SetTikilganPullar("Tikilganpullar3","3",$lk);
+                SetTikilganPullar("Tikilganpullar4","4",$lk);
+                SetTikilganPullar("Tikilganpullar5","5",$lk);
+                SetTikilganPullar("Tikilganpullar6","6",$lk);
+                SetTikilganPullar("Tikilganpullar7","7",$lk);
+                SetTikilganPullar("Tikilganpullar8","8",$lk);
+
+
 
                 combinatsiya();
                 //Gruppalaga ajratiganda
@@ -427,21 +842,18 @@ class DbOperation
                 if (trt != -1) { ChiqaribYuborish[trt].Timer.Start(); }
                 try
                 {
-                    for (int i = 0; i < 9; i++)
+                    for ($i = 0; $i < 9; $i++)
                     {
-                        uyinchilar[lk] = uyinchilar[lk].Substring(1, 1) +
-                    uyinchilar[lk].Substring(2, uyinchilar[lk].Length - 2) + uyinchilar[lk].Substring(0, 1);
-                        print(" " + uyinchilar[lk]);
-                        if (YurishKimmiki[lk].Contains(uyinchilar[lk].Substring(1, 1)) &&
-                            YurishKimmiki[lk].Contains(uyinchilar[lk].Substring(0, 1)))
+                        uyinchilar[lk] = uyinchilar[lk].Substring(1, 1) + uyinchilar[lk].Substring(2, uyinchilar[lk].Length - 2) + uyinchilar[lk].Substring(0, 1);
+                        if (YurishKimmiki[lk].Contains(uyinchilar[lk].Substring(1, 1))&& YurishKimmiki[lk].Contains(uyinchilar[lk].Substring(0, 1)))
                         {
                             break;
                         }
                     }
                 }
-                catch (Exception e)
+                catch (Exception $e)
                 {
-                    print(e.Message);
+                    print($e->getMessage());
                 }
                 int totti = GruppadagiAktivOdamlarSoni[lk];
                 huy[lk] = totti;
