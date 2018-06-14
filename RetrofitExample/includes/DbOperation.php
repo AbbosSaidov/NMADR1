@@ -343,23 +343,23 @@ class DbOperation
                 $ttt4 = "";
 
                   if( (int)substr(OxirgiZapisplar($lk,"Oxirgizapis0"),14,12)+(int)substr(OxirgiZapisplar($lk,"Oxirgizapis0"),27,12)>=$minSatck){
-                    $dssad = $dssad + 1; if(strpos(Tekshir($lk), (string)(0+ 1)) !== false){ $ttt4 = $ttt4.(string)(0+ 1);}
+                    $dssad = $dssad + 1; if(strpos(uyinchilar($lk), (string)(0+ 1)) !== false){ $ttt4 = $ttt4.(string)(0+ 1);}
                 } if( (int)substr(OxirgiZapisplar($lk,"Oxirgizapis1"),14,12)+(int)substr(OxirgiZapisplar($lk,"Oxirgizapis1"),27,12)>=$minSatck){
-                    $dssad = $dssad + 1;if(strpos(Tekshir($lk), (string)(1+ 1)) !== false){ $ttt4 = $ttt4.(string)(1+ 1);}
+                    $dssad = $dssad + 1;if(strpos(uyinchilar($lk), (string)(1+ 1)) !== false){ $ttt4 = $ttt4.(string)(1+ 1);}
                 } if( (int)substr(OxirgiZapisplar($lk,"Oxirgizapis2"),14,12)+(int)substr(OxirgiZapisplar($lk,"Oxirgizapis2"),27,12)>=$minSatck){
-                    $dssad = $dssad + 1;if(strpos(Tekshir($lk), (string)(2+ 1)) !== false){ $ttt4 = $ttt4.(string)(2+ 1);}
+                    $dssad = $dssad + 1;if(strpos(uyinchilar($lk), (string)(2+ 1)) !== false){ $ttt4 = $ttt4.(string)(2+ 1);}
                 } if( (int)substr(OxirgiZapisplar($lk,"Oxirgizapis3"),14,12)+(int)substr(OxirgiZapisplar($lk,"Oxirgizapis3"),27,12)>=$minSatck){
-                    $dssad = $dssad + 1;if(strpos(Tekshir($lk), (string)(3+ 1)) !== false){ $ttt4 = $ttt4.(string)(3+ 1);}
+                    $dssad = $dssad + 1;if(strpos(uyinchilar($lk), (string)(3+ 1)) !== false){ $ttt4 = $ttt4.(string)(3+ 1);}
                 } if( (int)substr(OxirgiZapisplar($lk,"Oxirgizapis4"),14,12)+(int)substr(OxirgiZapisplar($lk,"Oxirgizapis4"),27,12)>=$minSatck){
-                    $dssad = $dssad + 1;if(strpos(Tekshir($lk), (string)(4+ 1)) !== false){ $ttt4 = $ttt4.(string)(4+ 1);}
+                    $dssad = $dssad + 1;if(strpos(uyinchilar($lk), (string)(4+ 1)) !== false){ $ttt4 = $ttt4.(string)(4+ 1);}
                 } if( (int)substr(OxirgiZapisplar($lk,"Oxirgizapis5"),14,12)+(int)substr(OxirgiZapisplar($lk,"Oxirgizapis5"),27,12)>=$minSatck){
-                    $dssad = $dssad + 1;if(strpos(Tekshir($lk), (string)(5+ 1)) !== false){ $ttt4 = $ttt4.(string)(5+ 1);}
+                    $dssad = $dssad + 1;if(strpos(uyinchilar($lk), (string)(5+ 1)) !== false){ $ttt4 = $ttt4.(string)(5+ 1);}
                 } if( (int)substr(OxirgiZapisplar($lk,"Oxirgizapis6"),14,12)+(int)substr(OxirgiZapisplar($lk,"Oxirgizapis6"),27,12)>=$minSatck){
-                    $dssad = $dssad + 1;if(strpos(Tekshir($lk), (string)(6+ 1)) !== false){ $ttt4 = $ttt4.(string)(6+ 1);}
+                    $dssad = $dssad + 1;if(strpos(uyinchilar($lk), (string)(6+ 1)) !== false){ $ttt4 = $ttt4.(string)(6+ 1);}
                 } if( (int)substr(OxirgiZapisplar($lk,"Oxirgizapis7"),14,12)+(int)substr(OxirgiZapisplar($lk,"Oxirgizapis7"),27,12)>=$minSatck){
-                    $dssad = $dssad + 1;if(strpos(Tekshir($lk), (string)(7+ 1)) !== false){ $ttt4 = $ttt4.(string)(7+ 1);}
+                    $dssad = $dssad + 1;if(strpos(uyinchilar($lk), (string)(7+ 1)) !== false){ $ttt4 = $ttt4.(string)(7+ 1);}
                 } if( (int)substr(OxirgiZapisplar($lk,"Oxirgizapis8"),14,12)+(int)substr(OxirgiZapisplar($lk,"Oxirgizapis8"),27,12)>=$minSatck){
-                    $dssad = $dssad + 1;if(strpos(Tekshir($lk), (string)(8+ 1)) !== false){ $ttt4 = $ttt4.(string)(8+ 1);}
+                    $dssad = $dssad + 1;if(strpos(uyinchilar($lk), (string)(8+ 1)) !== false){ $ttt4 = $ttt4.(string)(8+ 1);}
                 }
 
 
@@ -367,40 +367,52 @@ class DbOperation
                 $stmt =$this->con->prepare("UPDATE players SET huy = ?,yurishkimmi=? WHERE gruberopnum =$lk");
                 $stmt->bind_param("is",$dssad,$ttt4);
                 $stmt->execute();
-
+                $koo=$lk;
+                $stmt2=$this->con->prepare("SELECT Kimboshlashi FROM players WHERE groupnumber=?");
+                $stmt2->bind_param("i",$koo);
+                $stmt2->execute();
+                $stmt2->store_result();
+                $koo2=$lk;
+                $stmt2=$this->con->prepare("SELECT yurishkimmi FROM players WHERE groupnumber=?");
+                $stmt2->bind_param("s",$koo2);
+                $stmt2->execute();
+                $stmt2->store_result();
                 $mkj = "";
                 for ($i = 1; $i < 10; $i++)
                 {
-                    $gd = KimBoshlashi[lk] + i;
+
+                    $gd = $koo + $i;
                     if ($gd > 9)
                     {
                         $gd = $gd - 9;
                     }
 
-                    if (YurishKimmiki[lk].Contains((gd).ToString()))
+                    if (strpos($koo2, $gd) !== false)
                     {
-                        YurishKimmiki[lk] = (gd).ToString() + YurishKimmiki[lk];
-                        KimBoshlashi[lk] = gd;
+                        $rew=(string)$gd.(string)$koo2;
+                         $stmt =$this->con->prepare("UPDATE players SET Kimboshlashi = ?,yurishkimmi=? WHERE gruberopnum =$lk");
+                         $stmt->bind_param("is",$gd,$rew);
+                         $stmt->execute();
                         break;
                     }
                 }
             }
-            if (BotGrouplar[lk].Count + grop2[lk].Count != grop22[lk].Count)
-            {
-                for (int i = 0; i < grop2[lk].Count; i++)
-                {
-                    int mkdsd = BotGrouplar[lk].Count;
-                    for (int l = 0; l < mkdsd; l++)
-                    {
-                        if (grop2[lk][i].indexClient.ToString() == BotGrouplar[lk][l].Index)
-                        {
-                            BotGrouplar[lk].RemoveAt(l);
-                            l = l - 1;
-                            mkdsd = mkdsd - 1;
-                        }
-                    }
-                }
-            }
+            /*        if (BotGrouplar[lk].Count + grop2[lk].Count != grop22[lk].Count)
+                 /* {
+                       for ($i = 0; $i < grop2[lk].Count; i++)
+                       {
+                           int mkdsd = BotGrouplar[lk].Count;
+                           for ($l = 0; $l < $mkdsd; $l++)
+                           {
+                               if (grop2[lk][i].indexClient.ToString() == BotGrouplar[lk][l].Index)
+                               {
+                                   BotGrouplar[lk].RemoveAt(l);
+                                   l = l - 1;
+                                   mkdsd = mkdsd - 1;
+                               }
+                           }
+                       }
+                   }*/
             if (GruppadagiAktivOdamlarSoni[lk] >= soni && KartaTarqatildi[lk] == false)
             {
                 KartaTarqatildi[lk] = true;
