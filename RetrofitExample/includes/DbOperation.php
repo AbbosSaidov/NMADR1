@@ -1084,14 +1084,11 @@ $index =substr(uyinchilar($GroupNumber),strlen(uyinchilar($GroupNumber)), 1)
     return $grouppy;
 }
 
-
         $BotOrClient = "true";
         $GroupNumber = 0;
-        $pul = "";
-        $Id = "";
-        $Level = "";
-        $Money = "";
-        $yol = "";    $Name = "";
+        $pul = "";  $Id = "";
+        $Level = "";$Money = "";
+        $yol = "";  $Name = "";
         if(strlen($data)>2 && substr($data,0, 2) == "%%" && strlen($data)>=69)
         {
             $GroupNumber = substr($data,10, 4);
@@ -1166,7 +1163,6 @@ $index =substr(uyinchilar($GroupNumber),strlen(uyinchilar($GroupNumber)), 1)
                     }
                 }
         }
-        //print("lk= " + MainData.GroupNumber);
         if ($GroupNumber % 2 == 0)
         {
             if (Tekshir($GroupNumber) > 4)
