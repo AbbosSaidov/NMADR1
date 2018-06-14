@@ -340,16 +340,15 @@ class DbOperation
                     ChiqaribYuborish.Add(new RRniKItish(lk));
                 }*/
                 $dssad = 0;
-                for ($i = 0; $i < Tekshir($lk); $i++)
-                {
-                    if (int.Parse(OxirgiZapisplar[lk, int.Parse(uyinchilar[lk].Substring(i, 1))].Substring(14, 12)) +
-                int.Parse(OxirgiZapisplar[lk, int.Parse(uyinchilar[lk].Substring(i, 1))].Substring(27, 12)) >= minSatck)
-                    {
-                        $dssad = $dssad + 1;
-                    }
+
+                if( (int)substr(OxirgiZapisplar($lk,"Oxirgizapis0"),14,12)+(int)substr(OxirgiZapisplar($lk,"Oxirgizapis0"),27,12)>=$minSatck){
+                    $dssad = $dssad + 1;
                 }
-                huy[lk] = GruppadagiAktivOdamlarSoni[lk];
-                string ttt4 = "";
+                $stmt =$this->con->prepare("UPDATE players SET huy = ? WHERE gruberopnum =$lk");
+                $stmt->bind_param("i",$dssad);
+                $stmt->execute();
+
+                $ttt4 = "";
                 YurishKimmiki[lk] = uyinchilar[lk];
                 for (int i = 0; i < 9; i++)
                 {
