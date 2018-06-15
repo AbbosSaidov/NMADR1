@@ -71,11 +71,23 @@ class DbOperation
             $stmt->execute();
         }
 
+        function SetUyinchilar($value,$GroupNumber){
+            $stmt =$this->con->prepare("UPDATE players SET uyinchilar = ? WHERE GroupNumber = $GroupNumber");
+            $stmt->bind_param("s",$value);
+            $stmt->execute();
+        }
 
         function Kartatarqatildi($ki1){
-
             $stmt2=$this->con->prepare("SELECT Kartatarqatildi FROM players WHERE GroupNumber=?");
             $stmt2->bind_param("i",$ki1);
+            $stmt2->execute();
+            $stmt2->store_result();
+            return $ki1;
+        }
+
+        function GetYurishKimmiki($ki1){
+            $stmt2=$this->con->prepare("SELECT YurishKimmiki FROM players WHERE GroupNumber=?");
+            $stmt2->bind_param("s",$ki1);
             $stmt2->execute();
             $stmt2->store_result();
             return $ki1;
@@ -742,7 +754,7 @@ class DbOperation
                 $ttt4 = "";
 
                   if( (int)substr(OxirgiZapisplar($lk,"Oxirgizapis0"),14,12)+(int)substr(OxirgiZapisplar($lk,"Oxirgizapis0"),27,12)>=$minSatck){
-                    $dssad = $dssad + 1; if(strpos(uyinchilar($lk), (string)(0+ 1)) !== false){ $ttt4 = $ttt4.(string)(0+ 1);}
+                    $dssad = $dssad + 1;if(strpos(uyinchilar($lk), (string)(0+ 1)) !== false){ $ttt4 = $ttt4.(string)(0+ 1);}
                 } if( (int)substr(OxirgiZapisplar($lk,"Oxirgizapis1"),14,12)+(int)substr(OxirgiZapisplar($lk,"Oxirgizapis1"),27,12)>=$minSatck){
                     $dssad = $dssad + 1;if(strpos(uyinchilar($lk), (string)(1+ 1)) !== false){ $ttt4 = $ttt4.(string)(1+ 1);}
                 } if( (int)substr(OxirgiZapisplar($lk,"Oxirgizapis2"),14,12)+(int)substr(OxirgiZapisplar($lk,"Oxirgizapis2"),27,12)>=$minSatck){
@@ -760,8 +772,6 @@ class DbOperation
                 } if( (int)substr(OxirgiZapisplar($lk,"Oxirgizapis8"),14,12)+(int)substr(OxirgiZapisplar($lk,"Oxirgizapis8"),27,12)>=$minSatck){
                     $dssad = $dssad + 1;if(strpos(uyinchilar($lk), (string)(8+ 1)) !== false){ $ttt4 = $ttt4.(string)(8+ 1);}
                 }
-
-
 
                 $stmt =$this->con->prepare("UPDATE players SET huy = ?,yurishkimmi=? WHERE gruberopnum =$lk");
                 $stmt->bind_param("is",$dssad,$ttt4);
@@ -831,16 +841,20 @@ class DbOperation
 
 
 
-                combinatsiya();
+                // combinatsiya();
                 //Gruppalaga ajratiganda
-                XammaKartalar[lk] = cards[n[0]] + cards[n[1]] + cards[n[2]] + cards[n[3]] + cards[n[4]];
-                if (trt != -1) { ChiqaribYuborish[trt].Timer.Start(); }
+                //XammaKartalar[lk] = cards[n[0]] + cards[n[1]] + cards[n[2]] + cards[n[3]] + cards[n[4]];
+                // if (trt != -1) { ChiqaribYuborish[trt].Timer.Start(); }
+
                 try
-                {
+                {    $asd=uyinchilar($lk);
+                    $asd2=GetYurishKimmiki($lk);
                     for ($i = 0; $i < 9; $i++)
                     {
-                        uyinchilar[lk] = uyinchilar[lk].Substring(1, 1) + uyinchilar[lk].Substring(2, uyinchilar[lk].Length - 2) + uyinchilar[lk].Substring(0, 1);
-                        if (YurishKimmiki[lk].Contains(uyinchilar[lk].Substring(1, 1))&& YurishKimmiki[lk].Contains(uyinchilar[lk].Substring(0, 1)))
+                        //uyinchilar[lk] = uyinchilar[lk].Substring(1, 1) + uyinchilar[lk].Substring(2, uyinchilar[lk].Length - 2) + uyinchilar[lk].Substring(0, 1);
+                        SetUyinchilar(substr($asd,1,1).substr($asd,2,strlen($asd-2)).substr($asd,0,1),$lk);
+                        $asd=substr($asd,1,1).substr($asd,2,strlen($asd-2)).substr($asd,0,1);
+                        if ( strpos($asd2, substr($asd,1,1)) !== false&& strpos($asd2, substr($asd,0,1)) !== false)
                         {
                             break;
                         }
@@ -850,7 +864,7 @@ class DbOperation
                 {
                     print($e->getMessage());
                 }
-                int totti = GruppadagiAktivOdamlarSoni[lk];
+                $totti = Tekshir($lk);
                 huy[lk] = totti;
 
                 for (int m = 0; m < totti; m++)
@@ -920,6 +934,7 @@ class DbOperation
                 $stmt2->store_result();
                 return $grouppade;
             }
+
 
             function OxirgiZapisplar($GroupNumber ,$OxirgiZapis){
                 $stmt2=$this->con->prepare("SELECT $OxirgiZapis FROM players WHERE GroupNumber=?");
