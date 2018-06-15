@@ -77,6 +77,12 @@ class DbOperation
             $stmt->execute();
         }
 
+        function SetHuy($value,$GroupNumber){
+            $stmt =$this->con->prepare("UPDATE players SET huy = ? WHERE GroupNumber = $GroupNumber");
+            $stmt->bind_param("i",$value);
+            $stmt->execute();
+        }
+
         function Kartatarqatildi($ki1){
             $stmt2=$this->con->prepare("SELECT Kartatarqatildi FROM players WHERE GroupNumber=?");
             $stmt2->bind_param("i",$ki1);
@@ -91,6 +97,11 @@ class DbOperation
             $stmt2->execute();
             $stmt2->store_result();
             return $ki1;
+        }
+        function SEndMEssage($id,$message){
+            $stmt2=$this->con->prepare("   INSERT INTO messages (id,message) VALUES ?,?");
+            $stmt2->bind_param("is",$id,$message);
+            $stmt2->execute();
         }
 
         function uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient,$Id,$Level,$Money,$Name,$pul,$yol){
@@ -865,63 +876,58 @@ class DbOperation
                     print($e->getMessage());
                 }
                 $totti = Tekshir($lk);
-                huy[lk] = totti;
 
-                for (int m = 0; m < totti; m++)
+                SetHuy($totti,$lk);
+
+                for ($m = 0; $m < $totti; $m++)
                 {
+                    $tott2 = -1;
+                   // $tott3 = 0;
+                    /*                   for ($o = 0; $o < Tekshir($lk); $o++)
+                                    {
 
+                                        if (YurishKimmiki[lk].Length>m+1 && YurishKimmiki[lk].Substring(m + 1, 1) == grop2[lk][o].indexClient.ToString())
+                                        {
 
-                    int tott2 = -1, tott3 = 0; ;
-                    for (int o = 0; o < grop2[lk].Count; o++)
-                    {
-
-                        if (YurishKimmiki[lk].Length>m+1 && YurishKimmiki[lk].Substring(m + 1, 1) == grop2[lk][o].indexClient.ToString())
-                        {
-
-                            tott2 = o;  print("Yurish " + tott2);
-                            break;
-                        }
-                    }
-                    for (int o = 0; o < grop22[lk].Count; o++)
-                    {
-                        if (YurishKimmiki[lk].Length > m + 1 && YurishKimmiki[lk].Substring(m + 1, 1) == grop22[lk][o].indexClient.ToString())
-                        {
-                            tott3 = o;
-                            break;
-                        }
-                    }
-                    if (tott2 !=-1)
+                                            tott2 = o;                                          break;
+                                        }
+                                    }
+                            /*     for ($o = 0; $o < grop22[lk].Count; $o++)
+                                    {
+                                        if (YurishKimmiki[lk].Length > m + 1 && YurishKimmiki[lk].Substring(m + 1, 1) == grop22[lk][o].indexClient.ToString())
+                                        {
+                                            tott3 = o;
+                                            break;
+                                        }
+           }*/
+                    if ($tott2==-1)
                     {
                         try
                         {
-                            StreamWriter writer = new StreamWriter(grop2[lk][tott2].tcp.GetStream());
                             writer.WriteLine(cards[g[m * 2]] + cards[g[m * 2 + 1]] + "" + YurishKimmiki[lk].Substring(0, 1) +
                         (minSatck / 2).ToString().PadLeft(12, '0') + "!" + (minSatck).ToString().PadLeft(12, '0') +
                         uyinchilar[lk] + grop22[lk][tott2].indexClient + grop22[lk][tott2].ClientGroup);
-                            writer.Flush();
-                            print("Toott= " + grop22[lk][tott2].indexClient + " " + grop2[lk][tott2].indexClient);
                         }
-                        catch (ObjectDisposedException e)
+                        catch ( ErrorException $e)
                         {
-                            print("ee uyinchi chiqibketti" + e.Message);
+                            print("ee uyinchi chiqibketti".$e->getMessage());
                         }
                     }
                     else
                     {
-                        int mop = 0;
-                        for(int i = 0; i < BotGrouplar[lk].Count; i++)
-                        {
-                            if(grop22[lk][tott3].indexClient.ToString()== BotGrouplar[lk][i].Index)
-                            {
-                                mop = i;
-                                break;
-                            }
-                        }
-                            OnIncomBot(cards[g[m * 2]] + cards[g[m * 2 + 1]] + "" + YurishKimmiki[lk].Substring(0, 1) +
-                    (minSatck / 2).ToString().PadLeft(12, '0') + "!" + (minSatck).ToString().PadLeft(12, '0') +
-                    uyinchilar[lk] + grop22[lk][tott3].indexClient + grop22[lk][tott3].ClientGroup, int.Parse(BotGrouplar[lk][mop].IdNumber));
+                        /*                       int mop = 0;
+                                           for(int i = 0; i < BotGrouplar[lk].Count; i++)
+                                           {
+                                               if(grop22[lk][tott3].indexClient.ToString()== BotGrouplar[lk][i].Index)
+                                               {
+                                                   mop = i;
+                                             break;
+                                               }
+                                           }
+                                 /*            OnIncomBot(cards[g[m * 2]] + cards[g[m * 2 + 1]] + "" + YurishKimmiki[lk].Substring(0, 1) +
+                                       (minSatck / 2).ToString().PadLeft(12, '0') + "!" + (minSatck).ToString().PadLeft(12, '0') +
+                                       uyinchilar[lk] + grop22[lk][tott3].indexClient + grop22[lk][tott3].ClientGroup, int.Parse(BotGrouplar[lk][mop].IdNumber));*/
                     }
-                    yield return null;
                 }
             }
         }
