@@ -285,10 +285,6 @@ class DbOperation
                // grop22[Maindata.GroupNumber][grop22[Maindata.GroupNumber].Count - 1].BotOrClient = false;
             }
 
-      //  grop22[Maindata.GroupNumber][grop22[Maindata.GroupNumber].Count - 1].ClientGroup = Maindata.GroupNumber.ToString().PadLeft(4, '0');
-      //  grop22[Maindata.GroupNumber][grop22[Maindata.GroupNumber].Count - 1].ClientLevel = Maindata.Level;
-      //  grop22[Maindata.GroupNumber][grop22[Maindata.GroupNumber].Count - 1].indexClient = int.Parse(uyinchilar[Maindata.GroupNumber].Substring(uyinchilar[Maindata.GroupNumber].Length - 1, 1));
-      //  grop22[Maindata.GroupNumber][grop22[Maindata.GroupNumber].Count - 1].TikilganPullar = "0";
 
             function combinatsiya()
             {
