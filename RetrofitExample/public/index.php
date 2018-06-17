@@ -13,20 +13,48 @@ $app = new \Slim\App([
 ]);
 
 
-//registering a new user
 $app->post('/register', function (Request $request, Response $response) {
-    if (isTheseParametersAvailable(array('registerId'))) {
+
+    if (isTheseParametersAvailable(array('id'))) {
         $requestData = $request->getParsedBody();
-        $name = $requestData['registerId'];
+        $id = $requestData['id'];
 
         $db = new DbOperation();
         $responseData = array();
 
-        $result = $db->registerUser($name);
+        $result = $db->registerUser($id);
 
-        if ($result == USER_CREATED) {
+        if ($result!=true && $result == USER_CREATED) {
             $responseData['error'] = false;
             $responseData['message'] = 'Registered successfully';
+            //  $responseData['user'] = $db->getUserByEmail($email);
+        } elseif ($result == USER_CREATION_FAILED) {
+            $responseData['error'] = true;
+            $responseData['message'] = 'Some error occurred';
+        } elseif ($result == USER_EXIST) {
+            $responseData['error'] = true;
+            $responseData['message'] = 'This email already exist, please login';
+        }
+
+        $response->getBody()->write(json_encode($responseData));
+    }
+});
+
+$app->post('/uyingaKirish', function (Request $request, Response $response){
+    if (isTheseParametersAvailable(array('data'))){
+        $requestData = $request->getParsedBody();
+        $data = $requestData['data'];
+
+
+        $db = new DbOperation();
+        $responseData = array();
+
+        $result =$db->uyingaKirish($data);//gruppani chiqarish uchun
+
+        if ($result == USER_CREATED) {
+            $responseData['error'] = $result;
+            $responseData['message'] = 'successfully';
+
         } elseif ($result == USER_CREATION_FAILED) {
             $responseData['error'] = true;
             $responseData['message'] = 'Some error occurred';
@@ -34,41 +62,12 @@ $app->post('/register', function (Request $request, Response $response) {
             $responseData['error'] = true;
             $responseData['message'] = 'This email already exist, please login';
         }else{
-            $responseData['Register'] = $result;
+            $responseData['group']=$result;
         }
 
         $response->getBody()->write(json_encode($responseData));
     }
 });
-
-$app->post('/uyingKirish', function (Request $request, Response $response) {
-    if (isTheseParametersAvailable(array('registerId'))) {
-        $requestData = $request->getParsedBody();
-        $name = $requestData['UyingKirish'];
-
-        $db = new DbOperation();
-        $responseData = array();
-
-        $result = $db->UyingaKirish($name);
-
-        if ($result == USER_CREATED) {
-            $responseData['error'] = false;
-            $responseData['message'] = 'Registered successfully';
-        } elseif ($result == USER_CREATION_FAILED) {
-            $responseData['error'] = true;
-            $responseData['message'] = 'Some error occurred';
-        } elseif ($result == USER_EXIST) {
-            $responseData['error'] = true;
-            $responseData['message'] = 'This email already exist, please login';
-        }else{
-            $responseData['UyingKirish'] = $result;
-        }
-
-        $response->getBody()->write(json_encode($responseData));
-    }
-});
-
-
 
 
 //function to check parameters
@@ -85,7 +84,7 @@ function isTheseParametersAvailable($required_fields)
         }
     }
 
-    if ($error){
+    if ($error) {
         $response = array();
         $response["error"] = true;
         $response["message"] = 'Required field(s) ' . substr($error_fields, 0, -2) . ' is missing or empty';
@@ -94,5 +93,7 @@ function isTheseParametersAvailable($required_fields)
     }
     return true;
 }
+
+
 
 $app->run();
