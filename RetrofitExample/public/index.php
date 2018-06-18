@@ -45,7 +45,6 @@ $app->post('/uyingaKirish', function (Request $request, Response $response){
         $requestData = $request->getParsedBody();
         $data = $requestData['data'];
 
-
         $db = new DbOperation();
         $responseData = array();
 
@@ -54,11 +53,10 @@ $app->post('/uyingaKirish', function (Request $request, Response $response){
         if ($result == USER_CREATED) {
             $responseData['error'] = $result;
             $responseData['message'] = 'successfully';
-
-        } elseif ($result == USER_CREATION_FAILED) {
+        }elseif ($result == USER_CREATION_FAILED) {
             $responseData['error'] = true;
             $responseData['message'] = 'Some error occurred';
-        } elseif ($result == USER_EXIST) {
+        }elseif ($result == USER_EXIST) {
             $responseData['error'] = true;
             $responseData['message'] = 'This email already exist, please login';
         }else{
