@@ -112,7 +112,7 @@ class DbOperation
         $stmt->execute();
     }
     function GetOxirgiZapisplar($GroupNumber ,$OxirgiZapis){
-        $stmt2=$this->con->prepare("SELECT $OxirgiZapis FROM players WHERE GroupNumber=?");
+        $stmt2=$this->con->prepare("SELECT $OxirgiZapis FROM oxirgizapis WHERE GroupNumber=?");
         $stmt2->bind_param("s",$GroupNumber);
         $stmt2->execute();
         $stmt2->store_result();
