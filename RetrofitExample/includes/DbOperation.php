@@ -173,7 +173,6 @@ class DbOperation
 
         function UyingaKirish($data){
 
-        //boshqalarde
         function uyinchilarade($son)
         {
             $db=new DbOperation();
@@ -787,9 +786,9 @@ class DbOperation
                 }*/
                     $dssad = 0;
                     $ttt4 = "";
-                    if( (int)substr($db->GetOxirgiZapisplar($lk,"Oxirgizapis0"),14,12)+(int)substr($db->GetOxirgiZapisplar($lk,"Oxirgizapis0"),27,12)>=$minSatck){
+                  if( (int)substr($db->GetOxirgiZapisplar($lk,"Oxirgizapis0"),14,12)+(int)substr($db->GetOxirgiZapisplar($lk,"Oxirgizapis0"),27,12)>=$minSatck){
                     $dssad = $dssad + 1;if(strpos($db->Getuyinchilar($lk), (string)(0+ 1)) !== false){ $ttt4 = $ttt4.(string)(0+ 1);}
-                    } if( (int)substr($db->GetOxirgiZapisplar($lk,"Oxirgizapis1"),14,12)+(int)substr($db->GetOxirgiZapisplar($lk,"Oxirgizapis1"),27,12)>=$minSatck){
+                } if( (int)substr($db->GetOxirgiZapisplar($lk,"Oxirgizapis1"),14,12)+(int)substr($db->GetOxirgiZapisplar($lk,"Oxirgizapis1"),27,12)>=$minSatck){
                     $dssad = $dssad + 1;if(strpos($db->Getuyinchilar($lk), (string)(1+ 1)) !== false){ $ttt4 = $ttt4.(string)(1+ 1);}
                 } if( (int)substr($db->GetOxirgiZapisplar($lk,"Oxirgizapis2"),14,12)+(int)substr($db->GetOxirgiZapisplar($lk,"Oxirgizapis2"),27,12)>=$minSatck){
                     $dssad = $dssad + 1;if(strpos($db->Getuyinchilar($lk), (string)(2+ 1)) !== false){ $ttt4 = $ttt4.(string)(2+ 1);}
@@ -862,7 +861,8 @@ class DbOperation
                     $db->SetTikilganPullar("Tikilganpullar6","6",$lk);
                     $db->SetTikilganPullar("Tikilganpullar7","7",$lk);
                     $db->SetTikilganPullar("Tikilganpullar8","8",$lk);
-//klk;l
+
+
                     $n=combinatsiya();
                     $cards=cardio();
                     //Gruppalaga ajratiganda
@@ -1044,8 +1044,8 @@ class DbOperation
             if($db->GetOxirgiZapisplar($GroupNumber,"OxirgiZapis8") != "")
             { $kil = $kil.$db->GetOxirgiZapisplar($GroupNumber,"OxirgiZapis8"); }
             // GruppadagiAktivOdamlarSoni[Maindata.GroupNumber] = GruppadagiAktivOdamlarSoni[Maindata.GroupNumber] + 1;
-            PlayerdaKartaniTarqatish($data, $kil, $GroupNumber,$index,$db->Tekshir($GroupNumber));
-            return true;
+
+            return PlayerdaKartaniTarqatish($data, $kil, $GroupNumber,$index,$db->Tekshir($GroupNumber));
         }
 
         $BotOrClient = "true";
@@ -1132,6 +1132,7 @@ class DbOperation
                 }
             }
         }
+            $rewrwr="Ushade";
         if ($GroupNumber % 2 == 0)
         {
             if ($db->Tekshir($GroupNumber) > 4)
@@ -1147,12 +1148,12 @@ class DbOperation
                 {
                     if ($db->Getgrop2help($GroupNumber)=="true")
                     {
-                        uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient,$Id,$Level,$Money,$Name,$pul,$yol);
+                        $rewrwr=uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient,$Id,$Level,$Money,$Name,$pul,$yol);
                     }
                 }
                 else
                 {
-                    uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient,$Id,$Level,$Money,$Name,$pul,$yol);
+                    $rewrwr=uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient,$Id,$Level,$Money,$Name,$pul,$yol);
                 }
             }
         }
@@ -1171,15 +1172,15 @@ class DbOperation
                 {
                     if ($db->Getgrop2help($GroupNumber)=="true")
                     {
-                        uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient,$Id,$Level,$Money,$Name,$pul,$yol);
+                        $rewrwr=uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient,$Id,$Level,$Money,$Name,$pul,$yol);
                     }
                 }
                 else
                 {
-                    uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient,$Id,$Level,$Money,$Name,$pul,$yol);
+                    $rewrwr=uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient,$Id,$Level,$Money,$Name,$pul,$yol);
                 }
             }
         }
-        return true;
+        return $rewrwr;
     }
 }
