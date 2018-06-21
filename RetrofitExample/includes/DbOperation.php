@@ -101,7 +101,7 @@ class DbOperation
         $stmt2->store_result();
     }
     function Creategrop2help($lk,$value){
-        $stmt =$this->con->prepare("INSERT INTO groups (grop2help,NumberOfGroup) VALUES(?,?)");
+        $stmt =$this->con->prepare("INSERT IGNORE INTO  groups (grop2help,NumberOfGroup) VALUES(?,?)");
         /*   $stmt =$this->con->prepare(
              'IF NOT EXISTS (SELECT * FROM groups  WHERE NumberOfGroup = $lk)
        BEGIN
@@ -1132,7 +1132,7 @@ class DbOperation
                 }
             }
         }
-            $rewrwr="Ushade";
+        $rewrwr="Ushade";
         if ($GroupNumber % 2 == 0)
         {
             if ($db->Tekshir($GroupNumber) > 4)
