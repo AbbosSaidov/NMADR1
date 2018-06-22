@@ -36,7 +36,7 @@ class DbOperation
     }
     function Getuyinchilar($grouppade){
         $stmt2=$this->con->prepare("SELECT uyinchilar FROM groups WHERE NumberOfGroup=?");
-        $stmt2->bind_param("s",$grouppade);
+        $stmt2->bind_param("i",$grouppade);
         $stmt2->execute();
         $stmt2->bind_result($grouppade1);
         return $grouppade1;
