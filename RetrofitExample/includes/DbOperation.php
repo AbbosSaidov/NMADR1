@@ -13,14 +13,14 @@ class DbOperation
         $stmt2=$this->con->prepare("SELECT HowManyPlayers FROM groups WHERE NumberOfGroup=?");
         $stmt2->bind_param("i",$ki1);
         $stmt2->execute();
-        $stmt2->store_result();
+        $stmt2->bind_result($ki1);
         return $ki1;
     }
     function GetKimboshlashi($koo){
         $stmt2=$this->con->prepare("SELECT Kimboshlashi FROM groups WHERE NumberOfGroup=?");
         $stmt2->bind_param("i",$koo);
         $stmt2->execute();
-        $stmt2->store_result();
+        $stmt2->bind_result($koo);
         return $koo;
     }
     function SetTikilganPullar($nmaligi,$value,$GroupNumber){
@@ -29,19 +29,17 @@ class DbOperation
         $stmt->execute();
     }
     function SetUyinchilar($value,$GroupNumber){
-        $sql="INSERT INTO groups (NumberOfGroup) VALUES (?)
-              ON DUPLICATE KEY UPDATE uyinchilar=?";
+        $sql="UPDATE groups SET uyinchilar=? WHERE NumberOfGroup=? ";
         $stmt =$this->con->prepare($sql);
-        //$stmt =$this->con->prepare("UPDATE groups SET uyinchilar = ? WHERE NumberOfGroup = $GroupNumber");
-        $stmt->bind_param("is",$GroupNumber,$value);
+        $stmt->bind_param("si",$value,$GroupNumber);
         $stmt->execute();
     }
     function Getuyinchilar($grouppade){
         $stmt2=$this->con->prepare("SELECT uyinchilar FROM groups WHERE NumberOfGroup=?");
         $stmt2->bind_param("s",$grouppade);
         $stmt2->execute();
-        $stmt2->store_result();
-        return $grouppade;
+        $stmt2->bind_result($grouppade1);
+        return $grouppade1;
     }
     function SetHuy($value,$GroupNumber){
         $stmt =$this->con->prepare("UPDATE groups SET huy = ? WHERE NumberOfGroup = ?");
@@ -72,14 +70,14 @@ class DbOperation
         $stmt2=$this->con->prepare("SELECT Kartatarqatildi FROM groups WHERE NumberOfGroup=?");
         $stmt2->bind_param("s",$ki1);
         $stmt2->execute();
-        $stmt2->store_result();
+        $stmt2->bind_result($ki1);
         return $ki1;
     }
     function GetYurishKimmiki($ki1){
         $stmt2=$this->con->prepare("SELECT YurishKimmiki FROM groups WHERE NumberOfGroup=?");
         $stmt2->bind_param("s",$ki1);
         $stmt2->execute();
-        $stmt2->store_result();
+        $stmt2->bind_result($ki1);
         return $ki1;
     }
     function SEndMEssage($groupnumber,$index,$message){
@@ -91,7 +89,7 @@ class DbOperation
         $stmt2=$this->con->prepare("SELECT grop2help FROM groups WHERE NumberOfGroup=?");
         $stmt2->bind_param("s",$grouppy);
         $stmt2->execute();
-        $stmt2->store_result();
+        $stmt2->bind_result($grouppy);
         return $grouppy;
     }
     function Setgrop2help($lk,$value){
@@ -109,7 +107,7 @@ class DbOperation
         $stmt2=$this->con->prepare("SELECT $OxirgiZapis FROM oxirgizapis WHERE GroupNumber=?");
         $stmt2->bind_param("s",$GroupNumber);
         $stmt2->execute();
-        $stmt2->store_result();
+        $stmt2->bind_result($GroupNumber);
         return $GroupNumber;
     }
     function SetOxirgiZapislar($data,$GroupNumber,$OxirgiZapis){
@@ -168,6 +166,7 @@ class DbOperation
         function uyinchilarade($son)
         {
             $db=new DbOperation();
+
             $st=$db->Getuyinchilar($son);
             if (!strpos($st, '1') !== false)
             {
@@ -177,7 +176,7 @@ class DbOperation
             {
                 if (!strpos($st, '4') !== false)
                 {
-                    $db->SetUyinchilar($st."4",$son);
+                      $db->SetUyinchilar($st."4",$son);
                 }
                 else
                 {
@@ -189,19 +188,19 @@ class DbOperation
                     {
                         if (!strpos($st, '6') !== false)
                         {
-                            $db->SetUyinchilar($st."6",$son);
+                           $db->SetUyinchilar($st."6",$son);
                         }
                         else
                         {
                             if (!strpos($st, '3') !== false)
                             {
-                                $db->SetUyinchilar($st."3",$son);
+                              $db->SetUyinchilar($st."3",$son);
                             }
                             else
                             {
                                 if (!strpos($st, '5') !== false)
                                 {
-                                    $db->SetUyinchilar($st."5",$son);
+                                   $db->SetUyinchilar($st."5",$son);
                                 }
                                 else
                                 {
