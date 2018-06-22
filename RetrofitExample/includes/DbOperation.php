@@ -2,16 +2,13 @@
 class DbOperation
 {
     private $con;
-
     function __construct()
     {
         require_once dirname(__FILE__) . '/DbConnect.php';
         $db = new DbConnect();
         $this->con = $db->connect();
     }
-
     function Tekshir($ki1){
-
         //  $stmt2=$this->con->prepare("SELECT HowManyPlayers FROM groups WHERE NumberOfGroup=?");
         $stmt2=$this->con->prepare("SELECT HowManyPlayers FROM groups WHERE NumberOfGroup=?");
         $stmt2->bind_param("i",$ki1);
@@ -27,13 +24,16 @@ class DbOperation
         return $koo;
     }
     function SetTikilganPullar($nmaligi,$value,$GroupNumber){
-        $stmt =$this->con->prepare("UPDATE tikilganpullar SET $nmaligi = ? WHERE GroupNumber = $GroupNumber");
-        $stmt->bind_param("s",$value);
+        $stmt =$this->con->prepare("UPDATE tikilganpullar SET $nmaligi = ? WHERE GroupNumber = ?");
+        $stmt->bind_param("si",$value,$GroupNumber);
         $stmt->execute();
     }
     function SetUyinchilar($value,$GroupNumber){
-        $stmt =$this->con->prepare("UPDATE groups SET uyinchilar = ? WHERE NumberOfGroup = $GroupNumber");
-        $stmt->bind_param("s",$value);
+        $sql="INSERT INTO groups (NumberOfGroup) VALUES (?)
+              ON DUPLICATE KEY UPDATE uyinchilar=?";
+        $stmt =$this->con->prepare($sql);
+        //$stmt =$this->con->prepare("UPDATE groups SET uyinchilar = ? WHERE NumberOfGroup = $GroupNumber");
+        $stmt->bind_param("is",$GroupNumber,$value);
         $stmt->execute();
     }
     function Getuyinchilar($grouppade){
@@ -44,28 +44,28 @@ class DbOperation
         return $grouppade;
     }
     function SetHuy($value,$GroupNumber){
-        $stmt =$this->con->prepare("UPDATE groups SET huy = ? WHERE NumberOfGroup = $GroupNumber");
-        $stmt->bind_param("i",$value);
+        $stmt =$this->con->prepare("UPDATE groups SET huy = ? WHERE NumberOfGroup = ?");
+        $stmt->bind_param("ii",$value,$GroupNumber);
         $stmt->execute();
     }
     function SetYurishKimmiki($value,$GroupNumber){
-        $stmt =$this->con->prepare("UPDATE groups SET YurishKimmiki = ? WHERE NumberOfGroup = $GroupNumber");
-        $stmt->bind_param("s",$value);
+        $stmt =$this->con->prepare("UPDATE groups SET YurishKimmiki = ? WHERE NumberOfGroup = ?");
+        $stmt->bind_param("si",$value,$GroupNumber);
         $stmt->execute();
     }
     function SetKartatarqatildi($value,$GroupNumber){
-        $stmt =$this->con->prepare("UPDATE groups SET Kartatarqatildi = ? WHERE NumberOfGroup = $GroupNumber");
-        $stmt->bind_param("s",$value);
+        $stmt =$this->con->prepare("UPDATE groups SET Kartatarqatildi = ? WHERE NumberOfGroup = ?");
+        $stmt->bind_param("si",$value,$GroupNumber);
         $stmt->execute();
     }
     function SetKimboshlashi($value,$GroupNumber){
-        $stmt =$this->con->prepare("UPDATE groups SET Kimboshlashi = ? WHERE NumberOfGroup = $GroupNumber");
-        $stmt->bind_param("i",$value);
+        $stmt =$this->con->prepare("UPDATE groups SET Kimboshlashi = ? WHERE NumberOfGroup = ?");
+        $stmt->bind_param("ii",$value,$GroupNumber);
         $stmt->execute();
     }
     function SetXAmmakartalar($value,$GroupNumber){
-        $stmt =$this->con->prepare("UPDATE groups SET hammakartalar = ? WHERE NumberOfGroup = $GroupNumber");
-        $stmt->bind_param("s",$value);
+        $stmt =$this->con->prepare("UPDATE groups SET hammakartalar = ? WHERE NumberOfGroup = ?");
+        $stmt->bind_param("si",$value,$GroupNumber);
         $stmt->execute();
     }
     function GetKartatarqatildi($ki1){
@@ -95,19 +95,13 @@ class DbOperation
         return $grouppy;
     }
     function Setgrop2help($lk,$value){
-        $stmt2=$this->con->prepare("UPDATE groups SET group2help = ? WHERE NumberOfGroup=$lk");
-        $stmt2->bind_param("s",$value);
+        $stmt2=$this->con->prepare("UPDATE groups SET grop2help = ? WHERE NumberOfGroup=?");
+        $stmt2->bind_param("si",$value,$lk);
         $stmt2->execute();
         $stmt2->store_result();
     }
     function Creategrop2help($lk,$value){
         $stmt =$this->con->prepare("INSERT IGNORE INTO  groups (grop2help,NumberOfGroup) VALUES(?,?)");
-        /*   $stmt =$this->con->prepare(
-             'IF NOT EXISTS (SELECT * FROM groups  WHERE NumberOfGroup = $lk)
-       BEGIN
-             INSERT INTO groups (group2help,NumberOfGroup) VALUES(?,?)
-       END
-              ');*/
         $stmt->bind_param("si",$value,$lk);
         $stmt->execute();
     }
@@ -120,14 +114,14 @@ class DbOperation
     }
     function SetOxirgiZapislar($data,$GroupNumber,$OxirgiZapis){
         $db=new DbOperation();
-        $stmt =$this->con->prepare("UPDATE oxirgizapis SET $OxirgiZapis = ? WHERE GroupNumber =$GroupNumber");
+        $stmt =$this->con->prepare("UPDATE oxirgizapis SET $OxirgiZapis = ? WHERE GroupNumber =?");
         $fd=$data.substr($db->Getuyinchilar($GroupNumber),strlen($db->Getuyinchilar($GroupNumber)), 1);
-        $stmt->bind_param("s",$fd);
+        $stmt->bind_param("si",$fd,$GroupNumber);
         $stmt->execute();
     }
     function SetPlayers($GroupNumber,$Level,$Id,$ki,$re){
-        $stmt =$this->con->prepare("UPDATE players SET Indexq = ?,groupnamer = ?,Levelde = ?,Tikilgan='0',ContactName = ? WHERE id =$Id");
-        $stmt->bind_param("siis",$re,$GroupNumber,$Level,$ki);
+        $stmt =$this->con->prepare("UPDATE players SET Indexq = ?,groupnamer = ?,Levelde = ?,Tikilgan='0',ContactName = ? WHERE id =?");
+        $stmt->bind_param("siiss",$re,$GroupNumber,$Level,$ki,$Id);
         $stmt->execute();
     }
     //Method to create a new user
@@ -170,9 +164,7 @@ class DbOperation
         }
         return true;
     }
-
-        function UyingaKirish($data){
-
+    function UyingaKirish($data){
         function uyinchilarade($son)
         {
             $db=new DbOperation();
@@ -786,9 +778,9 @@ class DbOperation
                 }*/
                     $dssad = 0;
                     $ttt4 = "";
-                  if( (int)substr($db->GetOxirgiZapisplar($lk,"Oxirgizapis0"),14,12)+(int)substr($db->GetOxirgiZapisplar($lk,"Oxirgizapis0"),27,12)>=$minSatck){
-                    $dssad = $dssad + 1;if(strpos($db->Getuyinchilar($lk), (string)(0+ 1)) !== false){ $ttt4 = $ttt4.(string)(0+ 1);}
-                } if( (int)substr($db->GetOxirgiZapisplar($lk,"Oxirgizapis1"),14,12)+(int)substr($db->GetOxirgiZapisplar($lk,"Oxirgizapis1"),27,12)>=$minSatck){
+                    if( (int)substr($db->GetOxirgiZapisplar($lk,"Oxirgizapis0"),14,12)+(int)substr($db->GetOxirgiZapisplar($lk,"Oxirgizapis0"),27,12)>=$minSatck){
+                        $dssad = $dssad + 1;if(strpos($db->Getuyinchilar($lk), (string)(0+ 1)) !== false){ $ttt4 = $ttt4.(string)(0+ 1);}
+                    } if( (int)substr($db->GetOxirgiZapisplar($lk,"Oxirgizapis1"),14,12)+(int)substr($db->GetOxirgiZapisplar($lk,"Oxirgizapis1"),27,12)>=$minSatck){
                     $dssad = $dssad + 1;if(strpos($db->Getuyinchilar($lk), (string)(1+ 1)) !== false){ $ttt4 = $ttt4.(string)(1+ 1);}
                 } if( (int)substr($db->GetOxirgiZapisplar($lk,"Oxirgizapis2"),14,12)+(int)substr($db->GetOxirgiZapisplar($lk,"Oxirgizapis2"),27,12)>=$minSatck){
                     $dssad = $dssad + 1;if(strpos($db->Getuyinchilar($lk), (string)(2+ 1)) !== false){ $ttt4 = $ttt4.(string)(2+ 1);}
@@ -805,16 +797,12 @@ class DbOperation
                 } if( (int)substr($db->GetOxirgiZapisplar($lk,"Oxirgizapis8"),14,12)+(int)substr($db->GetOxirgiZapisplar($lk,"Oxirgizapis8"),27,12)>=$minSatck){
                     $dssad = $dssad + 1;if(strpos($db->Getuyinchilar($lk), (string)(8+ 1)) !== false){ $ttt4 = $ttt4.(string)(8+ 1);}
                 }
-                     $db->SetYurishKimmiki($ttt4,$lk);
-                     $db->SetHuy($dssad,$lk);
-
+                    $db->SetYurishKimmiki($ttt4,$lk);
+                    $db->SetHuy($dssad,$lk);
                     $koo=$lk;
                     $koo=$db->GetKimboshlashi($koo);
                     $koo2=$lk;
-
                     $koo2=$db->GetYurishKimmiki($koo2);
-
-
                     for ($i = 1; $i < 10; $i++)
                     {
                         $gd = $koo + $i;
@@ -849,9 +837,7 @@ class DbOperation
                        }*/
                 if ($db->Tekshir($lk) >= $soni && $db->GetKartatarqatildi($lk) == "false")
                 {
-
                     $db->SetKartatarqatildi("true",$lk);
-
                     $db->SetTikilganPullar("Tikilganpullar0","0",$lk);
                     $db->SetTikilganPullar("Tikilganpullar1","1",$lk);
                     $db->SetTikilganPullar("Tikilganpullar2","2",$lk);
@@ -861,8 +847,6 @@ class DbOperation
                     $db->SetTikilganPullar("Tikilganpullar6","6",$lk);
                     $db->SetTikilganPullar("Tikilganpullar7","7",$lk);
                     $db->SetTikilganPullar("Tikilganpullar8","8",$lk);
-
-
                     $n=combinatsiya();
                     $cards=cardio();
                     //Gruppalaga ajratiganda
@@ -940,7 +924,7 @@ class DbOperation
             }
         }
         function uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient,$Id,$Level,$Money,$Name,$pul,$yol){
-           $db=new DbOperation();
+            $db=new DbOperation();
             if ($GroupNumber % 2 == 0)
             {
                 uyinchilarade2($GroupNumber);
@@ -1044,15 +1028,14 @@ class DbOperation
             if($db->GetOxirgiZapisplar($GroupNumber,"OxirgiZapis8") != "")
             { $kil = $kil.$db->GetOxirgiZapisplar($GroupNumber,"OxirgiZapis8"); }
             // GruppadagiAktivOdamlarSoni[Maindata.GroupNumber] = GruppadagiAktivOdamlarSoni[Maindata.GroupNumber] + 1;
-
             return PlayerdaKartaniTarqatish($data, $kil, $GroupNumber,$index,$db->Tekshir($GroupNumber));
         }
-
         $BotOrClient = "true";
         $GroupNumber = 0;
         $pul = "";  $Id = "";
         $Level = "";$Money = "";
         $yol = "";  $Name = "";
+        //%%asdsasdad0001000000001000&000000000000000001000000001000$^0000000001
         if(strlen($data)>2 && substr($data,0, 2) == "%%" && strlen($data)>=69)
         {
             $GroupNumber = substr($data,10, 4);
@@ -1067,12 +1050,9 @@ class DbOperation
                 $BotOrClient = "false";
             }
         }
-
-
-      // Creategrop2help($GroupNumber,"true");
-         $db= new DbOperation();
+        // Creategrop2help($GroupNumber,"true");
+        $db= new DbOperation();
         $db->Creategrop2help($GroupNumber,"true");
-
         $ki=$GroupNumber;
         if ($GroupNumber > 2100)
         {
