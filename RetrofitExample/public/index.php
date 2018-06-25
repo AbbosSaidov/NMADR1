@@ -67,7 +67,14 @@ $app->post('/uyingaKirish', function (Request $request, Response $response){
     }
 });
 
+$app->get('/messages/{id}/{group}', function (Request $request, Response $response) {
+    $userid = $request->getAttribute('id');
+    $userGropde= $request->getAttribute('group');
 
+    $db = new DbOperation();
+    $messages = $db->getMessages($userid,$userGropde);
+    $response->getBody()->write(json_encode(array("messages" => $messages)));
+});
 //function to check parameters
 function isTheseParametersAvailable($required_fields)
 {
