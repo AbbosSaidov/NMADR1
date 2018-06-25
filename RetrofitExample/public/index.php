@@ -67,6 +67,35 @@ $app->post('/uyingaKirish', function (Request $request, Response $response){
     }
 });
 
+
+$app->post('/UyinniDavomEtishi', function (Request $request, Response $response) {
+    if (isTheseParametersAvailable(array('data'))) {
+        $requestData = $request->getParsedBody();
+        $data = $requestData['data'];
+
+        $db = new DbOperation();
+        $responseData = array();
+
+        $result = $db->UyinniDAvomEttir($data);
+
+        if ($result == USER_CREATED) {
+            $responseData['error'] = false;
+            $responseData['message'] = 'Registered successfully';
+
+        } elseif ($result == USER_CREATION_FAILED) {
+            $responseData['error'] = true;
+            $responseData['message'] = 'Some error occurred';
+        } elseif ($result == USER_EXIST) {
+            $responseData['error'] = true;
+            $responseData['message'] = 'This email already exist, please login';
+        }else{
+            $responseData['group']=$result;
+        }
+
+        $response->getBody()->write(json_encode($responseData));
+    }
+});
+
 $app->get('/messages/{id}/{group}', function (Request $request, Response $response) {
     $userid = $request->getAttribute('id');
     $userGropde= $request->getAttribute('group');

@@ -1203,7 +1203,6 @@ class DbOperation
         }
         return $rewrwr;
     }
-
     //messajji olish ucnde
     function getMessages($userindex,$userGrop)
     {
@@ -1223,6 +1222,54 @@ class DbOperation
         }
 
         return $messages;
+    }
+    //
+    function UyinniDAvomEttir($data){
+
+        if (strpos($data,"$")!==false && strpos($data,"^")!==false && strlen($data) > 32)
+        {
+            //%%NameByMe0001000000039990$000000000010000000040000xb00000000011
+            //1000000000980000000000020$^121010
+            //3000000000980000000000020$^1021010
+            $Pas=false;
+            $nmaligi = "UyinniDavomEtishi";
+            $Index = (int)substr($data,0,1);
+            $GroupNumber =(int)substr($data,28,4);
+            $keraklide = (int)substr($data,27,1);
+            $yol =(int)substr($data,13,12);
+            $pul = (int)substr($data,1,12);
+            $mik = (int)substr($data,32,1);
+            $db=new DbOperation();
+            $nj="OxirgiZapis".(string)$Index;
+            $oxirgizapis = $db->GetOxirgiZapisplar($GroupNumber,$nj);
+            if($GroupNumber>0 && $GroupNumber < 3200 && strlen($oxirgizapis) > 68)
+            {
+                $Level = substr($oxirgizapis,39,6);
+                $Id = substr($oxirgizapis,59,10);
+                $Name = substr($oxirgizapis,2,8);
+                $Money = substr($oxirgizapis,45,126);
+            }
+
+            if (strpos($data,"&")!==false )
+            {
+                $Pas = true;
+                if (strlen($data)> 34)
+                {
+                    $Judgement = data.Substring(data.Length - 12, 12);
+                }
+                else
+                {
+                    $Judgement = "";
+                }
+            }
+            else
+            {
+                $Pas = false;
+            }
+         //  print("Uyinni davom etishi "+ MainData.GroupNumber+" " + MainData.nmaligi + " -" + YurishKimmiki[MainData.GroupNumber] + " -" + MainData.Index + " -" + KartaTarqatildi[MainData.GroupNumber] +" -"+data);
+        }
+
+        return "Zo'r";
     }
 
 }
