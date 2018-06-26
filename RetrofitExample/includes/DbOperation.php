@@ -1473,8 +1473,8 @@ class DbOperation
                 {
                     if (substr($uyinchilar,$t,1) == $i)
                     {
-                        $Massiv2[$i] = long.Parse(grop22[lk][t].TikilganPullar);
-                        $Massiv[$i] = long.Parse(grop22[lk][t].TikilganPullar);
+                        $Massiv2[$i] = $db->GetTikilganPullar($lk,"TikilganPullar".(string)$t);
+                        $Massiv[$i] = $Massiv2[$i];
                         $t = 10;
                     }
                 }
@@ -1482,31 +1482,32 @@ class DbOperation
         }
 
         $mkds = 9 - $mkds; $kmn = "";
-        if (mkds == 1)
+        if ($mkds == 1)
         {
-            for(int i = 1; i < 10; i++)
+            for($i = 1; $i < 10;$i++)
             {
-                kmn = kmn + Javoblade[lk,i];
+                $kmn = $kmn.$db->GetTikilganPullar($lk,"TikilganPullar".(string)$i);
             }
         }
         else
         {
-            string[] d;d = new string[9];
-        d[0] = "st"; d[1] = "p1"; d[2] = "p2"; d[3] = "se";
-        d[4] = "sr"; d[5] = "fl"; d[6] = "fs";
+            $d=array();
+        $d[0] = "st"; $d[1] = "p1"; $d[2] = "p2"; $d[3] = "se";
+        $d[4] = "sr"; $d[5] = "fl"; $d[6] = "fs";
 
-            print(hu3[lk] + " " + huy[lk] + " "+asosiy);
 
-            while (asosiy.Length > 0)
+            while (strlen($asosiy) > 0)
             {
-                string[] b; b = new string[10];
-                string[] b1; b1 = new string[10]; string t1 = ""; int t = -1;
-                for (int i = 0; i < asosiy.Length; i++)
+                $b =array();
+                $b1 =array();
+                $t1 ="";
+                $t =-1;
+                for ($i = 0; $i < strlen($asosiy); $i++)
                 {
                     //print(i + " " + asosiy + " d=" + Javoblade[lk, int.Parse(asosiy.Substring(i, 1))]);
                     //113579RR3p121di22he2121020
 
-                    int toshde = int.Parse(Javoblade[lk, int.Parse(asosiy.Substring(i, 1))].Substring(2, 1));
+                    $toshde = (int)(Javoblade[lk, int.Parse(asosiy.Substring(i, 1))].Substring(2, 1));
                     if (Javoblade[lk, int.Parse(asosiy.Substring(i, 1))].Length > 20)
                     {
                         ObshiyPul = Javoblade[lk, int.Parse(asosiy.Substring(i, 1))].Substring(19, Javoblade[lk, int.Parse(asosiy.Substring(i, 1))].Length - 19);
@@ -1548,10 +1549,7 @@ class DbOperation
                 {
                     asosiy = asosiy.Replace(t1.Substring(i,1),"");
                 }
-                //knn= 45:2:1:7:
             }
-            print("Utdi");
-            yield return new WaitForSeconds(0.2f);
 
             string[] Pullar; Pullar = new string[Massiv2.Length];
             string[] g; g = new string[Massiv2.Length];
