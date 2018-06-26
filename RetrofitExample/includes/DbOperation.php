@@ -1514,7 +1514,7 @@ class DbOperation
                     }
                  //   print(i + toshde);
 
-                    b[int.Parse(asosiy.Substring(i, 1))] =
+                    $b[int.Parse(asosiy.Substring(i, 1))] =
                     Javoblade[lk, int.Parse(asosiy.Substring(i, 1))]
                 .Substring(3, 2);
                     b1[int.Parse(asosiy.Substring(i, 1))] =
