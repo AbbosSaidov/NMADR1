@@ -214,6 +214,7 @@ class DbOperation
         if (strlen($data) > 2 && substr($data,0, 3) == "%??" && strlen($data) >= 35)
         {
             $Id = substr($data,3, 10);
+            $ki=(int)$Id;
             $Money = substr($data,21, 12);
             $ImageNumber = substr($data,33, 2);
             if (strlen($data)>40&&substr($data,35, 1) == "f")
@@ -226,12 +227,13 @@ class DbOperation
         {
             if ($BotOrClient!= "false")
             {
-                $stmt2=$this->con->prepare("SELECT id FROM users WHERE nmadr=?");
-                $stmt2->bind_param("i",$ki);
+                $stmt2=$this->con->prepare("SELECT COUNT(id)FROM players");
+           //     $stmt2->bind_param("i",$ki);
                 $stmt2->execute();
-                $stmt2->store_result();
+                $stmt2->bind_result($ki);
+                $stmt2->fetch();
                 $ki=$ki+1;
-                $stmt =$this->con->prepare("INSERT INTO users (id,Imagenumber,money) VALUES(?,?,?)");
+                $stmt =$this->con->prepare("INSERT INTO players (id,Imagenumber,money) VALUES(?,?,?)");
                 $stmt->bind_param("isi",$ki,$ImageNumber,$Money);
                 $stmt->execute();
             }
