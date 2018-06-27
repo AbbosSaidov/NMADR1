@@ -1242,7 +1242,7 @@ class DbOperation
         }
         return $messages;
     }
-    //
+    //Davom etishi uyinni
     function UyinniDAvomEttir($data){
         function YurishAsosiy($lk, $minSatck,$soni){
             $koo=$lk;
@@ -2010,6 +2010,24 @@ class DbOperation
                         $db->SEndMEssageToGroup($lk,$uyinchilar,$data.$huy.$Index.str_pad($lk,4,"0"));
                     }
                 }
+            }
+        }
+        return "Zo'r";
+    }
+
+    //Rrnikirishi
+    function RRniKiritish($data){
+        if (strlen($data)>19&&substr($data,0,2)=="RR")
+        {
+            $db=new DbOperation();
+            //RR1at21sp21sp1621020
+            $lk =(int)(substr($data,15,4)) ;
+            $index = (int)(substr($data,2,1));
+
+            //st,p1,p2,se,fl,sr,fs  RR2p122he12di12
+            if ($db->GetJavoblade($lk,"Javoblade".(string)$index) == "" ||$db->GetJavoblade($lk,"Javoblade".(string)$index) == null)
+            {
+                $db->SetJavoblade("Javoblade".(string)$index,substr($data,0,19).(int)substr($data,19,12),$lk);
             }
         }
         return "Zo'r";
