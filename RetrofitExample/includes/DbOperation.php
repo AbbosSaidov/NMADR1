@@ -1405,17 +1405,11 @@ class DbOperation
                }*/
                         if ($tott2==-1)
                         {
-                            try
-                            {
                                 $message=$cards[$n[1][$m * 2]].$cards[$n[1][$m * 2 + 1]].substr($yurishkimmiki,0,1).
                                     str_pad((string)($minSatck / 2),12,'0',STR_PAD_LEFT)."!". str_pad((string)($minSatck ),12,'0',STR_PAD_LEFT).
                                     $asd .substr($yurishkimmiki,$m+1,1) .$lk;
                                 $db->SEndMEssage($lk,substr($asd,$m,1),$message);
-                            }
-                            catch ( ErrorException $e)
-                            {
-                                print("ee uyinchi chiqibketti".$e->getMessage());
-                            }
+
                         }
                         else
                         {
