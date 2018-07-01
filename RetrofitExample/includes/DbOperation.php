@@ -109,6 +109,11 @@ class DbOperation
         $stmt->bind_param("si",$value,$GroupNumber);
         $stmt->execute();
     }
+    function SetError($value,$GroupNumber){
+        $stmt =$this->con->prepare("INSERT INTO error1 (message,groupnumber ) VALUES (?,?)");
+        $stmt->bind_param("si",$value,$GroupNumber);
+        $stmt->execute();
+    }
     function SetKartatarqatildi($value,$GroupNumber){
         $stmt =$this->con->prepare("UPDATE groups SET Kartatarqatildi = ? WHERE NumberOfGroup = ?");
         $stmt->bind_param("si",$value,$GroupNumber);
@@ -179,8 +184,11 @@ class DbOperation
         $stmt =$this->con->prepare("INSERT IGNORE INTO  groups (grop2help,NumberOfGroup,Kartatarqatildi) VALUES(?,?,?)");
         $as="false";
         $stmt->bind_param("sis",$value,$lk,$as);
-        $stmt->execute()
-        ;$stmt =$this->con->prepare("INSERT IGNORE INTO  tikilganpullar (GroupNumber) VALUES(?)");
+        $stmt->execute();
+        $stmt =$this->con->prepare("INSERT IGNORE INTO  tikilganpullar (GroupNumber) VALUES(?)");
+        $stmt->bind_param("i",$lk);
+        $stmt->execute();
+        $stmt =$this->con->prepare("INSERT IGNORE INTO  javoblade (groupnumber) VALUES(?)");
         $stmt->bind_param("i",$lk);
         $stmt->execute();
         $stmt =$this->con->prepare("INSERT IGNORE INTO  oxirgizapis (GroupNumber) VALUES(?)");
@@ -1405,11 +1413,10 @@ class DbOperation
                }*/
                         if ($tott2==-1)
                         {
-                                $message=$cards[$n[1][$m * 2]].$cards[$n[1][$m * 2 + 1]].substr($yurishkimmiki,0,1).
-                                    str_pad((string)($minSatck / 2),12,'0',STR_PAD_LEFT)."!". str_pad((string)($minSatck ),12,'0',STR_PAD_LEFT).
-                                    $asd .substr($yurishkimmiki,$m+1,1) .$lk;
-                                $db->SEndMEssage($lk,substr($asd,$m,1),$message);
-
+                            $message=$cards[$n[1][$m * 2]].$cards[$n[1][$m * 2 + 1]].substr($yurishkimmiki,0,1).
+                                str_pad((string)($minSatck / 2),12,'0',STR_PAD_LEFT)."!". str_pad((string)($minSatck ),12,'0',STR_PAD_LEFT).
+                                $asd .substr($yurishkimmiki,$m+1,1) .$lk;
+                            $db->SEndMEssage($lk,substr($asd,$m,1),$message);
                         }
                         else
                         {
@@ -1443,11 +1450,11 @@ class DbOperation
             $n=array();
             for ($i = 0; $i < 18; $i++)
             {
-                $g[$i] = rand(11, 63);
+                $g[$i] = rand(11, 62);
             }
             for ($iop = 0; $iop < 5; $iop++)
             {
-                $n[$iop] = rand(11, 63);
+                $n[$iop] = rand(11, 62);
             }
             try
             {
@@ -1465,7 +1472,7 @@ class DbOperation
                             $g[1] == $g[14] || $g[1] == $g[15] ||
                             $g[1] == $g[16] || $g[1] == $g[17])
                         {
-                            $g[$t1] = rand(11, 63);
+                            $g[$t1] = rand(11, 62);
                         }
                     }
                     if ($t1 == 2)
@@ -1480,7 +1487,7 @@ class DbOperation
                             $g[2] == $g[14] || $g[2] == $g[15] ||
                             $g[2] == $g[16] || $g[2] == $g[17])
                         {
-                            $g[$t1] = rand(11, 63);
+                            $g[$t1] = rand(11, 62);
                         }
                     }
                     if ($t1 == 3)
@@ -1495,7 +1502,7 @@ class DbOperation
                             $g[3] == $g[14] || $g[3] == $g[15] ||
                             $g[3] == $g[16] || $g[3] == $g[17])
                         {
-                            $g[$t1] = rand(11, 63);
+                            $g[$t1] = rand(11, 62);
                         }
                     }
                     if ($t1 == 4)
@@ -1510,7 +1517,7 @@ class DbOperation
                             $g[4] == $g[14] || $g[4] == $g[15] ||
                             $g[4] == $g[16] || $g[4] == $g[17])
                         {
-                            $g[$t1] = rand(11, 63);
+                            $g[$t1] = rand(11, 62);
                         }
                     }
                     if ($t1 == 5)
@@ -1525,7 +1532,7 @@ class DbOperation
                             $g[5] == $g[14] || $g[5] == $g[15] ||
                             $g[5] == $g[16] || $g[5] == $g[17])
                         {
-                            $g[$t1] = rand(11, 63);
+                            $g[$t1] = rand(11, 62);
                         }
                     }
                     if ($t1 == 6)
@@ -1540,7 +1547,7 @@ class DbOperation
                             $g[6] == $g[14] || $g[6] == $g[15] ||
                             $g[6] == $g[16] || $g[6] == $g[17])
                         {
-                            $g[$t1] = rand(11, 63);
+                            $g[$t1] = rand(11, 62);
                         }
                     }
                     if ($t1 == 7)
@@ -1555,7 +1562,7 @@ class DbOperation
                             $g[7] == $g[14] || $g[7] == $g[15] ||
                             $g[7] == $g[16] || $g[7] == $g[17])
                         {
-                            $g[$t1] = rand(11, 63);
+                            $g[$t1] = rand(11, 62);
                         }
                     }
                     if ($t1 == 8)
@@ -1570,7 +1577,7 @@ class DbOperation
                             $g[8] == $g[14] || $g[8] == $g[15] ||
                             $g[8] == $g[16] || $g[8] == $g[17])
                         {
-                            $g[$t1] = rand(11, 63);
+                            $g[$t1] = rand(11, 62);
                         }
                     }
                     if ($t1 == 9)
@@ -1585,7 +1592,7 @@ class DbOperation
                             $g[9] == $g[14] || $g[9] == $g[15] ||
                             $g[9] == $g[16] || $g[9] == $g[17])
                         {
-                            $g[$t1] = rand(11, 63);
+                            $g[$t1] = rand(11, 62);
                         }
                     }
                     if ($t1 == 10)
@@ -1600,7 +1607,7 @@ class DbOperation
                             $g[10] == $g[14] || $g[10] == $g[15] ||
                             $g[10] == $g[16] || $g[10] == $g[17])
                         {
-                            $g[$t1] = rand(11, 63);
+                            $g[$t1] = rand(11, 62);
                         }
                     }
                     if ($t1 == 11)
@@ -1615,7 +1622,7 @@ class DbOperation
                             $g[11] == $g[14] || $g[11] == $g[15] ||
                             $g[11] == $g[16] || $g[11] == $g[17])
                         {
-                            $g[$t1] = rand(11, 63);
+                            $g[$t1] = rand(11, 62);
                         }
                     }
                     if ($t1 == 12)
@@ -1630,7 +1637,7 @@ class DbOperation
                             $g[12] == $g[14] || $g[12] == $g[15] ||
                             $g[12] == $g[16] || $g[12] == $g[17])
                         {
-                            $g[$t1] = rand(11, 63);
+                            $g[$t1] = rand(11, 62);
                         }
                     }
                     if ($t1 == 13)
@@ -1645,7 +1652,7 @@ class DbOperation
                             $g[13] == $g[14] || $g[13] == $g[15] ||
                             $g[13] == $g[16] || $g[13] == $g[17])
                         {
-                            $g[$t1] = rand(11, 63);
+                            $g[$t1] = rand(11, 62);
                         }
                     }
                     if ($t1 == 14)
@@ -1660,7 +1667,7 @@ class DbOperation
                             $g[14] == $g[13] || $g[14] == $g[15] ||
                             $g[14] == $g[16] || $g[14] == $g[17])
                         {
-                            $g[$t1] = rand(11, 63);
+                            $g[$t1] = rand(11, 62);
                         }
                     }
                     if ($t1 == 15)
@@ -1675,7 +1682,7 @@ class DbOperation
                             $g[15] == $g[13] || $g[15] == $g[14] ||
                             $g[15] == $g[16] || $g[15] == $g[17])
                         {
-                            $g[$t1] = rand(11, 63);
+                            $g[$t1] = rand(11, 62);
                         }
                     }
                     if ($t1 == 16)
@@ -1690,7 +1697,7 @@ class DbOperation
                             $g[16] == $g[13] || $g[16] == $g[15] ||
                             $g[16] == $g[14] || $g[16] == $g[17])
                         {
-                            $g[$t1] = rand(11, 63);
+                            $g[$t1] = rand(11, 62);
                         }
                     }
                     if ($t1 == 17)
@@ -1705,7 +1712,7 @@ class DbOperation
                             $g[17] == $g[13] || $g[17] == $g[15] ||
                             $g[17] == $g[14] || $g[17] == $g[16])
                         {
-                            $g[$t1] = rand(11, 63);
+                            $g[$t1] = rand(11, 62);
                         }
                     }
                 }
@@ -1725,7 +1732,7 @@ class DbOperation
                             $n[$yu] == $n[1] || $n[$yu] == $n[2] ||
                             $n[$yu] == $n[3] || $n[$yu] == $n[4])
                         {
-                            $n[$yu] = rand(11, 63);
+                            $n[$yu] = rand(11, 62);
                         }
                     }
                     if ($yu == 1)
@@ -1742,7 +1749,7 @@ class DbOperation
                             $n[$yu] == $n[0] || $n[$yu] == $n[2] ||
                             $n[$yu] == $n[3] || $n[$yu] == $n[4])
                         {
-                            $n[$yu] = rand(11, 63);
+                            $n[$yu] = rand(11, 62);
                         }
                     }
                     if ($yu == 2)
@@ -1759,7 +1766,7 @@ class DbOperation
                             $n[$yu] == $n[0] || $n[$yu] == $n[1] ||
                             $n[$yu] == $n[3] || $n[$yu] == $n[4])
                         {
-                            $n[$yu] = rand(11, 63);
+                            $n[$yu] = rand(11, 62);
                         }
                     }
                     if ($yu == 3)
@@ -1776,7 +1783,7 @@ class DbOperation
                             $n[$yu] == $n[0] || $n[$yu] == $n[2] ||
                             $n[$yu] == $n[1] || $n[$yu] == $n[4])
                         {
-                            $n[$yu] = rand(11, 63);
+                            $n[$yu] = rand(11, 62);
                         }
                     }
                     if ($yu == 4)
@@ -1793,7 +1800,7 @@ class DbOperation
                             $n[$yu] == $n[0] || $n[$yu] == $n[2] ||
                             $n[$yu] == $n[1] || $n[$yu] == $n[3])
                         {
-                            $n[$yu] = rand(11, 63);
+                            $n[$yu] = rand(11, 62);
                         }
                     }
                 }
@@ -1890,12 +1897,16 @@ class DbOperation
             $uyinchilar=$db->Getuyinchilar($lk);
             for ($i = 0; $i < strlen($uyinchilar); $i++)
             {
-                $ObshiyPul = (string)((int)($ObshiyPul) + (int)($db->GetTikilganPullar($lk,"TikilganPullar".(string)substr($uyinchilar,$i,1))));
+                $ObshiyPul = (string)((int)($ObshiyPul) + (int)($db->GetTikilganPullar($lk,"TikilganPullar".substr($uyinchilar,$i,1))));
             }
             $mkds = 0;$asosiy = "";
             //100,200,300,400,500
             $Massiv2=array();
             $Massiv=array();
+            for($i=0;$i<10;$i++){
+                $Massiv2[$i]=0;
+                $Massiv[$i]=0;
+            }
             for ($i = 1; $i < 10; $i++)
             {
                 if ($db->GetJavoblade($lk,"Javoblade".(string)$i)=="")
@@ -1905,11 +1916,11 @@ class DbOperation
                 else
                 {
                     $asosiy = $asosiy.$i;
-                    for($t = 0; $t < $uyinchilar; $t++)
+                    for($t = 0; $t < strlen($uyinchilar); $t++)
                     {
                         if (substr($uyinchilar,$t,1) == $i)
                         {
-                            $Massiv2[$i] = $db->GetTikilganPullar($lk,"TikilganPullar".(string)$t);
+                            $Massiv2[$i] = $db->GetTikilganPullar($lk,"TikilganPullar".(string)$i);
                             $Massiv[$i] = $Massiv2[$i];
                             $t = 10;
                         }
@@ -1925,7 +1936,11 @@ class DbOperation
                 }
             }
             else
-            {
+            { $javoblade=array();
+                $javoblade[0]="";
+                for($l=1;$l<10;$l++){
+                    $javoblade[$l]=$db->GetJavoblade($lk,"Javoblade".(string)$l);
+                }
                 $d=array();
                 $d[0] = "st"; $d[1] = "p1"; $d[2] = "p2"; $d[3] = "se";
                 $d[4] = "sr"; $d[5] = "fl"; $d[6] = "fs";
@@ -1939,15 +1954,15 @@ class DbOperation
                     {
                         //print(i + " " + asosiy + " d=" + Javoblade[lk, int.Parse(asosiy.Substring(i, 1))]);
                         //113579RR3p121di22he2121020
-                   //     $toshde = (int)(substr($db->GetJavoblade($lk,"Javoblade".substr($asosiy,$i,1)),2,1));
-                        if (strlen($db->GetJavoblade($lk,"Javoblade".substr($asosiy,$i,1))) > 20)
+                        //     $toshde = (int)(substr($db->GetJavoblade($lk,"Javoblade".substr($asosiy,$i,1)),2,1));
+                        if (strlen($javoblade[(int)substr($asosiy,$i,1)]) > 20)
                         {
-                            $ObshiyPul = substr($db->GetJavoblade($lk,"Javoblade".substr($asosiy,$i,1)),19,strlen($db->GetJavoblade($lk,"Javoblade".substr($asosiy,$i,1)))-19);
+                            $ObshiyPul = substr($javoblade[(int)substr($asosiy,$i,1)],19,strlen($javoblade[(int)substr($asosiy,$i,1)])-19);
                         }
                         //   print(i + toshde);
                         $b[(int)substr($asosiy,$i,1)] =
-                            substr($db->GetJavoblade($lk,"Javoblade".substr($asosiy,$i,1)),3,2);
-                        $b1[(int)substr($asosiy,$i,1)] = substr($db->GetJavoblade($lk,"Javoblade".substr($asosiy,$i,1)),5,2);
+                            substr($javoblade[(int)substr($asosiy,$i,1)],3,2);
+                        $b1[(int)substr($asosiy,$i,1)] = substr($javoblade[(int)substr($asosiy,$i,1)],5,2);
                         //  print(" b=" + b[int.Parse(asosiy.Substring(i, 1))]);
                         //  print(" b1=" + b1[int.Parse(asosiy.Substring(i, 1))]);
                         for ($x = 0; $x < 7; $x++)
@@ -1955,23 +1970,27 @@ class DbOperation
                             if ($d[$x] == $b[(int)substr($asosiy,$i,1)])
                             {
                                 if ($x > $t) { $t = $x; $t1 = substr($asosiy,$i,1); break; }
-                                if ($x == $t) { $t1 = $t1 + (int)(substr($asosiy,$i,1)); }
+                                if ($x == $t) { $t1 = $t1.substr($asosiy,$i,1); }
                                 if (strlen($t1) > 1)
                                 {
                                     $k1 = 0; $k2 = "";
                                     for ($k = 0; $k < strlen($t1); $k++)
                                     {
-                                        if ((int)($b1[(int)(substr($t1,$k,1))]) > $k1) { $k2 = substr($t1,$k,1); $k1 = (int)($b1[(int)(substr($t1,$k,1))]); }
+                                        if ((int)($b1[(int)substr($asosiy,$i,1)]) > $k1) { $k2 = substr($t1,$k,1); $k1 = (int)($b1[(int)substr($asosiy,$i,1)]); }
                                         else
                                         {
-                                            if ((int)($b1[(int)(substr($t1,$k,1))]) == $k1) { $k2 = $k2.substr($t1,$k,1); }
+                                            if ((int)($b1[$i]) == $k1) { $k2 = $k2.substr($t1,$k,1); }
                                         }
                                     }
+                                    $db->SetError("Ass4-".$k2." ".$t1,$lk);
                                     $t1 = $k2;
                                 }
                             }
+                            $db->SetError("Ass3-".$t1,$lk);
                         }
+                        $db->SetError("Ass2-".$t1,$lk);
                     }
+                    $db->SetError("Ass22-".$kmn,$lk);
                     // print("1:" + t1);
                     $kmn = $kmn.$t1.":";
                     for ($i = 0; $i < strlen($t1); $i++)
@@ -1979,6 +1998,7 @@ class DbOperation
                         $asosiy = str_replace(substr($t1,$i,1),"",$asosiy);
                     }
                 }
+
                 $Pullar = array();
                 $g = array();
                 for ($i=0;$i<10;$i++)
@@ -2076,30 +2096,31 @@ class DbOperation
                         $dfg++; $dfg2++; $dfg3++;
                     }
                 }
-            for ($i = 0; $i < 10; $i++)
-            {
-                for ($t = 0; $t < 10; $t++)
+                for ($i = 0; $i < 10; $i++)
                 {
-                    if($Golib[$t]!=null && $Golib[$i] != null && substr($Golib[$i],0,1)==substr($Golib[$t],0,1) && $t!=$i)
+                    for ($t = 0; $t < 10; $t++)
                     {
-                        $Golib[$i] =  substr($Golib[$i],0,1) .(string)((int)(substr($Golib[$i],1,strlen($Golib[$i])-1))+
-                                (int)(substr($Golib[$t],1,strlen($Golib[$t])-1)));
-                        $Golib[$t] = null;
-                    }
-                    if($Golib2[$t]!=null && $Golib2[$i] != null && substr($Golib2[$i],0,1)==substr($Golib2[$t],0,1) && $t!=$i)
-                    {
-                        $Golib2[$i] =  substr($Golib2[$i],0,1) .(string)((int)(substr($Golib2[$i],1,strlen($Golib2[$i])-1))+
-                                (int)(substr($Golib2[$t],1,strlen($Golib2[$t])-1)));
-                        $Golib2[$t] = null;
-                    }
-                    if($Golib3[$t]!=null && $Golib3[$i] != null && substr($Golib3[$i],0,1)==substr($Golib3[$t],0,1) && $t!=$i)
-                    {
-                        $Golib3[$i] =  substr($Golib3[$i],0,1) .(string)((int)(substr($Golib3[$i],1,strlen($Golib3[$i])-1))+
-                                (int)(substr($Golib3[$t],1,strlen($Golib3[$t])-1)));
-                        $Golib3[$t] = null;
+                        if($Golib[$t]!=null && $Golib[$i] != null && substr($Golib[$i],0,1)==substr($Golib[$t],0,1) && $t!=$i)
+                        {
+                            $Golib[$i] =  substr($Golib[$i],0,1) .(string)((int)(substr($Golib[$i],1,strlen($Golib[$i])-1))+
+                                    (int)(substr($Golib[$t],1,strlen($Golib[$t])-1)));
+                            $Golib[$t] = null;
+                        }
+                        if($Golib2[$t]!=null && $Golib2[$i] != null && substr($Golib2[$i],0,1)==substr($Golib2[$t],0,1) && $t!=$i)
+                        {
+                            $Golib2[$i] =  substr($Golib2[$i],0,1) .(string)((int)(substr($Golib2[$i],1,strlen($Golib2[$i])-1))+
+                                    (int)(substr($Golib2[$t],1,strlen($Golib2[$t])-1)));
+                            $Golib2[$t] = null;
+                        }
+                        if($Golib3[$t]!=null && $Golib3[$i] != null && substr($Golib3[$i],0,1)==substr($Golib3[$t],0,1) && $t!=$i)
+                        {
+                            $Golib3[$i] =  substr($Golib3[$i],0,1) .(string)((int)(substr($Golib3[$i],1,strlen($Golib3[$i])-1))+
+                                    (int)(substr($Golib3[$t],1,strlen($Golib3[$t])-1)));
+                            $Golib3[$t] = null;
+                        }
                     }
                 }
-            }
+
                 $kmn = "";
                 for ($i = 0; $i < 10; $i++)
                 {
@@ -2265,18 +2286,18 @@ class DbOperation
             {
                 if (strlen($kmn) > $i + 2 &&substr($kmn,$i,2) == "RR")
                 {
+
                     $db->SetOxirgiZapislar(
-                        substr(substr($db->GetOxirgiZapisplar($lk,"OxirgiZapis".substr($kmn,$i+1,1)),0,14),0,14)
-                        .str_pad((string)((int)substr($db->GetOxirgiZapisplar($lk,"OxirgiZapis".substr($kmn,$i+1,1)),14,12)+(int)substr($kmn,19+$i,12)),12,"0",STR_PAD_LEFT)
-                        .substr(26,strlen($db->GetOxirgiZapisplar($lk,"OxirgiZapis".substr($kmn,$i+1,1)))-26)
+                        substr(substr($db->GetOxirgiZapisplar($lk,"OxirgiZapis".substr($kmn,$i+2,1)),0,14),0,14)
+                        .str_pad((string)((int)substr($db->GetOxirgiZapisplar($lk,"OxirgiZapis".substr($kmn,$i+2,1)),14,12)+(int)substr($kmn,19+$i,12)),12,"0",STR_PAD_LEFT)
+                        .substr(26,strlen($db->GetOxirgiZapisplar($lk,"OxirgiZapis".substr($kmn,$i+2,1)))-26)
                         ,$lk,
-                        "OxirgiZapis".substr($kmn,$i+1,1),
-                        substr($kmn,$i+1,1)
+                        "OxirgiZapis".substr($kmn,$i+2,1),
+                        substr($kmn,$i+2,1)
                     );
                     $i = $i + 30;
                 }
             }
-            //pullarini nol qilish
             //%%NameByMe\Ism\0001\gruppa\00000001000$\pul\000000000000\yul\00000\level\000000001000\pul\xb0000000000\id\
             for ($i = 0; $i < strlen($uyinchilar); $i++)
             {
@@ -2286,6 +2307,7 @@ class DbOperation
                             substr($uyinchilar,$i,1)))-39),$lk,"OxirgiZapis".substr($uyinchilar,$i,1),substr($uyinchilar,$i,1)
                 );
             }
+            $db->SetError("As-".$kmn,$lk);
             if ($kmn != "") { $db->SEndMEssageToGroup($lk,$uyinchilar,$kmn); }
             // $db->SetKartatarqatildi("false",$lk);
             sleep(6);
@@ -2304,7 +2326,6 @@ class DbOperation
             $Index = (int)substr($data,0,1);
             $GroupNumber =(int)substr($data,28,4);
             $keraklide = (int)substr($data,27,1);
-
             $yol =(int)substr($data,13,12);
             $pul = (int)substr($data,1,12);
             $mik = (int)substr($data,32,1);
@@ -2385,11 +2406,9 @@ class DbOperation
                     }
                 }
                 $db->SetOxirgiZapislar("%%".$Name.str_pad((string)$GroupNumber,4,"0",STR_PAD_LEFT).str_pad((string)$pul,12,"0",STR_PAD_LEFT)."$".
-                  str_pad((string)$yol,12,"0",STR_PAD_LEFT) .$Level .str_pad((string)$Money,12,"0",STR_PAD_LEFT)."xb".$Id,$GroupNumber,"OxirgiZapis".(string)$Index,$Index);
-
+                    str_pad((string)$yol,12,"0",STR_PAD_LEFT) .$Level .str_pad((string)$Money,12,"0",STR_PAD_LEFT)."xb".$Id,$GroupNumber,"OxirgiZapis".(string)$Index,$Index);
                 $oxirgizapis=  "%%".$Name.str_pad((string)$GroupNumber,4,"0",STR_PAD_LEFT).str_pad((string)$pul,12,"0",STR_PAD_LEFT)."$".  str_pad((string)$yol,12,"0",STR_PAD_LEFT)
                     .$Level .str_pad((string)$Money,12,"0",STR_PAD_LEFT)."xb".$Id.$Index;
-
                 if($keraklide == 1)
                 {
                     $db->SetHuy(strlen($yurishkimmiki)-1,$lk);
@@ -2401,7 +2420,6 @@ class DbOperation
                         $tikilgsnpul="TikilganPullar".substr($yurishkimmiki,$i+1,1);
                         $OxirgiZapis="OxirgiZapis".substr($yurishkimmiki,$i+1,1);
                         $db->SetTikilganPullar($tikilgsnpul,(int)$db->GetTikilganPullar($lk,$tikilgsnpul)+(int)substr($db->GetOxirgiZapisplar($lk,$OxirgiZapis),27,12),$lk);
-                      //  return $OxirgiZapis." das".$yol;
                     }
                     $db->SetHuy(strlen($yurishkimmiki)-1,$lk);
                     $hu3=$db->Gethu3($lk)+1;
@@ -2421,10 +2439,10 @@ class DbOperation
                         for ($i = 1; $i < 10; $i++)
                         {
                             $javboblede="Javoblade".(string)$i;
-                            $db->SetJavoblade($javboblede,"",$lk);
+                            //  $db->SetJavoblade($javboblede,"",$lk);
                         }
-                        Javobit($lk);
                         $db->Sethu3(0,$lk);
+                        Javobit($lk);
                     }
                     if ($Pas)
                     {  $yurishkimmiki=str_replace("",(string)$Index,$yurishkimmiki);
