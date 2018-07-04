@@ -2322,11 +2322,11 @@ class DbOperation
             }
             $db->SetError("As-".$kmn,$lk);
             if ($kmn != "") { $db->SEndMEssageToGroup($lk,$uyinchilar,$kmn); }
-            //sleep(6);
-            //  $minSatck = TurnLk($lk);
-            //    $db=new DbOperation();
-            // $db->SetKartatarqatildi("false",$lk);
-            //   YurishAsosiy($lk,$minSatck,2);
+            sleep(6);
+              $minSatck = TurnLk($lk);
+                $db=new DbOperation();
+             $db->SetKartatarqatildi("false",$lk);
+               YurishAsosiy($lk,$minSatck,2);
         }
         if (strpos($data,"$")!==false && strpos($data,"^")!==false && strlen($data) > 32)
         {
@@ -2451,7 +2451,7 @@ class DbOperation
                         for ($i = 1; $i < 10; $i++)
                         {
                             $javboblede="Javoblade".(string)$i;
-                            //  $db->SetJavoblade($javboblede,"",$lk);
+                              $db->SetJavoblade($javboblede,"",$lk);
                         }
                         $db->Sethu3(0,$lk);
                         Javobit($lk);
