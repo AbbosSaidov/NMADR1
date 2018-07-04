@@ -1236,6 +1236,7 @@ class DbOperation
                 }
             }
         }
+        $db->SEndMEssageToGroup($GroupNumber,$db->Getuyinchilar($GroupNumber),$rewrwr);
         return $rewrwr;
     }
     //messajji olish ucnde
