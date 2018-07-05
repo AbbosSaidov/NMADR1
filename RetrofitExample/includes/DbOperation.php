@@ -1237,7 +1237,8 @@ class DbOperation
     }
     //messajji olish ucnde
     function getMessages($userindex,$userGrop)
-    {$data="";
+    {
+        $data="";
         $stmt = $this->con->prepare("SELECT message FROM messages WHERE gropnumber = ? AND indexq=?");
         $stmt->bind_param("ii", $userGrop,$userindex);
         $stmt->execute();
