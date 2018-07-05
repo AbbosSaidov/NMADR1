@@ -236,20 +236,16 @@ class DbOperation
         {
             if ($BotOrClient!= "false")
             {
-                $stmt2=$this->con->prepare("SELECT COUNT(id)FROM players");
-                //     $stmt2->bind_param("i",$ki);
-                $stmt2->execute();
-                $stmt2->bind_result($ki);
-                $stmt2->fetch();
-                $ki=$ki+1;
-                $stmt =$this->con->prepare("INSERT INTO players (id,Imagenumber,money) VALUES(?,?,?)");
-                $stmt->bind_param("isi",$ki,$ImageNumber,$Money);
+                $stmt =$this->con->prepare("INSERT INTO players (Imagenumber,money) VALUES(?,?)");
+                $stmt->bind_param("si",$ImageNumber,$Money);
                 $stmt->execute();
+
+                $ki=$stmt->insert_id;
             }
         }
         if ($BotOrClient != "false")
         {
-            return("Jiklo".str_pad($ki,10,"0"));
+            return("Jiklo".str_pad($ki,10,"0",STR_PAD_LEFT));
         }
         else
         {

@@ -15,9 +15,9 @@ $app = new \Slim\App([
 
 $app->post('/register', function (Request $request, Response $response) {
 
-    if (isTheseParametersAvailable(array('id'))) {
+    if (isTheseParametersAvailable(array('data'))) {
         $requestData = $request->getParsedBody();
-        $id = $requestData['id'];
+        $id = $requestData['data'];
 
         $db = new DbOperation();
         $responseData = array();
@@ -34,6 +34,8 @@ $app->post('/register', function (Request $request, Response $response) {
         } elseif ($result == USER_EXIST) {
             $responseData['error'] = true;
             $responseData['message'] = 'This email already exist, please login';
+        }else{
+            $responseData['group']=$result;
         }
 
         $response->getBody()->write(json_encode($responseData));
