@@ -1045,16 +1045,18 @@ class DbOperation
                 $index=substr($db->Getuyinchilar($GroupNumber),strlen($db->Getuyinchilar($GroupNumber))-1, 1);
                 $db->SetPlayers($GroupNumber,$Level,$Id,"person".$db->Tekshir($GroupNumber),$index);
             }
+            $db->SetError("Usha= ".$GroupNumber." index=".$index,$GroupNumber);
             //       NechtasiBorliginiAniqlash($GroupNumber);
             //       ChiqqanBusaChiqaribYuborish($GroupNumber);
             //%%NameByMe\Ism\0001\gruppa\00000001000$\pul\000000000000\yul\00000\level\000000001000\pul\xb0000000000\id\
-            switch($index){
+            $rtasd="OxirgiZapis".(string)$index;
+            $db->SetOxirgiZapislar($data,$GroupNumber,$rtasd,$index);
+     /*       switch($index){
                 case 9;
-                    $db->SetOxirgiZapislar($data,$GroupNumber,"OxirgiZapis9",$index);
                     break;
-                case 1;    $db->SetOxirgiZapislar($data,$GroupNumber,"OxirgiZapis1",$index);
+                case 1;  $db->SetOxirgiZapislar($data,$GroupNumber,"OxirgiZapis1",$index);
                     break;
-                case 2;     $db->SetOxirgiZapislar($data,$GroupNumber,"OxirgiZapis2",$index);
+                case 2;  $db->SetOxirgiZapislar($data,$GroupNumber,"OxirgiZapis2",$index);
                     break;
                 case 3; $db->SetOxirgiZapislar($data,$GroupNumber,"OxirgiZapis3",$index);
                     break;
@@ -1068,7 +1070,7 @@ class DbOperation
                     break;
                 case 8;  $db->SetOxirgiZapislar($data,$GroupNumber,"OxirgiZapis8",$index);
                     break;
-            }
+            }*/
             $minStavka = TurnLk($GroupNumber);
             $gruppdagaiOdamlariSoni=0;
             for ($i = 1; $i < 10; $i++)
@@ -1080,7 +1082,7 @@ class DbOperation
             }
             //  return
             $db->SetHowmanyPlayers($gruppdagaiOdamlariSoni,$GroupNumber);
-            $data = "%%".$Name .str_pad((string)$GroupNumber,4,"0").$pul."$" .$yol
+            $data = "%%".$Name .str_pad((string)$GroupNumber,4,"0",STR_PAD_LEFT).$pul."$" .$yol
                 .$Level .$Money."xb".$Id;
             $kil = "";
             if($db->GetOxirgiZapisplar($GroupNumber,"OxirgiZapis9") != "" && $index!=9)
@@ -1136,11 +1138,12 @@ class DbOperation
                 }
             }
         }
-//ASs
+        //ASs
         // Creategrop2help($GroupNumber,"true");
         $rewrwr="Ushade";
-        if($trwe){ $db->Creategrop2help($GroupNumber,"true");
-            $db->SetHowmanyPlayers($db->GetHowmanyPlayers($GroupNumber)+1,$GroupNumber);
+        if($trwe){
+          //  $db->Creategrop2help($GroupNumber,"true");
+         //   $db->SetHowmanyPlayers($db->GetHowmanyPlayers($GroupNumber)+1,$GroupNumber);
             $ki=$GroupNumber;
             if ($GroupNumber > 2100)
             {
@@ -1155,7 +1158,7 @@ class DbOperation
             }
             else
             {/**/
-                if (str_pad((string)$ki,10,"0") == "0001")
+                if (str_pad((string)$ki,4,"0",STR_PAD_LEFT) == "0001")
                 {
                     $mvc = 0;
                     for($i = 2; $i < 100; $i=$i+2)
@@ -1200,6 +1203,8 @@ class DbOperation
                     }
                 }
             }
+            $db->Creategrop2help($GroupNumber,"true");
+            $db->SetHowmanyPlayers($db->GetHowmanyPlayers($GroupNumber)+1,$GroupNumber);
             if ($GroupNumber % 2 == 0)
             {
                 if ($db->Tekshir($GroupNumber) > 4)
@@ -2160,7 +2165,7 @@ class DbOperation
                 {
                     if ($Golib[$i] != null ||$Golib[$i] != "")
                     {
-                        $kmn = $kmn .substr($db->GetJavoblade($lk,"Javoblade".substr($Golib[$i],0,1)),0,19).str_pad(substr($Golib[$i],1,strlen($Golib[$i])-1) ,12,"0",STR_PAD_LEFT);
+                        $kmn = $kmn.substr($db->GetJavoblade($lk,"Javoblade".substr($Golib[$i],0,1)),0,19).str_pad(substr($Golib[$i],1,strlen($Golib[$i])-1) ,12,"0",STR_PAD_LEFT);
                     }
                 }
                 for ($i = 0; $i < 10; $i++)
