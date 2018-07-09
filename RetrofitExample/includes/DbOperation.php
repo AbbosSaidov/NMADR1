@@ -2538,7 +2538,10 @@ class DbOperation
     }
     //Chiqishde
     function Chiqishde($data)
-{   $mkjd1 = strlen($data) / 14;
+{
+    $db=new DbOperation();
+
+    $mkjd1 = strlen($data) / 14;
 
 $kijshda2 = $data;
 
@@ -2547,20 +2550,18 @@ for ($lkj = 0; $lkj <$mkjd1; $lkj++)
 {
 $data = substr($kijshda2,$lkj*14,14);
 $lk = (int)(substr($data,10,4));
-    /**/
-if (GruppadagiAktivOdamlarSoni[lk] > 0)
-{
-GruppadagiAktivOdamlarSoni[lk] = GruppadagiAktivOdamlarSoni[lk] - 1;
-}
 
+    /*
+    if (GruppadagiAktivOdamlarSoni[lk] > 0)
+    {
+       GruppadagiAktivOdamlarSoni[lk] = GruppadagiAktivOdamlarSoni[lk] - 1;
+    }*/
 
-
-print(data.Substring(9, 1) + BotGrouplar[lk]);
-            int mkdss = grop22[lk].Count;
-            for (int i = 0; i < mkdss; i++)
+            $mkdss = $db->GetHowmanyPlayers($lk);
+            $uyinchilar=$db->Getuyinchilar($lk);
+            for ($i = 0; $i < $mkdss; $i++)
             {
-                print(grop22[lk][i].indexClient);
-                if (data.Substring(9, 1) == grop22[lk][i].indexClient.ToString())
+                if (substr($data,9,1) == grop22[lk][i].indexClient.ToString())
                 {
                     if (grop22[lk][i].BotOrClient) { grop2[lk].Remove(c); }
                     else
@@ -2576,7 +2577,6 @@ print(data.Substring(9, 1) + BotGrouplar[lk]);
                         }
                     }
                     grop22[lk].RemoveAt(i);
-
                     break;
                 }
             }
