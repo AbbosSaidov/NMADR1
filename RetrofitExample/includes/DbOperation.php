@@ -2536,4 +2536,191 @@ class DbOperation
         }
         return "Zo'r";
     }
+    //Chiqishde
+    function Chiqishde($data)
+{   $mkjd1 = strlen($data) / 14;
+
+$kijshda2 = $data;
+
+$kijshda3 = "";
+for ($lkj = 0; $lkj <$mkjd1; $lkj++)
+{
+$data = substr($kijshda2,$lkj*14,14);
+$lk = (int)(substr($data,10,4));
+    /**/
+if (GruppadagiAktivOdamlarSoni[lk] > 0)
+{
+GruppadagiAktivOdamlarSoni[lk] = GruppadagiAktivOdamlarSoni[lk] - 1;
+}
+
+
+
+print(data.Substring(9, 1) + BotGrouplar[lk]);
+            int mkdss = grop22[lk].Count;
+            for (int i = 0; i < mkdss; i++)
+            {
+                print(grop22[lk][i].indexClient);
+                if (data.Substring(9, 1) == grop22[lk][i].indexClient.ToString())
+                {
+                    if (grop22[lk][i].BotOrClient) { grop2[lk].Remove(c); }
+                    else
+                    {
+                        int mkdss2 = BotGrouplar[lk].Count;
+                        for (int k = 0; k < mkdss2; k++)
+                        {
+                            if (BotsList[int.Parse(BotGrouplar[lk][k].IdNumber)].Index.ToString() == grop22[lk][i].indexClient.ToString())
+                            {
+                                BotGrouplar[lk].RemoveAt(k);
+                                break;
+                            }
+                        }
+                    }
+                    grop22[lk].RemoveAt(i);
+
+                    break;
+                }
+            }
+            if (grop2[lk].Count == 0)
+            {
+                ObnovitQilish(lk);
+            }
+            uyinchilar[lk] = uyinchilar[lk].Replace(data.Substring(9, 1), string.Empty);
+            OxirgiZapisplar[lk, int.Parse(data.Substring(9, 1))] = "";
+            if (YurishKimmiki[lk].Contains(data.Substring(9, 1)))
+            {
+                //    print(YurishKimmiki[lk] + " " + GruppadagiAktivOdamlarSoni[lk]);
+                if (KartaTarqatildi[lk])
+                {
+                    if (YurishKimmiki[lk].Substring(0, 1) != data.Substring(9, 1))
+                    {
+                        YurishKimmiki[lk] = YurishKimmiki[lk].Replace(data.Substring(9, 1), "");
+                    }
+                    else
+                    {
+                        for (int i = 0; i < YurishKimmiki[lk].Length; i++)
+                        {
+
+                            //1000000000350000000000050$^201020 a=1 b=13113
+                            string a = YurishKimmiki[lk].Substring(0, 1); string b = YurishKimmiki[lk];
+                            //   print(a + " " + b);
+                            if (i + 2 == YurishKimmiki[lk].Length)
+                            {
+                                YurishKimmiki[lk] = b.Substring(1, 1) +
+                                b.Substring(1, b.Length - 1);
+                                break;
+                            }
+                            else
+                            {
+                                if (a == b.Substring(i + 1, 1))
+                                {
+                                    YurishKimmiki[lk] =
+                                    b.Substring(i + 2, 1) +
+                                    b.Substring(1, b.Length - 1);
+                                    break;
+                                }
+                            }
+                        }
+                        YurishKimmiki[lk] = YurishKimmiki[lk].Replace(data.Substring(9, 1), "");
+                    }
+                }
+                else
+                {
+                    YurishKimmiki[lk] = YurishKimmiki[lk].Replace(data.Substring(9, 1), "");
+                }
+
+                if (YurishKimmiki[lk].Length < 4)
+                {
+                    huy[lk] = YurishKimmiki[lk].Length - 1;
+                    if (YurishKimmiki[lk].Length == 2 && YurishKimmiki[lk].Substring(0, 1) != YurishKimmiki[lk].Substring(1, 1))
+                    {
+                        huy[lk] = 2;
+                    }
+                }
+                print(YurishKimmiki[lk] + " " + GruppadagiAktivOdamlarSoni[lk]);
+                //%%NameByMe0001000000000500$000000000000000000000000001500xb0000000004
+                //   print("Finally=" + YurishKimmiki[lk].Substring(0, 1) + " " + OxirgiZapisplar[lk, int.Parse(YurishKimmiki[lk].Substring(0, 1))]);
+                if (huy[lk] == 1 && uyinchilar[lk].Length > 1)
+                {
+                    hu3[lk] = 0;
+                    // StartCoroutine(Pas(lk));
+                }
+                if (uyinchilar[lk].Length < 2)
+                {
+                    hu3[lk] = 0;
+                }
+                //  print("Finally=" + YurishKimmiki[lk].Substring(0, 1) + " " + OxirgiZapisplar[lk, int.Parse(YurishKimmiki[lk].Substring(0, 1))]);
+            }
+            print(uyinchilar[lk] + " " + c.indexClient + " " + YurishKimmiki[lk]);
+
+            string sadad = uyinchilar[lk];
+            NechtasiBorliginiAniqlash(lk);
+            ChiqqanBusaChiqaribYuborish(lk);
+            if (data.Length > 9)
+            {
+                data = data.Substring(0, 10);
+            }
+            if (uyinchilar[lk] != sadad && uyinchilar[lk].Length > 0)
+            {
+                data = data + uyinchilar[lk] + "()";
+                int mkdss2 = YurishKimmiki[lk].Length;
+                for (int by = 0; by < mkdss2; by++)
+                {
+                    if (!uyinchilar[lk].Contains(YurishKimmiki[lk].Substring(by, 1)))
+                    {
+                        YurishKimmiki[lk] = YurishKimmiki[lk].Replace(YurishKimmiki[lk].Substring(by, 1), "");
+                    }
+                }
+            }
+            print(uyinchilar[lk] + " " + c.indexClient + " " + YurishKimmiki[lk]);
+            if (uyinchilar[lk].Length > 0)
+            {
+                if (YurishKimmiki[lk] == "") { YurishKimmiki[lk] = "0"; }
+                if (lkj == 0 && lkj != mkjd1 - 1)
+                {
+                    kijshda3 =  data + YurishKimmiki[lk].Substring(0, 1) + lk.ToString().PadLeft(4, '0');
+                }
+                if (lkj == mkjd1 - 1)
+                {
+
+                    Broadcast(kijshda3+data + YurishKimmiki[lk].Substring(0, 1) + lk.ToString().PadLeft(4, '0'), grop2[lk], lk);
+                }
+                else
+                {
+                    if (lkj != 0)
+                    {
+                        kijshda3 = kijshda3 + data + YurishKimmiki[lk].Substring(0, 1) + lk.ToString().PadLeft(4, '0');
+                    }
+                }
+           }
+            print(uyinchilar[lk] + " " + c.indexClient + " " + YurishKimmiki[lk]);
+            if (uyinchilar[lk].Length < 2)
+            {
+                for (int i = 0; i < ChiqaribYuborish.Count; i++)
+                {
+                    if (ChiqaribYuborish[i].lk1 == lk)
+                    {
+                        if (ChiqaribYuborish[i].Timer.IsRunning)
+                        {
+                            ChiqaribYuborish[i].Timer.Stop();
+                            ChiqaribYuborish[i].Timer.Reset();
+                            print("Boshlandi" + ChiqaribYuborish[i].Timer.ElapsedMilliseconds + " " + i);
+                        }
+                        break;
+                    }
+                }
+                int mmksd = KartaniTarqatish.Count;
+                for (int i = 0; i < mmksd; i++)
+                {
+                    if (KartaniTarqatish[i].lk1 == lk)
+                    {
+                        KartaniTarqatish.RemoveAt(i);
+                        break;
+                    }
+                }
+                Grop2help[lk] = true; KartaTarqatildi[lk] = false; hu3[lk] = 0;
+            }
+        }
+    return "Zo'r";
+    }
+
 }
