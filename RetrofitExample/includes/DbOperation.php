@@ -2438,8 +2438,7 @@ class DbOperation
                 }
                 $db->SetOxirgiZapislar("%%".$Name.str_pad((string)$GroupNumber,4,"0",STR_PAD_LEFT).str_pad((string)$pul,12,"0",STR_PAD_LEFT)."$".
                     str_pad((string)$yol,12,"0",STR_PAD_LEFT) .$Level .str_pad((string)$Money,12,"0",STR_PAD_LEFT)."xb".$Id.(string)$Index,$GroupNumber,"OxirgiZapis".(string)$Index);
-                $oxirgizapis=  "%%".$Name.str_pad((string)$GroupNumber,4,"0",STR_PAD_LEFT).str_pad((string)$pul,12,"0",STR_PAD_LEFT)."$".  str_pad((string)$yol,12,"0",STR_PAD_LEFT)
-                    .$Level .str_pad((string)$Money,12,"0",STR_PAD_LEFT)."xb".$Id.$Index;
+
                 if($keraklide == 1)
                 {
                     $db->SetHuy(strlen($yurishkimmiki)-1,$lk);
