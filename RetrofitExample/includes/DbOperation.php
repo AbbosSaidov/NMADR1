@@ -2424,14 +2424,18 @@ class DbOperation
                     $a =substr($yurishkimmiki,0,1);  $b = $yurishkimmiki;
                     if ($i + 2 == strlen($yurishkimmiki))
                     {
-                        $db->SetYurishKimmiki(substr($b,1,1) .substr($b,1,strlen($b)-1),$GroupNumber);$yurishkimmiki=substr($b,1,1).substr($b,1,strlen($b)-1);
+                        $db->SetYurishKimmiki(substr($b,1,1)
+                            .substr($b,1,strlen($b)-1),$GroupNumber);
+                        $yurishkimmiki=substr($b,1,1).substr($b,1,strlen($b)-1);
                         break;
                     }
                     else
                     {
                         if ($a ==substr($b,$i+1,1))
                         {
-                            $db->SetYurishKimmiki(substr($b,$i+2,1).substr($b,1,strlen($b)-1),$GroupNumber);$yurishkimmiki=substr($b,$i+2,1).substr($b,1,strlen($b)-1);
+                            $db->SetYurishKimmiki(substr($b,$i+2,1)
+                                .substr($b,1,strlen($b)-1),$GroupNumber);
+                            $yurishkimmiki=substr($b,$i+2,1).substr($b,1,strlen($b)-1);
                             break;
                         }
                     }
