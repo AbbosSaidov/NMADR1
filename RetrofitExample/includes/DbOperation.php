@@ -2395,8 +2395,7 @@ class DbOperation
             }
             //return " As".$keraklide;
             if ($nmaligi =="UyinniDavomEtishi"&& strlen($yurishkimmiki)>1&&
-                (string)$Index == substr($yurishkimmiki,0,1) &&
-                $kartaTarqatildi=="true")
+                (string)$Index == substr($yurishkimmiki,0,1) &&$kartaTarqatildi=="true")
             {
                 //qw = data;
                 //Masalan :  1st220000001000$000000000010^
@@ -2460,8 +2459,10 @@ class DbOperation
                     $db->Sethu3($hu3,$lk);
                     // XammaKartalar[lk] = cards[n[0]] + cards[n[1]] + cards[n[2]] + cards[n[3]] + cards[n[4]];
                     //1000000000990000000000010$^200017&
-                    if (!$Pas) {
-                        $data = $Index.str_pad($pul,12,"0",STR_PAD_LEFT) .str_pad($yol,12,"0",STR_PAD_LEFT)."$^" .$keraklide.$mik .$db->GetXAmmakartalar($lk); }
+                    if (!$Pas)
+                    {
+                        $data = $Index.str_pad($pul,12,"0",STR_PAD_LEFT) .str_pad($yol,12,"0",STR_PAD_LEFT)."$^" .$keraklide.$mik .$db->GetXAmmakartalar($lk);
+                    }
                     else
                     {
                         $data = $Index.str_pad($pul,12,"0",STR_PAD_LEFT) .str_pad($yol,12,"0",STR_PAD_LEFT)."$^" .$keraklide. "&".$mik .$db->GetXAmmakartalar($lk);
