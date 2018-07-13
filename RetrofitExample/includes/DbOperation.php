@@ -2445,6 +2445,7 @@ class DbOperation
                 if($keraklide == 1)
                 {
                     $db->SetHuy(strlen($yurishkimmiki)-1,$lk);
+                    $huy=strlen($yurishkimmiki)-1;
                 }
                 if ($keraklide >= $huy)
                 {
@@ -2455,6 +2456,7 @@ class DbOperation
                         $db->SetTikilganPullar($tikilgsnpul,(int)$db->GetTikilganPullar($lk,$tikilgsnpul)+(int)substr($db->GetOxirgiZapisplar($lk,$OxirgiZapis),27,12),$lk);
                     }
                     $db->SetHuy(strlen($yurishkimmiki)-1,$lk);
+                    $huy=strlen($yurishkimmiki)-1;
                     $hu3=$db->Gethu3($lk)+1;
                     $db->Sethu3($hu3,$lk);
                     // XammaKartalar[lk] = cards[n[0]] + cards[n[1]] + cards[n[2]] + cards[n[3]] + cards[n[4]];
