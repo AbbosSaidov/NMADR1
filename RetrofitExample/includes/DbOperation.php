@@ -2479,7 +2479,7 @@ class DbOperation
                         Javobit($lk);
                     }
                     if ($Pas)
-                    {  $yurishkimmiki=str_replace("",(string)$Index,$yurishkimmiki);
+                    {  $yurishkimmiki=str_replace((string)$Index,"",$yurishkimmiki);
                         $db->SetYurishKimmiki($yurishkimmiki,$lk);
                         if ($huy == 2 || strlen($yurishkimmiki) == 3) { $db->Sethu3(0,$lk); Pas($lk); }
                     }
@@ -2500,15 +2500,16 @@ class DbOperation
                                lk.ToString().PadLeft(4, '0') + MainData.Judgement, int.Parse(BotGrouplar[lk][i].IdNumber));
                            }
                        }*/
-                        $yurishkimmiki=str_replace("",(string)$Index,$yurishkimmiki);
+                        $yurishkimmiki=str_replace((string)$Index,"",$yurishkimmiki);
                         $db->SetYurishKimmiki($yurishkimmiki,$lk);
+                        if($yurishkimmiki==""){$yurishkimmiki="0";}
                         $data = $Index.str_pad($pul,12,"0",STR_PAD_LEFT).str_pad($yol,12,"0",STR_PAD_LEFT)."$^" .$keraklide.$mik .$huy."&";
                         $db->SEndMEssageToGroup($lk,$uyinchilar,$data.substr($yurishkimmiki,0,1).str_pad($lk,4,"0",STR_PAD_LEFT));
                         // qushish mumkin
                         if ($huy == 2) {$db->Sethu3(0,$lk); Pas($lk);  }
                     }
                     else
-                    {
+                    {   if($yurishkimmiki==""){$yurishkimmiki="0";}
                         $data = $Index.str_pad($pul,12,"0",STR_PAD_LEFT).str_pad($yol,12,"0",STR_PAD_LEFT)."$^" .$keraklide.$mik .$huy;
                         $db->SEndMEssageToGroup($lk,$uyinchilar,$data.$huy.substr($yurishkimmiki,0,1).str_pad($lk,4,"0",STR_PAD_LEFT));
                     }
