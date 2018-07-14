@@ -2482,9 +2482,10 @@ class DbOperation
                         Javobit($lk);
                     }
                     if ($Pas)
-                    {  $yurishkimmiki=str_replace((string)$Index,"",$yurishkimmiki);
-                        $db->SetYurishKimmiki($yurishkimmiki,$lk);
+                    {
                         if ($huy == 2 || strlen($yurishkimmiki) == 3) { $db->Sethu3(0,$lk); Pas($lk); }
+                        $yurishkimmiki=str_replace((string)$Index,"",$yurishkimmiki);
+                        $db->SetYurishKimmiki($yurishkimmiki,$lk);
                     }
                 }
                 else
