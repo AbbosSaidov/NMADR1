@@ -225,8 +225,8 @@ class DbOperation
         $stmt->execute();
     }
     function GetTimede($GroupNumber,$timede){
-        $stmt2=$this->con->prepare("SELECT $timede FROM timede WHERE $GroupNumber=?");
-        $stmt2->bind_param("i",$ki1);
+        $stmt2=$this->con->prepare("SELECT $timede FROM timede WHERE GroupNumber=?");
+        $stmt2->bind_param("i",$GroupNumber);
         $stmt2->execute();
         $stmt2->bind_result($ki1);
         $stmt2->fetch();
@@ -1074,14 +1074,12 @@ class DbOperation
             $nk="time".(string)$index;
             $db->SetTimede($GroupNumber,$nk,time());
             for($i=0;$i<strlen($uyinchilar);$i++){
-
                 $mk="time".substr($uyinchilar,$i,1);
-                $db->SetError("time=".time()." ".$db->GetTimede($GroupNumber,$mk)." ".(time()-$db->GetTimede($GroupNumber,$mk)),$GroupNumber);
                 if(time()-$db->GetTimede($GroupNumber,$mk)>7 && $db->GetTimede($GroupNumber,$mk)!="" && $db->GetTimede($GroupNumber,$mk)!=null){
 
                      $db->SetTimede($GroupNumber,$mk,"");
                      $db->SetTimede2($GroupNumber,$mk,"");
-                $yurishkimmiki=$db->GetYurishKimmiki($GroupNumber);
+                     $yurishkimmiki=$db->GetYurishKimmiki($GroupNumber);
 
                 $lk = $GroupNumber;
                 if($yurishkimmiki == "")
@@ -1090,7 +1088,7 @@ class DbOperation
                 }
                 else
                 {
-                    $data21 = "Chiqishde" .substr($yurishkimmiki,0,1).str_pad((string)($lk ),4,'0',STR_PAD_LEFT);
+                    $data21 = "Chiqishde" .substr($yurishkimmiki,0,1).str_pad((string)($lk),4,'0',STR_PAD_LEFT);
                 }
                      $db->Chiqishde($data21);
                 }
@@ -2605,6 +2603,7 @@ class DbOperation
                     $db->SetUyinchilar(str_replace($index,"",$uyinchilar),$lk);
                     $uyinchilar=str_replace($index,"",$uyinchilar);
                     $db->SetOxirgiZapislar("",$lk,"OxirgiZapis".$index);
+
                     break;
                 }
             }
@@ -2661,7 +2660,9 @@ class DbOperation
                     {
                         $db->SetHuy(2,$lk);
                     }else{
-                        $db->SetHuy(strlen($yurishkimmiki)-1,$lk);
+                        if($db->GetHuy($lk)>0){
+                            $db->SetHuy(strlen($yurishkimmiki)-1,$lk);
+                        }
                     }
                 }
                 //%%NameByMe0001000000000500$000000000000000000000000001500xb0000000004
