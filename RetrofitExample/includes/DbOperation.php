@@ -1145,9 +1145,11 @@ class DbOperation
         }
         $trwe=true;
         $db= new DbOperation();
+        $db->SetError("1=".$trwe,$GroupNumber);
         for($i=1;$i<10;$i++){
             $rt="OxirgiZapis".(string)$i;
             $te=$db->GetOxirgiZapisplar($GroupNumber,$rt);
+            $db->SetError("usha2=".$trwe." ".$te." ".$Id,$GroupNumber);
             if($te!=""){
                 if($Id==substr($te,59,10)){
                     $trwe=false;
@@ -1157,6 +1159,7 @@ class DbOperation
         }
         //ASs
         // Creategrop2help($GroupNumber,"true");
+        $db->SetError("usha=".$trwe,$GroupNumber);
         $rewrwr="Ushade";
         if($trwe){
             //  $db->Creategrop2help($GroupNumber,"true");
