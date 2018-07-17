@@ -1072,7 +1072,9 @@ class DbOperation
             //       ChiqqanBusaChiqaribYuborish($GroupNumber);
             //%%NameByMe\Ism\0001\gruppa\00000001000$\pul\000000000000\yul\00000\level\000000001000\pul\xb0000000000\id\
             $nk="time".(string)$index;
+
             $db->SetTimede($GroupNumber,$nk,time());
+
             for($i=0;$i<strlen($uyinchilar);$i++){
 
                 $mk="time".substr($uyinchilar,$i,1);
