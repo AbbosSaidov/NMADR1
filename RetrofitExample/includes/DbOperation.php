@@ -1074,24 +1074,23 @@ class DbOperation
             $nk="time".(string)$index;
             $db->SetTimede($GroupNumber,$nk,time());
             for($i=0;$i<strlen($uyinchilar);$i++){
+
                 $mk="time".substr($uyinchilar,$i,1);
-                if(time()-$db->GetTimede($GroupNumber,$mk)>7 && $db->GetTimede($GroupNumber,$mk)!="" && $db->GetTimede($GroupNumber,$mk)!=null){
+
+                if(time()-$db->GetTimede($GroupNumber,$mk)>7){
 
                      $db->SetTimede($GroupNumber,$mk,"");
-                     $db->SetTimede2($GroupNumber,$mk,"");
-                     $yurishkimmiki=$db->GetYurishKimmiki($GroupNumber);
 
-                $lk = $GroupNumber;
-                if($yurishkimmiki == "")
-                {
-                    $data21 = "Chiqishde"."0" .str_pad((string)($lk ),4,'0',STR_PAD_LEFT);
-                }
-                else
-                {
-                    $data21 = "Chiqishde" .substr($yurishkimmiki,0,1).str_pad((string)($lk),4,'0',STR_PAD_LEFT);
-                }
+                     $db->SetTimede2($GroupNumber,$mk,"");
+
+                     $lk = $GroupNumber;
+
+                     $data21 = "Chiqishde" .substr($uyinchilar,0,1).str_pad((string)($lk),4,'0',STR_PAD_LEFT);
+
                      $db->Chiqishde($data21);
+
                 }
+
             }
 
 
@@ -1301,7 +1300,7 @@ class DbOperation
     }
     //Davom etishi uyinni
     function UyinniDAvomEttir($data){
-        function YurishAsosiy($lk, $minSatck,$soni){
+        function YurishAsosiy($lk,$minSatck,$soni){
             $koo=$lk;
             $db=new DbOperation();
             $koo=$db->GetKartatarqatildi($koo);
@@ -2569,11 +2568,13 @@ class DbOperation
         $mkjd1 = strlen($data) / 14;
         $kijshda2 = $data;
         $kijshda3 = "";
+
         for ($lkj = 0; $lkj <$mkjd1; $lkj++)
         {
 
             $data = substr($kijshda2,$lkj*14,14);
             $lk = (int)(substr($data,10,4));
+            $db->SetError("Chiq",$lk);
             /*
             if (GruppadagiAktivOdamlarSoni[lk] > 0)
             {
