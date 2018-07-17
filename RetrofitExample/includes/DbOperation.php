@@ -203,7 +203,7 @@ class DbOperation
     }
     function GetOxirgiZapisplar($GroupNumber ,$OxirgiZapis){
         $stmt2=$this->con->prepare("SELECT $OxirgiZapis FROM oxirgizapis WHERE GroupNumber=?");
-        $stmt2->bind_param("s",$GroupNumber);
+        $stmt2->bind_param("i",$GroupNumber);
         $stmt2->execute();
         $stmt2->bind_result($GroupNumber);
         $stmt2->fetch();
@@ -1145,21 +1145,8 @@ class DbOperation
         }
         $trwe=true;
         $db= new DbOperation();
-        $db->SetError("1=".$trwe,$GroupNumber);
-        for($i=1;$i<10;$i++){
-            $rt="OxirgiZapis".(string)$i;
-            $te=$db->GetOxirgiZapisplar($GroupNumber,$rt);
-            $db->SetError("usha2=".$trwe." ".$te." ".$Id,$GroupNumber);
-            if($te!=""){
-                if($Id==substr($te,59,10)){
-                    $trwe=false;
-                    break;
-                }
-            }
-        }
         //ASs
         // Creategrop2help($GroupNumber,"true");
-        $db->SetError("usha=".$trwe,$GroupNumber);
         $rewrwr="Ushade";
         if($trwe){
             //  $db->Creategrop2help($GroupNumber,"true");
@@ -1186,38 +1173,38 @@ class DbOperation
                         //  print("1");
                         switch ((int)$pul)
                         {
-                            case 100:if ($db->Tekshir($i) < 5) { $GroupNumber = $i; $mvc = 1; }  ; break;
-                            case 500: if ($db->Tekshir(100 + $i) < 5) { $GroupNumber = 100 + $i; $mvc = 1; } break;
+                            case 100:           if ($db->Tekshir($i) < 5) { $GroupNumber = $i; $mvc = 1; } ; break;
+                            case 500:  if ($db->Tekshir(100 + $i) < 5) { $GroupNumber = 100 + $i; $mvc = 1; } break;
                             case 2000: if ($db->Tekshir(200 + $i) < 5) { $GroupNumber = 200 + $i; $mvc = 1; }; break;
                             case 10000: if ($db->Tekshir(300 + $i) < 5) { $GroupNumber = 300 + $i; $mvc = 1; }; break;
-                            case 40000: if ($db->Tekshir(400 + $i) < 5) { $GroupNumber = 400 + $i; $mvc = 1; }; break;
-                            case 200000: if ($db->Tekshir(500 + $i) < 5) { $GroupNumber = 500 + $i; $mvc = 1; }; break;
-                            case 1000000: if ($db->Tekshir(600 + $i) < 5) { $GroupNumber = 600 + $i; $mvc = 1; }; break;
-                            case 10000000: if ($db->Tekshir(700 + $i) < 5) { $GroupNumber = 700 +$i; $mvc = 1; }; break;
-                            case 100000000: if ($db->Tekshir(800 + $i) < 5) { $GroupNumber = 800 + $i; $mvc = 1; }; break;
-                            case 200000000: if ($db->Tekshir(900 + $i) < 5) { $GroupNumber = 900 +$i; $mvc = 1; }; break;
-                            case 400000000: if ($db->Tekshir(1000 + $i) < 5) { $GroupNumber = 1000 + $i; $mvc = 1; }; break;
-                            case 1000000000: if ($db->Tekshir(1100 + $i) < 5) { $GroupNumber = 1100 + $i; $mvc = 1; }; break;
-                            case 2000000000: if ($db->Tekshir(1200 + $i) < 5) { $GroupNumber = 1200 + $i; $mvc = 1; }; break;
+                            case 40000:  if ($db->Tekshir(400 + $i) < 5) { $GroupNumber = 400 + $i; $mvc = 1; }; break;
+                            case 200000:  if ($db->Tekshir(500 + $i) < 5) { $GroupNumber = 500 + $i; $mvc = 1; }; break;
+                            case 1000000:  if ($db->Tekshir(600 + $i) < 5) { $GroupNumber = 600 + $i; $mvc = 1; }; break;
+                            case 10000000:   if ($db->Tekshir(700 + $i) < 5) { $GroupNumber = 700 +$i; $mvc = 1; }; break;
+                            case 100000000:  if ($db->Tekshir(800 + $i) < 5) { $GroupNumber = 800 + $i; $mvc = 1; }; break;
+                            case 200000000:    if ($db->Tekshir(900 + $i) < 5) { $GroupNumber = 900 +$i; $mvc = 1; }; break;
+                            case 400000000:  if ($db->Tekshir(1000 + $i) < 5) { $GroupNumber = 1000 + $i; $mvc = 1; }; break;
+                            case 1000000000:  if ($db->Tekshir(1100 + $i) < 5) { $GroupNumber = 1100 + $i; $mvc = 1; }; break;
+                            case 2000000000:   if ($db->Tekshir(1200 + $i) < 5) { $GroupNumber = 1200 + $i; $mvc = 1; }; break;
                         }
                         //  print("41");
                         if ($mvc == 1) {  break; }
                         //  print("6");
                         switch ((int)$pul)
                         {
-                            case 100: if ($db->Tekshir($i + 1) < 9) { $GroupNumber =  $i + 1; $mvc = 1; }; break;
+                            case 100:           if ($db->Tekshir($i + 1) < 9) { $GroupNumber =  $i + 1; $mvc = 1; }; break;
                             case 500: if ($db->Tekshir(100 + $i + 1) < 9) { $GroupNumber = 100 + $i + 1; $mvc = 1; }; break;
                             case 2000: if ($db->Tekshir(200 + $i + 1) < 9) { $GroupNumber = 200 + $i + 1; $mvc = 1; }; break;
                             case 10000: if ($db->Tekshir(300 + $i + 1) < 9) { $GroupNumber = 300 + $i + 1; $mvc = 1; }; break;
-                            case 40000: if ($db->Tekshir(400 + $i + 1) < 9) { $GroupNumber = 400 + $i + 1; $mvc = 1; }; break;
-                            case 200000: if ($db->Tekshir(500 + $i + 1) < 9) { $GroupNumber = 500 + $i + 1; $mvc = 1; }; break;
-                            case 1000000: if ($db->Tekshir(600 + $i + 1) < 9) { $GroupNumber = 600 + $i + 1; $mvc = 1; }; break;
-                            case 10000000: if ($db->Tekshir(700 + $i + 1) < 9) { $GroupNumber = 700 + $i + 1; $mvc = 1; }; break;
-                            case 100000000: if ($db->Tekshir(800 + $i + 1) < 9) { $GroupNumber = 800 + $i + 1; $mvc = 1; }; break;
-                            case 200000000: if ($db->Tekshir(900 + $i + 1) < 9) { $GroupNumber = 9000 + $i + 1; $mvc = 1; }; break;
-                            case 400000000: if ($db->Tekshir(1000 + $i + 1) < 9) { $GroupNumber = 1000 + $i + 1; $mvc = 1; }; break;
-                            case 1000000000: if ($db->Tekshir(1100 + $i + 1) < 9) { $GroupNumber = 1100 + $i + 1; $mvc = 1; }; break;
-                            case 2000000000: if ($db->Tekshir(1200 + $i + 1) < 9) { $GroupNumber = 1200 + $i + 1; $mvc = 1; }; break;
+                            case 40000:  if ($db->Tekshir(400 + $i + 1) < 9) { $GroupNumber = 400 + $i + 1; $mvc = 1; }; break;
+                            case 200000:  if ($db->Tekshir(500 + $i + 1) < 9) { $GroupNumber = 500 + $i + 1; $mvc = 1; }; break;
+                            case 1000000:  if ($db->Tekshir(600 + $i + 1) < 9) { $GroupNumber = 600 + $i + 1; $mvc = 1; }; break;
+                            case 10000000:  if ($db->Tekshir(700 + $i + 1) < 9) { $GroupNumber = 700 + $i + 1; $mvc = 1; }; break;
+                            case 100000000:  if ($db->Tekshir(800 + $i + 1) < 9) { $GroupNumber = 800 + $i + 1; $mvc = 1; }; break;
+                            case 200000000:  if ($db->Tekshir(900 + $i + 1) < 9) { $GroupNumber = 9000 + $i + 1; $mvc = 1; }; break;
+                            case 400000000:  if ($db->Tekshir(1000 + $i + 1) < 9) { $GroupNumber = 1000 + $i + 1; $mvc = 1; }; break;
+                            case 1000000000:  if ($db->Tekshir(1100 + $i + 1) < 9) { $GroupNumber = 1100 + $i + 1; $mvc = 1; }; break;
+                            case 2000000000:   if ($db->Tekshir(1200 + $i + 1) < 9) { $GroupNumber = 1200 + $i + 1; $mvc = 1; }; break;
                         }
                         if ($mvc == 1) {  break; }
                     }
@@ -1225,51 +1212,65 @@ class DbOperation
             }
             $db->Creategrop2help($GroupNumber,"true");
             $db->SetHowmanyPlayers($db->GetHowmanyPlayers($GroupNumber)+1,$GroupNumber);
-            if ($GroupNumber % 2 == 0)
-            {
-                if ($db->Tekshir($GroupNumber) > 4)
-                {
-                    if ($BotOrClient != "false")
-                    {
-                        return"OdamtudaUzi";
-                    }
-                }
-                else
-                {
-                    if ($GroupNumber > 2100)
-                    {
-                        if ($db->Getgrop2help($GroupNumber)=="true")
-                        {
-                            $rewrwr=uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient,$Id,$Level,$Money,$Name,$pul,$yol);
-                        }
-                    }
-                    else
-                    {
-                        $rewrwr=uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient,$Id,$Level,$Money,$Name,$pul,$yol);
+
+            for($i=1;$i<10;$i++){
+                $rt="OxirgiZapis".(string)$i;
+                $te=$db->GetOxirgiZapisplar($GroupNumber,$rt);
+                if($te!=""){
+                    if($Id==substr($te,59,10)){
+                        $trwe=false;
+                        break;
                     }
                 }
             }
-            else
-            {
-                if ($db->Tekshir($GroupNumber) > 8)
+
+            if($trwe){
+                if ($GroupNumber % 2 == 0)
                 {
-                    if ($BotOrClient != "false")
+                    if ($db->Tekshir($GroupNumber) > 4)
                     {
-                        return"OdamtudaUzi";
-                    }
-                }
-                else
-                {
-                    if ($GroupNumber > 2100)
-                    {
-                        if ($db->Getgrop2help($GroupNumber)=="true")
+                        if ($BotOrClient != "false")
                         {
-                            $rewrwr=uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient,$Id,$Level,$Money,$Name,$pul,$yol);
+                            return"OdamtudaUzi";
                         }
                     }
                     else
                     {
-                        $rewrwr=uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient,$Id,$Level,$Money,$Name,$pul,$yol);
+                        if ($GroupNumber > 2100)
+                        {
+                            if ($db->Getgrop2help($GroupNumber)=="true")
+                            {
+                                $rewrwr=uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient,$Id,$Level,$Money,$Name,$pul,$yol);
+                            }
+                        }
+                        else
+                        {
+                            $rewrwr=uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient,$Id,$Level,$Money,$Name,$pul,$yol);
+                        }
+                    }
+                }
+                else
+                {
+                    if ($db->Tekshir($GroupNumber) > 8)
+                    {
+                        if ($BotOrClient != "false")
+                        {
+                            return"OdamtudaUzi";
+                        }
+                    }
+                    else
+                    {
+                        if ($GroupNumber > 2100)
+                        {
+                            if ($db->Getgrop2help($GroupNumber)=="true")
+                            {
+                                $rewrwr=uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient,$Id,$Level,$Money,$Name,$pul,$yol);
+                            }
+                        }
+                        else
+                        {
+                            $rewrwr=uyinchiniGruppgaQushish($data,$GroupNumber,$BotOrClient,$Id,$Level,$Money,$Name,$pul,$yol);
+                        }
                     }
                 }
             }
