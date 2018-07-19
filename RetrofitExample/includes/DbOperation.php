@@ -1080,6 +1080,7 @@ class DbOperation
                 $mk="time".substr($uyinchilar,$i,1);
 
                 if(time()-$db->GetTimede($GroupNumber,$mk)>7){
+                    $db->DeleteMessages((int)substr($uyinchilar,$i,1),$GroupNumber);
 
                      $db->SetTimede($GroupNumber,$mk,"");
 
@@ -1087,14 +1088,12 @@ class DbOperation
 
                      $lk = $GroupNumber;
 
-                     $data21 = "Chiqishde" .substr($uyinchilar,0,1).str_pad((string)($lk),4,'0',STR_PAD_LEFT);
+                     $data21 = "Chiqishde" .substr($uyinchilar,$i,1).str_pad((string)($lk),4,'0',STR_PAD_LEFT);
 
                      $db->Chiqishde($data21);
 
                 }
-
             }
-
 
 
             $rtasd="OxirgiZapis".(string)$index;
@@ -1285,6 +1284,8 @@ class DbOperation
     //messajji olish ucnde
     function getMessages($userindex,$userGrop)
     {   $data="";
+        $db= new DbOperation();
+        $db->SetTimede($userGrop,"time".(string)$userindex,time());
         $stmt = $this->con->prepare("SELECT message FROM messages WHERE gropnumber = ? AND indexq=?");
         $stmt->bind_param("ii", $userGrop,$userindex);
         $stmt->execute();
@@ -1295,10 +1296,13 @@ class DbOperation
             $temp['data'] = $data;
             array_push($messages, $temp);
         }
+        $db->DeleteMessages($userindex,$userGrop);
+        return $messages;
+    }
+    function DeleteMessages($userindex,$userGrop){
         $stmt = $this->con->prepare("DELETE FROM messages WHERE gropnumber = ? AND indexq=?");
         $stmt->bind_param("ii", $userGrop,$userindex);
         $stmt->execute();
-        return $messages;
     }
     //Davom etishi uyinni
     function UyinniDAvomEttir($data){
@@ -2668,7 +2672,7 @@ class DbOperation
                         $db->SetHuy(2,$lk);
                     }else{
                         if($db->GetHuy($lk)>0){
-                            $db->SetHuy(strlen($yurishkimmiki)-1,$lk);
+                            $db->SetHuy($mkdss-1,$lk);
                         }
                     }
                 }
@@ -2703,8 +2707,8 @@ class DbOperation
                 }*/
             if (strlen($uyinchilar) > 0)
             {
-                if ($yurishkimmiki == "") { $yurishkimmiki = "0"; }
-                if ($lkj == 0 && $lkj != $mkjd1 - 1)
+                if($yurishkimmiki == ""){ $yurishkimmiki = "0"; }
+                if($lkj == 0 && $lkj != $mkjd1 - 1)
                 {
                     $kijshda3 =  $data .substr($yurishkimmiki,0,1) .str_pad($lk,4,"0",STR_PAD_LEFT);
                 }
