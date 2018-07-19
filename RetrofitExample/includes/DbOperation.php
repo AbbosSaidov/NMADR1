@@ -451,6 +451,31 @@ class DbOperation
         }
         return true;
     }
+    //Chekifonline
+    function ChekIfOnline($userGrop){
+        $db=new DbOperation();
+        $GroupNumber=$userGrop;
+        $uyinchilar=$db->Getuyinchilar($userGrop);
+        for($i=0;$i<strlen($uyinchilar);$i++){
+
+            $mk="time".substr($uyinchilar,$i,1);
+
+            if(time()-$db->GetTimede($GroupNumber,$mk)>7){
+                $db->DeleteMessages((int)substr($uyinchilar,$i,1),$GroupNumber);
+
+                $db->SetTimede($GroupNumber,$mk,"");
+
+                $db->SetTimede2($GroupNumber,$mk,"");
+
+                $lk = $GroupNumber;
+
+                $data21 = "Chiqishde" .substr($uyinchilar,$i,1).str_pad((string)($lk),4,'0',STR_PAD_LEFT);
+
+                $db->Chiqishde($data21);
+
+            }
+        }
+    }
     //methoda uyinga kirish unchun
     function UyingaKirish($data){
         function uyinchilarade($son)
@@ -1062,25 +1087,8 @@ class DbOperation
 
             $db->SetTimede($GroupNumber,$nk,time());
 
-            for($i=0;$i<strlen($uyinchilar);$i++){
+            $db->ChekIfOnline($GroupNumber);
 
-                $mk="time".substr($uyinchilar,$i,1);
-
-                if(time()-$db->GetTimede($GroupNumber,$mk)>7){
-                    $db->DeleteMessages((int)substr($uyinchilar,$i,1),$GroupNumber);
-
-                     $db->SetTimede($GroupNumber,$mk,"");
-
-                     $db->SetTimede2($GroupNumber,$mk,"");
-
-                     $lk = $GroupNumber;
-
-                     $data21 = "Chiqishde" .substr($uyinchilar,$i,1).str_pad((string)($lk),4,'0',STR_PAD_LEFT);
-
-                     $db->Chiqishde($data21);
-
-                }
-            }
 
 
             $rtasd="OxirgiZapis".(string)$index;
@@ -1198,6 +1206,7 @@ class DbOperation
                 }
             }
             $db->Creategrop2help($GroupNumber,"true");
+            $db->ChekIfOnline($GroupNumber);
             $db->SetHowmanyPlayers($db->GetHowmanyPlayers($GroupNumber)+1,$GroupNumber);
 
             for($i=1;$i<10;$i++){
