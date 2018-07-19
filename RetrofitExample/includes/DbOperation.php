@@ -239,7 +239,7 @@ class DbOperation
     }
     //Method to create a new user
 
-    //YrishAsosiy
+    //YurishAsosiy
     function YurishAsosiy($lk, $minSatck,$soni ){
         $koo=$lk;
         $db=new DbOperation();
