@@ -586,6 +586,7 @@ class DbOperation
             $minSatck = TurnLk($lk);
             $db=new DbOperation();
             $rtwq=str_replace(substr($data.$index.$ass2,69,1),"",$db->Getuyinchilar($lk));
+            $db->SetError("Usda=".$rtwq,$lk);
             $db->SEndMEssageToGroup($lk,$rtwq ,$data.$index.$ass2);
             //Gruppalaga ajratiganda
             // NechtasiBorliginiAniqlash(lk);
@@ -1290,12 +1291,15 @@ class DbOperation
         while ($stmt->fetch()) {
             $temp = array();
             $temp['data'] = $data;
+            $db=new DbOperation();
+            $db->SetError($data." index=".$userindex,$userGrop);
             array_push($messages, $temp);
         }
         $db->DeleteMessages($userindex,$userGrop);
         return $messages;
     }
     function DeleteMessages($userindex,$userGrop){
+
         $stmt = $this->con->prepare("DELETE FROM messages WHERE gropnumber = ? AND indexq=?");
         $stmt->bind_param("ii", $userGrop,$userindex);
         $stmt->execute();
@@ -2182,7 +2186,7 @@ class DbOperation
                             substr($uyinchilar,$i,1)))-39),$lk,"OxirgiZapis".substr($uyinchilar,$i,1)
                 );
             }
-            $db->SetError("As-".$kmn,$lk);
+         //   $db->SetError("As-".$kmn,$lk);
             if ($kmn != "") { $db->SEndMEssageToGroup($lk,$uyinchilar,$kmn); }
             sleep(6);
             $minSatck = TurnLk($lk);
@@ -2394,7 +2398,7 @@ class DbOperation
 
             $data = substr($kijshda2,$lkj*14,14);
             $lk = (int)(substr($data,10,4));
-            $db->SetError("Chiq",$lk);
+          //  $db->SetError("Chiq",$lk);
             /*
             if (GruppadagiAktivOdamlarSoni[lk] > 0)
             {
@@ -2432,10 +2436,10 @@ class DbOperation
                     break;
                 }
             }
-            $db->SetError("As ".$uyinchilar,$lk);
+          //  $db->SetError("As ".$uyinchilar,$lk);
             if ($mkdss-1 == 0)
             {
-                ObnovitQilish($lk);
+            //    ObnovitQilish($lk);
             }
             if (strpos($yurishkimmiki,$index)!==false)
             {
