@@ -459,8 +459,10 @@ class DbOperation
         for($i=0;$i<strlen($uyinchilar);$i++){
 
             $mk="time".substr($uyinchilar,$i,1);
+            $mk2="OxirgiZapis".substr($uyinchilar,$i,1);
+             $erw=$db->GetTimede($GroupNumber,$mk);
+            if(time()-(int)substr($erw,10,strlen($erw)-10)>7 &&substr($db->GetOxirgiZapisplar($GroupNumber,$mk2),59,10) == substr($erw,0,10)){
 
-            if(time()-$db->GetTimede($GroupNumber,$mk)>7){
                 $db->DeleteMessages((int)substr($uyinchilar,$i,1),$GroupNumber);
 
                 $db->SetTimede($GroupNumber,$mk,"");
@@ -586,7 +588,7 @@ class DbOperation
             $minSatck = TurnLk($lk);
             $db=new DbOperation();
             $rtwq=str_replace(substr($data.$index.$ass2,69,1),"",$db->Getuyinchilar($lk));
-            $db->SetError("Usda=".$rtwq,$lk);
+            $db->SetError("Usha=".$rtwq,$lk);
             $db->SEndMEssageToGroup($lk,$rtwq ,$data.$index.$ass2);
             //Gruppalaga ajratiganda
             // NechtasiBorliginiAniqlash(lk);
