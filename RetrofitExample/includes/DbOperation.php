@@ -682,10 +682,10 @@ class DbOperation
             $ttt4 = "";
             for($i=1;$i<10;$i++){
                 $jie="OxirgiZapis".(string)$i;
-
                 if((int)substr($db->GetOxirgiZapisplar($lk,$jie),14,12)+(int)substr($db->GetOxirgiZapisplar($lk,$jie),27,12)>=$minSatck){
                     $dssad = $dssad + 1;
                     if(strpos($db->Getuyinchilar($lk), (string)$i) !== false){ $ttt4 = $ttt4.(string)$i;}
+
                 }
             }
 
@@ -1026,7 +1026,6 @@ class DbOperation
             }
             return $data.$index.$ass2 ;
         }
-
         function TurnLk($lk)
         {
             $m = 0;
