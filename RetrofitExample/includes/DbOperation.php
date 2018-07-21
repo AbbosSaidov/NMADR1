@@ -461,7 +461,7 @@ class DbOperation
             $mk="time".substr($uyinchilar,$i,1);
             $mk2="OxirgiZapis".substr($uyinchilar,$i,1);
              $erw=$db->GetTimede($GroupNumber,$mk);
-            if(time()-(int)substr($erw,10,strlen($erw)-10)>7 &&substr($db->GetOxirgiZapisplar($GroupNumber,$mk2),59,10) == substr($erw,0,10)){
+            if(time()-(int)substr($erw,10,strlen($erw)-10)>7 && substr($db->GetOxirgiZapisplar($GroupNumber,$mk2),59,10) == substr($erw,0,10)){
 
                 $db->DeleteMessages((int)substr($uyinchilar,$i,1),$GroupNumber);
 
@@ -1088,7 +1088,7 @@ class DbOperation
             //%%NameByMe\Ism\0001\gruppa\00000001000$\pul\000000000000\yul\00000\level\000000001000\pul\xb0000000000\id\
             $nk="time".(string)$index;
 
-            $db->SetTimede($GroupNumber,$nk,time());
+            $db->SetTimede($GroupNumber,$nk,str_pad((string)$Id,10,"0",STR_PAD_LEFT).time());
 
             $db->ChekIfOnline($GroupNumber);
 
@@ -1284,13 +1284,15 @@ class DbOperation
     function getMessages($userindex,$userGrop)
     {   $data="";
         $db= new DbOperation();
-        $db->SetTimede($userGrop,"time".(string)$userindex,time());
+        $mk="time".(string)$userindex;
+        $erw=$db->GetTimede($userGrop,$mk);
+        $db->SetTimede($userGrop,"time".(string)$userindex,substr($erw,0,10).time());
         $stmt = $this->con->prepare("SELECT message FROM messages WHERE gropnumber = ? AND indexq=?");
         $stmt->bind_param("ii", $userGrop,$userindex);
         $stmt->execute();
         $stmt->bind_result($data);
         $messages = array();
-        while ($stmt->fetch()) {
+        while($stmt->fetch()){
             $temp = array();
             $temp['data'] = $data;
             $db=new DbOperation();
