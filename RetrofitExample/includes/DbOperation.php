@@ -681,12 +681,12 @@ class DbOperation
             $dssad = 0;
             $ttt4 = "";
             $uyinchilar=$db->Getuyinchilar($lk);
-            for($i=1;$i<10;$i++){
+
+            for ($i=1;$i<10;$i++){
                 $jie="OxirgiZapis".(string)$i;
                 if((int)substr($db->GetOxirgiZapisplar($lk,$jie),14,12)+(int)substr($db->GetOxirgiZapisplar($lk,$jie),27,12)>=$minSatck){
                     $dssad = $dssad + 1;
-                    if(strpos($uyinchilar, (string)$i) !== false){ $ttt4 = $ttt4.(string)$i;}
-
+                    if(strpos($uyinchilar,(string)$i)!== false){$ttt4 = $ttt4.(string)$i;}
                 }
             }
 
