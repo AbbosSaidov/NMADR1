@@ -680,19 +680,20 @@ class DbOperation
           }*/
             $dssad = 0;
             $ttt4 = "";
+            $uyinchilar=$db->Getuyinchilar($lk);
             for($i=1;$i<10;$i++){
                 $jie="OxirgiZapis".(string)$i;
                 if((int)substr($db->GetOxirgiZapisplar($lk,$jie),14,12)+(int)substr($db->GetOxirgiZapisplar($lk,$jie),27,12)>=$minSatck){
                     $dssad = $dssad + 1;
-                    if(strpos($db->Getuyinchilar($lk), (string)$i) !== false){ $ttt4 = $ttt4.(string)$i;}
+                    if(strpos($uyinchilar, (string)$i) !== false){ $ttt4 = $ttt4.(string)$i;}
 
                 }
             }
 
             $ttt5 = "";
-            $asd=$db->Getuyinchilar($lk);
+
             for($i=0;$i<9;$i++){
-                if(strpos($asd,(string)($i+1))!==false&&
+                if(strpos($uyinchilar,(string)($i+1))!==false&&
                     strpos($ttt4,(string)($i+1))!==false){
                     $ttt5=$ttt5.(string)($i+1);
                 }
@@ -701,8 +702,7 @@ class DbOperation
             $db->SetHuy($dssad,$lk);
             $koo=$lk;
             $koo=$db->GetKimboshlashi($koo);
-            $koo2=$lk;
-            $koo2=$db->GetYurishKimmiki($koo2);
+            $koo2=$ttt5;
             for ($i = 1; $i < 10; $i++)
             {
                 $gd = (int)$koo + $i;
@@ -714,12 +714,13 @@ class DbOperation
                 //   break;
                 if (strpos($koo2, (string)$gd) !== false)
                 {
-                    $rew=(string)$gd.(string)$koo2;
-                    $db->SetYurishKimmiki($rew,$lk);
+                    $koo2=(string)$gd.(string)$koo2;
+
                     $db->SetKimboshlashi($gd,$lk);
                     break;
                 }
             }
+            $db->SetYurishKimmiki($koo2,$lk);
             /*        if (BotGrouplar[lk].Count + grop2[lk].Count != grop22[lk].Count)
                  /* {
                        for ($i = 0; $i < grop2[lk].Count; i++)
@@ -748,24 +749,18 @@ class DbOperation
                 //Gruppalaga ajratiganda
                 $db->SetXAmmakartalar($cards[$n[0][0]].$cards[$n[0][1]].$cards[$n[0][2]].$cards[$n[0][3]].$cards[$n[0][4]],$lk);
                 // if (trt != -1) { ChiqaribYuborish[trt].Timer.Start(); }
-                $asd2=$db->GetYurishKimmiki($lk);
-                try
-                {
+                $yurishkimmiki=$db->GetYurishKimmiki($lk);
+
                     for ($i = 0; $i < 9; $i++)
                     {
-                        $db->SetUyinchilar(substr($asd,1,1).substr($asd,2,strlen($asd)-2).substr($asd,0,1),$lk);
-                        $asd=substr($asd,1,1).substr($asd,2,strlen($asd-2)).substr($asd,0,1);
-                        if ( strpos($asd2, substr($asd,1,1)) !== false&& strpos($asd2, substr($asd,0,1)) !== false)
+                        $db->SetUyinchilar(substr($uyinchilar,1,1).substr($uyinchilar,2,strlen($uyinchilar)-2).substr($uyinchilar,0,1),$lk);
+                        $uyinchilar=substr($uyinchilar,1,1).substr($uyinchilar,2,strlen($uyinchilar-2)).substr($uyinchilar,0,1);
+                        if (strpos($yurishkimmiki, substr($uyinchilar,1,1))!== false&& strpos($yurishkimmiki, substr($uyinchilar,0,1))!== false)
                         {
                             break;
                         }
                     }
-                }
-                catch (Exception $e)
-                {
-                    print($e->getMessage());
-                }
-                $yurishkimmiki=$db->GetYurishKimmiki($lk);
+
                 $totti = strlen($yurishkimmiki)-1;
                 $db->SetHuy($totti,$lk);
                 for ($m = 0; $m < $totti; $m++)
@@ -789,17 +784,10 @@ class DbOperation
            }*/
                     if ($tott2==-1)
                     {
-                        try
-                        {
                             $message=$cards[$n[1][$m * 2]].$cards[$n[1][$m * 2 + 1]].substr($yurishkimmiki,0,1).
                                 str_pad((string)($minSatck / 2),12,'0',STR_PAD_LEFT)."!". str_pad((string)($minSatck ),12,'0',STR_PAD_LEFT).
-                                $asd .substr($yurishkimmiki,$m+1,1) .str_pad((string)($lk),4,'0',STR_PAD_LEFT);
-                            $db->SEndMEssage($lk,substr($asd,$m,1),$message);
-                        }
-                        catch ( ErrorException $e)
-                        {
-                            print("ee uyinchi chiqibketti".$e->getMessage());
-                        }
+                                $uyinchilar .substr($yurishkimmiki,$m+1,1) .str_pad((string)($lk),4,'0',STR_PAD_LEFT);
+                            $db->SEndMEssage($lk,substr($uyinchilar,$m,1),$message);
                     }
                     else
                     {
