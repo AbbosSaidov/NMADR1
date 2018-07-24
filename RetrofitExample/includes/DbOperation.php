@@ -650,7 +650,7 @@ class DbOperation
         $koo=$lk;
         $db=new DbOperation();
         $koo=$db->GetKartatarqatildi($koo);
-        if ($koo== "false")
+        if($koo== "false")
         {
             if ($lk > 2100)
             {
@@ -698,6 +698,7 @@ class DbOperation
                     $ttt5=$ttt5.(string)($i+1);
                 }
             }
+
             $db->SetYurishKimmiki($ttt5,$lk);
             $db->SetHuy($dssad,$lk);
             $koo=$lk;
