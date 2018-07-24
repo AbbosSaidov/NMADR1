@@ -1076,7 +1076,7 @@ class DbOperation
             //%%NameByMe\Ism\0001\gruppa\00000001000$\pul\000000000000\yul\00000\level\000000001000\pul\xb0000000000\id\
             $nk="time".(string)$index;
 
-            $db->SetError("Chaeck=1=".$index,$GroupNumber);
+            $db->SetError("Chaeck=1=".$index." ",$GroupNumber);
 
             $db->SetTimede($GroupNumber,$nk,str_pad((string)$Id,10,"0",STR_PAD_LEFT).time());
 
