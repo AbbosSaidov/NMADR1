@@ -644,9 +644,8 @@ class DbOperation
         return $cards;
     }
     //Method to create a new user
-
     //YurishAsosiy
-    function YurishAsosiy($lk, $minSatck,$soni ){
+    function YurishAsosiy($lk,$minSatck,$soni){
         $koo=$lk;
         $db=new DbOperation();
         $koo=$db->GetKartatarqatildi($koo);
@@ -1077,14 +1076,21 @@ class DbOperation
             //%%NameByMe\Ism\0001\gruppa\00000001000$\pul\000000000000\yul\00000\level\000000001000\pul\xb0000000000\id\
             $nk="time".(string)$index;
 
+            $db->SetError("Chaeck=1=".$index,$GroupNumber);
+
             $db->SetTimede($GroupNumber,$nk,str_pad((string)$Id,10,"0",STR_PAD_LEFT).time());
+
+            $db->SetError("Chaeck=2=".$index,$GroupNumber);
 
             $db->ChekIfOnline($GroupNumber);
 
+            $db->SetError("Chaeck=3=".$index,$GroupNumber);
 
 
             $rtasd="OxirgiZapis".(string)$index;
+
             $db->SetOxirgiZapislar($data.$index,$GroupNumber,$rtasd);
+            $db->SetError("Chaeck=4=".$index,$GroupNumber);
 
             $minStavka = TurnLk($GroupNumber);
             $gruppdagaiOdamlariSoni=0;
