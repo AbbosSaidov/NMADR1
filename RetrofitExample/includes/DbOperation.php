@@ -875,60 +875,61 @@ class DbOperation
     //methoda uyinga kirish unchun
     function UyingaKirish($data){
         function uyinchilarade($son)
-        {
+        {$ui="";
             $db=new DbOperation();
             $st=$db->Getuyinchilar($son);
             if (strpos($st, '1') === false)
             {
                 $db->SetUyinchilar($st."1",$son);
+                $ui=$st."1";
             }
             else
             {
                 if (strpos($st, '4') === false)
                 {
-                    $db->SetUyinchilar($st."4",$son);
+                    $db->SetUyinchilar($st."4",$son); $ui=$st."4";
                 }
                 else
                 {
                     if (strpos($st, '2') === false)
                     {
-                        $db->SetUyinchilar($st."2",$son);
+                        $db->SetUyinchilar($st."2",$son); $ui=$st."2";
                     }
                     else
                     {
                         if (strpos($st, '6') === false)
                         {
-                            $db->SetUyinchilar($st."6",$son);
+                            $db->SetUyinchilar($st."6",$son); $ui=$st."6";
                         }
                         else
                         {
                             if (strpos($st, '3') === false)
                             {
-                                $db->SetUyinchilar($st."3",$son);
+                                $db->SetUyinchilar($st."3",$son); $ui=$st."3";
                             }
                             else
                             {
                                 if (strpos($st, '5') === false)
                                 {
-                                    $db->SetUyinchilar($st."5",$son);
+                                    $db->SetUyinchilar($st."5",$son); $ui=$st."5";
                                 }
                                 else
                                 {
                                     if (strpos($st, '9') === false)
                                     {
-                                        $db->SetUyinchilar($st."9",$son);
+                                        $db->SetUyinchilar($st."9",$son); $ui=$st."9";
                                     }
                                     else
                                     {
                                         if (strpos($st, '8') === false)
                                         {
-                                            $db->SetUyinchilar($st."8",$son);
+                                            $db->SetUyinchilar($st."8",$son); $ui=$st."8";
                                         }
                                         else
                                         {
                                             if (strpos($st, '7') === false)
                                             {
-                                                $db->SetUyinchilar($st."7",$son);
+                                                $db->SetUyinchilar($st."7",$son); $ui=$st."7";
                                             }
                                         }
                                     }
@@ -938,43 +939,46 @@ class DbOperation
                     }
                 }
             }
+            return $ui;
         }
         function uyinchilarade2($son)
-        { $db=new DbOperation();
+        {
+            $ui="";
+            $db=new DbOperation();
             $st=$db->Getuyinchilar($son);
             if (strpos($st, '1') === false)
             {
-                $db->SetUyinchilar($st."1",$son);
+                $db->SetUyinchilar($st."1",$son);$ui="1";
             }
             else
             {
                 if (strpos($st, '3') === false)
                 {
-                    $db->SetUyinchilar($st."3",$son);
+                    $db->SetUyinchilar($st."3",$son);$ui="3";
                 }
                 else
                 {
                     if (strpos($st, '5') === false)
                     {
-                        $db->SetUyinchilar($st."5",$son);
+                        $db->SetUyinchilar($st."5",$son);$ui="5";
                     }
                     else
                     {
                         if (strpos($st, '7') === false)
                         {
-                            $db->SetUyinchilar($st."7",$son);
+                            $db->SetUyinchilar($st."7",$son);$ui="7";
                         }
                         else
                         {
                             if (strpos($st, '9') === false)
                             {
-                                $db->SetUyinchilar($st."9",$son);
+                                $db->SetUyinchilar($st."9",$son);$ui="9";
                             }
                         }
                     }
                 }
             }
-
+return $ui;
         }
         function PlayerdaKartaniTarqatish($data,$ass3,$lk,$index,$sonide)
         {
@@ -1059,13 +1063,13 @@ class DbOperation
             $index=0;
             if ($GroupNumber % 2 == 0)
             {
-                uyinchilarade2($GroupNumber);
+                $uyinchilar =  uyinchilarade2($GroupNumber);
             }
             else
             {
-                uyinchilarade($GroupNumber);
+                $uyinchilar =  uyinchilarade($GroupNumber);
             }
-            $uyinchilar=$db->Getuyinchilar($GroupNumber);
+
             if ($BotOrClient != "false")
             {
                 $index=substr($uyinchilar,strlen($uyinchilar)-1, 1);
@@ -1076,21 +1080,17 @@ class DbOperation
             //%%NameByMe\Ism\0001\gruppa\00000001000$\pul\000000000000\yul\00000\level\000000001000\pul\xb0000000000\id\
             $nk="time".(string)$index;
 
-            $db->SetError("Chaeck=1=".$index." ",$GroupNumber);
 
             $db->SetTimede($GroupNumber,$nk,str_pad((string)$Id,10,"0",STR_PAD_LEFT).time());
 
-            $db->SetError("Chaeck=2=".$index,$GroupNumber);
 
             $db->ChekIfOnline($GroupNumber);
 
-            $db->SetError("Chaeck=3=".$index,$GroupNumber);
 
 
             $rtasd="OxirgiZapis".(string)$index;
 
             $db->SetOxirgiZapislar($data.$index,$GroupNumber,$rtasd);
-            $db->SetError("Chaeck=4=".$index,$GroupNumber);
 
             $minStavka = TurnLk($GroupNumber);
             $gruppdagaiOdamlariSoni=0;
