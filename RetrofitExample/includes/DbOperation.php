@@ -872,7 +872,7 @@ class DbOperation
             }
         }
         $uyinchilar=$db->Getuyinchilar($userGrop);
-        if(strlen($uyinchilar)>$db->GetHowmanyPlayers($userGrop)){
+        if(strlen($uyinchilar)<$db->GetHowmanyPlayers($userGrop)){
             for($i=1;$i<10;$i++){
                 $rew="OxirgiZapis".(string)$i;
                 if($db->GetOxirgiZapisplar($userGrop,$rew)!="" && strpos($uyinchilar,(string)$i)===false){
