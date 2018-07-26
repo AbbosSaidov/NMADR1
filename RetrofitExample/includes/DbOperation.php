@@ -721,6 +721,7 @@ class DbOperation
                 }
             }
             $db->SetYurishKimmiki($koo2,$lk);
+            $yurishkimmiki=$koo2;
             /*        if (BotGrouplar[lk].Count + grop2[lk].Count != grop22[lk].Count)
                  /* {
                        for ($i = 0; $i < grop2[lk].Count; i++)
@@ -749,7 +750,6 @@ class DbOperation
                 //Gruppalaga ajratiganda
                 $db->SetXAmmakartalar($cards[$n[0][0]].$cards[$n[0][1]].$cards[$n[0][2]].$cards[$n[0][3]].$cards[$n[0][4]],$lk);
                 // if (trt != -1) { ChiqaribYuborish[trt].Timer.Start(); }
-                $yurishkimmiki=$db->GetYurishKimmiki($lk);
 
                     for ($i = 0; $i < 9; $i++)
                     {
@@ -856,7 +856,7 @@ class DbOperation
             $mk="time".(string)$i;
             $erw=$db->GetTimede($GroupNumber,$mk);
             if(strlen($db->GetOxirgiZapisplar($userGrop,$mk2))>68 && strpos($uyinchilar,(string)$i)!==false && strlen($erw)>10 &&
-                time()-(int)substr($erw,10,strlen($erw)-10)>7 && substr($db->GetOxirgiZapisplar($GroupNumber,$mk2),59,10) == substr($erw,0,10)){
+                time()-(int)substr($erw,10,strlen($erw)-10)>7/* && substr($db->GetOxirgiZapisplar($GroupNumber,$mk2),59,10) == substr($erw,0,10)*/){
 
                 $lk = $GroupNumber;
 
