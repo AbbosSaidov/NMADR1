@@ -856,7 +856,7 @@ class DbOperation
             $mk="time".(string)$i;
             $erw=$db->GetTimede($GroupNumber,$mk);
             if(strlen($db->GetOxirgiZapisplar($userGrop,$mk2))>68 && strpos($uyinchilar,(string)$i)!==false && strlen($erw)>10 &&
-                time()-(int)substr($erw,10,strlen($erw)-10)>7/* && substr($db->GetOxirgiZapisplar($GroupNumber,$mk2),59,10) == substr($erw,0,10)*/){
+                time()-(int)substr($erw,10,strlen($erw)-10)>7 /*&& substr($db->GetOxirgiZapisplar($GroupNumber,$mk2),59,10) == substr($erw,0,10)*/){
 
                 $lk = $GroupNumber;
 
