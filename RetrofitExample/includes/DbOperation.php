@@ -748,7 +748,7 @@ class DbOperation
                 $n=$db->combinatsiya();
                 $cards=$db->cardio();
                 //Gruppalaga ajratiganda
-                $db->SetXAmmakartalar($cards[$n[0][0]].$cards[$n[0][1]].$cards[$n[0][2]].$cards[$n[0][3]].$cards[$n[0][4]],$lk);
+                $db->SetXAmmakartalar($cards[$n[1][0]].$cards[$n[1][1]].$cards[$n[1][2]].$cards[$n[1][3]].$cards[$n[1][4]],$lk);
                 // if (trt != -1) { ChiqaribYuborish[trt].Timer.Start(); }
 
                     for ($i = 0; $i < 9; $i++)
@@ -784,7 +784,7 @@ class DbOperation
            }*/
                     if ($tott2==-1)
                     {
-                            $message=$cards[$n[1][$m * 2]].$cards[$n[1][$m * 2 + 1]].substr($yurishkimmiki,0,1).
+                            $message=$cards[$n[0][$m * 2]].$cards[$n[0][$m * 2 + 1]].substr($yurishkimmiki,0,1).
                                 str_pad((string)($minSatck / 2),12,'0',STR_PAD_LEFT)."!". str_pad((string)($minSatck ),12,'0',STR_PAD_LEFT).
                                 $uyinchilar .substr($yurishkimmiki,$m+1,1) .str_pad((string)($lk),4,'0',STR_PAD_LEFT);
                             $db->SEndMEssage($lk,substr($uyinchilar,$m,1),$message);
@@ -1772,9 +1772,9 @@ return $ui;
                 if (strlen($kmn) > $i + 2 &&substr($kmn,$i,2) == "RR")
                 {
                     $db->SetOxirgiZapislar(
-                        substr(substr($db->GetOxirgiZapisplar($lk,"OxirgiZapis".substr($kmn,$i+2,1)),0,14),0,14)
+                        substr($db->GetOxirgiZapisplar($lk,"OxirgiZapis".substr($kmn,$i+2,1)),0,14)
                         .str_pad((string)((int)substr($db->GetOxirgiZapisplar($lk,"OxirgiZapis".substr($kmn,$i+2,1)),14,12)+(int)substr($kmn,19+$i,12)),12,"0",STR_PAD_LEFT)
-                        .substr(26,strlen($db->GetOxirgiZapisplar($lk,"OxirgiZapis".substr($kmn,$i+2,1)))-26) . substr($kmn,$i+2,1)
+                       .  substr($db->GetOxirgiZapisplar($lk,"OxirgiZapis".substr($kmn,$i+2,1)),26,strlen($db->GetOxirgiZapisplar($lk,"OxirgiZapis".substr($kmn,$i+2,1)))-26)
                         ,$lk,
                         "OxirgiZapis".substr($kmn,$i+2,1)
                     );
