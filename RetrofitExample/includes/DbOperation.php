@@ -159,6 +159,8 @@ class DbOperation
         $stmt2->execute();
     }
     function SEndMEssageToGroup($groupnumber,$indexs,$message){
+        $db=new DbOperation();
+        $db->SetError("iuyinchilar=".$indexs,$groupnumber);
         for($i=0;$i<strlen($indexs);$i++){
             $index=(int)substr($indexs,$i,1);
             $stmt2=$this->con->prepare("INSERT INTO messages (gropnumber,indexq,message) VALUES (?,?,?)");
@@ -2134,7 +2136,7 @@ return $ui;
                 if($yurishkimmiki == ""){ $yurishkimmiki = "0"; }
 
                 if ($lkj == $mkjd1 - 1 && strpos($uyinchilar,$index)===false)
-                {
+                { $db->SetError("uyinchilar=".$uyinchilar,$lk);
                     $db->SEndMEssageToGroup($lk,$uyinchilar,$data .substr($yurishkimmiki,0,1) .str_pad($lk,4,"0",STR_PAD_LEFT));
                 }
             }
