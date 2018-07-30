@@ -1287,6 +1287,7 @@ return $ui;
                     $db->SEndMEssageToGroup($GroupNumber,$rtwq ,$rewrwr);
                 }*/
         }
+        $db->SetError("rewqw=".$rewrwr,$GroupNumber);
         return $rewrwr;
     }
     //messajji olish ucnde
