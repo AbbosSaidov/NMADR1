@@ -857,26 +857,27 @@ class DbOperation
             $mk2="OxirgiZapis".(string)$i;
             $mk="time".(string)$i;
             $erw=$db->GetTimede($GroupNumber,$mk);
-            if(strlen($db->GetOxirgiZapisplar($userGrop,$mk2))>68 && strpos($uyinchilar,(string)$i)!==false && strlen($erw)>10 &&
+            $OxirgiZapis=$db->GetOxirgiZapisplar($userGrop,$mk2);
+            if(strlen($OxirgiZapis)>68 && strpos($uyinchilar,(string)$i)!==false && strlen($erw)>10 &&
                 time()-(int)substr($erw,10,strlen($erw)-10)>7 /*&& substr($db->GetOxirgiZapisplar($GroupNumber,$mk2),59,10) == substr($erw,0,10)*/){
-
+                  $db->SetError("1oxir=".$OxirgiZapis." uyinchilar=".$uyinchilar." time=".$erw,$userGrop);
                 $lk = $GroupNumber;
 
                 $data21 = "Chiqishde" .(string)$i.str_pad((string)($lk),4,'0',STR_PAD_LEFT);
 
                 $db->Chiqishde($data21);
             }else{
-                if(strlen($db->GetOxirgiZapisplar($userGrop,$mk2))>68 && strpos($uyinchilar,(string)$i)===false){
+                if(strlen($OxirgiZapis)>68 && strpos($uyinchilar,(string)$i)===false){
                     $db->SetOxirgiZapislar("",$userGrop,$mk2);
                     $db->DeleteMessages($i,$GroupNumber);
-
+                    $db->SetError("2oxir=".$OxirgiZapis." uyinchilar=".$uyinchilar." time=".$erw,$userGrop);
                     $db->SetTimede($GroupNumber,$mk,"");
 
                     $db->SetTimede2($GroupNumber,$mk,"");
                 }else{
-                    if(strlen($db->GetOxirgiZapisplar($userGrop,$mk2))>68 && strpos($uyinchilar,(string)$i)!==false&& strlen($erw)<10 ){
+                    if(strlen($OxirgiZapis)>68 && strpos($uyinchilar,(string)$i)!==false&& strlen($erw)<10 ){
                         $lk = $GroupNumber;
-
+                        $db->SetError("3oxir=".$OxirgiZapis." uyinchilar=".$uyinchilar." time=".$erw,$userGrop);
                         $data21 = "Chiqishde" .(string)$i.str_pad((string)($lk),4,'0',STR_PAD_LEFT);
 
                         $db->Chiqishde($data21);
@@ -2000,7 +2001,6 @@ return $ui;
 
         for ($lkj = 0; $lkj <$mkjd1; $lkj++)
         {
-
             $data = substr($kijshda2,$lkj*14,14);
             $lk = (int)(substr($data,10,4));
           //  $db->SetError("Chiq",$lk);
@@ -2037,7 +2037,13 @@ return $ui;
                     $db->SetUyinchilar(str_replace($index,"",$uyinchilar),$lk);
                     $uyinchilar=str_replace($index,"",$uyinchilar);
                     $db->SetOxirgiZapislar("",$lk,"OxirgiZapis".$index);
-                    $db->DeleteMessages((int)$index,$lk);
+
+                    for($i2=1;$i2<10;$i2++){
+                        if(strpos($uyinchilar,(string)$i2)===false){
+                            $db->DeleteMessages($i2,$lk);
+                        }
+                    }
+
 
                     $db->SetTimede($lk,"time".$index,"");
 
@@ -2166,6 +2172,7 @@ return $ui;
                 $db->Setgrop2help($lk,"true");
                 $db->SetKartatarqatildi("false",$lk);
                 $db->Sethu3(0,$lk);
+
             }
         }
         return "Zo'r";
