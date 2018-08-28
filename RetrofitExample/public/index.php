@@ -124,6 +124,49 @@ $app->post('/RRniKiritish', function (Request $request, Response $response) {
         $response->getBody()->write(json_encode($responseData));
     }
 });
+$app->post('/BotdeEndi', function (Request $request, Response $response) {
+    if (isTheseParametersAvailable(array('data'))) {
+        $requestData = $request->getParsedBody();
+        $data = $requestData['data'];
+
+        $db = new DbOperation();
+        $responseData = array();
+
+        $result = "Zurde";
+        $grupde=(int)substr($data,9,4);
+        $mk=array("1","3","5","7","9","2","4","6","8");
+        $mk2=array(5,9);$m=1;
+
+        for($i=0;$i<2;$i++){
+            if($grupde%2==$i){
+              for($t=0;$t<$mk2[$i];$t++){
+                  if(strpos($data,$mk[$t])===false){
+                      $m=(int)$mk[$t];
+                      break;
+                  }
+              }
+                break;
+            }
+        }
+        $db->CreateBot($grupde,$m);
+
+        if ($result == USER_CREATED) {
+            $responseData['error'] = false;
+            $responseData['message'] = 'Registered successfully';
+
+        } elseif ($result == USER_CREATION_FAILED) {
+            $responseData['error'] = true;
+            $responseData['message'] = 'Some error occurred';
+        } elseif ($result == USER_EXIST) {
+            $responseData['error'] = true;
+            $responseData['message'] = 'This email already exist, please login';
+        }else{
+            $responseData['group']=$result;
+        }
+
+        $response->getBody()->write(json_encode($responseData));
+    }
+});
 
 $app->post('/Chiqishde', function (Request $request, Response $response) {
     if (isTheseParametersAvailable(array('data'))) {
@@ -133,7 +176,7 @@ $app->post('/Chiqishde', function (Request $request, Response $response) {
         $db = new DbOperation();
         $responseData = array();
 
-        $result = $db->Chiqishde($data);
+        $result = $db->Chiqishde($data,1);
 
         if ($result == USER_CREATED) {
             $responseData['error'] = false;
