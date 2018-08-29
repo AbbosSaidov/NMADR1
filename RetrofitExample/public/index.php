@@ -134,13 +134,14 @@ $app->post('/BotdeEndi', function (Request $request, Response $response) {
 
         $result = "Zurde";
         $grupde=(int)substr($data,9,4);
+        $uyinchilar=$db->Getuyinchilar($grupde);
         $mk=array("1","3","5","7","9","2","4","6","8");
         $mk2=array(5,9);$m=1;
 
         for($i=0;$i<2;$i++){
             if($grupde%2==$i){
               for($t=0;$t<$mk2[$i];$t++){
-                  if(strpos($data,$mk[$t])===false){
+                  if(strpos($uyinchilar,$mk[$t])===false){
                       $m=(int)$mk[$t];
                       break;
                   }

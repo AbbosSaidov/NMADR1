@@ -862,6 +862,26 @@ class DbOperation
                 }
             }
         }
+        $uyinchilar=$db->Getuyinchilar($userGrop);
+        $stmt = $this->con->prepare("SELECT indexs FROM botgrouplar WHERE groupnumber = ? ");
+        $stmt->bind_param("i", $userGrop);
+        $stmt->execute();
+        $stmt->bind_result($index);
+
+        while($stmt->fetch()){
+            $indexs=$index;
+        }
+        if(strpos($uyinchilar,(string)$index)===false){
+            $sql="DELETE FROM botgrouplar WHERE groupnumber = ? AND indexs=?  ";
+            $stmt = $this->con->prepare($sql);
+            $stmt->bind_param("ii", $userGrop,$indexs);
+            $stmt->execute();
+            $sql="DELETE FROM botlist WHERE groupnumber = ? AND indexq=?  ";
+            $stmt = $this->con->prepare($sql);
+            $stmt->bind_param("ii", $userGrop,$indexs);
+            $stmt->execute();
+        }
+
     }
     //methoda uyinga kirish unchun
     function UyingaKirish($data){
@@ -1090,7 +1110,6 @@ class DbOperation
                 $timede2=$db->GetTimede2($userGrop,"time".$index);
                 //     $db->SetError("asd2 ".$timede2,$userGrop);
                 if(time()-(int)$timede2>28){
-                    $db->SetError("asd3 ".$timede2." ".time(),$userGrop);
 
                     $data21 = "Chiqishde".$index.str_pad((string)($userGrop),4,'0',STR_PAD_LEFT);
                     $db->Chiqishde($data21,1);
@@ -1098,32 +1117,35 @@ class DbOperation
             }
         }
         //Check the bots here
-
-        $stmt = $this->con->prepare("SELECT indexs,idnumber FROM botgrouplar WHERE groupnumber = ?");
-        $stmt->bind_param("i", $userGrop);
-        $stmt->execute();
-        $stmt->bind_result($index,$idnumber);
         $tr="";
-        while($stmt->fetch()){
+        $stmqt = $this->con->prepare("SELECT indexs,idnumber FROM botgrouplar WHERE groupnumber = ?");
+        $stmqt->bind_param("i", $userGrop);
+        $stmqt->execute();
+        $stmqt->bind_result($index,$idnumber);
+
+        while($stmqt->fetch()){
+
             $mk="time".(string)$index;
             $tr=$tr.(string)$index;
             $erw=$db->GetTimede($userGrop,$mk);
             $db->SetTimede($userGrop,"time".(string)$index,substr($erw,0,10).time());
         }
         for($i=0;$i<strlen($tr);$i++){
-            $stmt = $this->con->prepare("SELECT message,id FROM messages WHERE gropnumber = ? AND Indexq=?");
+
+            $stmtw = $this->con->prepare("SELECT message,id FROM messages WHERE gropnumber = ? AND Indexq=?");
             $iw=(int)substr($tr,$i,1);
-            $stmt->bind_param("ii", $userGrop,$iw);
-            $stmt->execute();
-            $stmt->bind_result($data,$id);
-            while($stmt->fetch()){
+            $stmtw->bind_param("ii", $userGrop,$iw);
+            $stmtw->execute();
+            $stmtw->bind_result($data,$id);
+            $db->SetError("asd4 ".$iw,$userGrop);
+
+            while($stmtw->fetch()){
+                $db->SetError("asd5 ".$iw,$userGrop);
+
                 $db->OnIncomBot($data,$idnumber);
-                $db->DeleteMessages($userindex,$userGrop,(int)$id);
+                $db->DeleteMessages($iw,$userGrop,(int)$id);
             }
         }
-
-
-
         return $messages;
     }
     function DeleteMessages($userindex,$userGrop,$id){
