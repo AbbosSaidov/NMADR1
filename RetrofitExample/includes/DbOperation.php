@@ -795,7 +795,7 @@ class DbOperation
         }
     }
     function registerUser($data)
-    {
+    {$db=new DbOperation();
         $BotOrClient = "true";
         $Id = "";  $Money = 0;$ki=0;
         $ImageNumber=12;$BotlistNumber=0;
@@ -823,7 +823,6 @@ class DbOperation
             return("Jiklo".str_pad($ki,10,"0",STR_PAD_LEFT));
         }else{
             if ($BotOrClient == "false"){
-            $db=new DbOperation();
             $db->OnIncomBot("Jiklo".str_pad($ki,10,"0",STR_PAD_LEFT),(int)$BotlistNumber);
             }
         }
@@ -965,8 +964,10 @@ class DbOperation
         $Ifgruplar=array(3300,2100,2,0);
         $Ifgruplar2=array(1,0);
         if($trwe){
+
             for($k=0;$k<2;$k++){
                 for($i=0;$i<4;$i=$i+2){
+                    //botde21 %%0402000000040000$000000000000000000000000040000xb0000000598f 0 2 0 0 0
                     if($k*$GroupNumber<$Ifgruplar[$i] &&$GroupNumber>$k*$Ifgruplar[$i+1] &&$Ifgruplar2[$k]*$GroupNumber<2100&&$GroupNumber>$Ifgruplar2[$k]){
                         for($i1 = $i; $i1 < 100; $i1 = $i1 + 2){
                             for($i2=0;$i2<($i/2)+1;$i2++){
@@ -1022,12 +1023,12 @@ class DbOperation
 
                                     if($tr=="false"){ $db->ChekIfOnline($grup);
 
-
                                         $playersNumber=$db->GetHowmanyPlayers($grup);
                                         if($db->Getgrop2help($grup)=="true"&&
                                             ($i/2)*(int)$pul==($i/2)*$Pullar[$t] && $playersNumber < $odamlade[$i2] )
                                         {
                                             $GroupNumber = $grup;  $t=33;$i2=2;$i1=100;$i=4;$k=2;
+                                            $db->SetError("botde2 ".$data,21312);
 
                                             for($i3=0;$i3<2;$i3++){
                                                 if($GroupNumber%2==$i3){
@@ -1063,7 +1064,7 @@ class DbOperation
         $mk="time".(string)$userindex;
         $erw=$db->GetTimede($userGrop,$mk);
         $db->SetTimede($userGrop,"time".(string)$userindex,substr($erw,0,10).time());
-        $stmt = $this->con->prepare("SELECT message,id FROM messages WHERE gropnumber = ? AND indexq=?");
+        $stmt = $this->con->prepare("SELECT message,id FROM messages WHERE gropnumber = ? AND Indexq=?");
         $stmt->bind_param("ii", $userGrop,$userindex);
         $stmt->execute();
         $stmt->bind_result($data,$id);
@@ -1102,22 +1103,26 @@ class DbOperation
         $stmt->bind_param("i", $userGrop);
         $stmt->execute();
         $stmt->bind_result($index,$idnumber);
-        $messages = array();
+        $tr="";
         while($stmt->fetch()){
             $mk="time".(string)$index;
+            $tr=$tr.(string)$index;
             $erw=$db->GetTimede($userGrop,$mk);
             $db->SetTimede($userGrop,"time".(string)$index,substr($erw,0,10).time());
-
-            $stmt2 = $this->con->prepare("SELECT message,id FROM messages WHERE gropnumber = ? AND indexq=?");
-            $stmt2->bind_param("ii", $userGrop,$index);
-            $stmt2->execute();
-            $stmt2->bind_result($data,$id);
-            $messages = array();
-            while($stmt2->fetch()){
+        }
+        for($i=0;$i<strlen($tr);$i++){
+            $stmt = $this->con->prepare("SELECT message,id FROM messages WHERE gropnumber = ? AND Indexq=?");
+            $iw=(int)substr($tr,$i,1);
+            $stmt->bind_param("ii", $userGrop,$iw);
+            $stmt->execute();
+            $stmt->bind_result($data,$id);
+            while($stmt->fetch()){
                 $db->OnIncomBot($data,$idnumber);
                 $db->DeleteMessages($userindex,$userGrop,(int)$id);
             }
         }
+
+
 
         return $messages;
     }
@@ -1991,8 +1996,8 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
             $Online = 2;
             $GroupNumber = (int)$Nomerstol;
 
-                  $stmt =$this->con->prepare("INSERT INTO botlist ( online,groupnumber,money,pul,minstavka,Indexq,idBot) VALUES(?,?,?,?,?,?,?)");
-                  $stmt->bind_param("iissiis",$Online,$GroupNumber,$money,$pul,$min,$index,$Id);
+                  $stmt =$this->con->prepare("INSERT INTO botlist ( online,groupnumber,money,pul,minstavka,Indexq,idBot,botname) VALUES(?,?,?,?,?,?,?,?)");
+                  $stmt->bind_param("iissiiss",$Online,$GroupNumber,$money,$pul,$min,$index,$Id,$name);
                   $stmt->execute();
                   $idd=$stmt->insert_id;
 
@@ -2006,14 +2011,13 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
     function OnIncomBot($data,$i)
     {
         $db=new DbOperation();
-
         if(strlen($data)>12 && substr($data,0,13) == "ChiqeO'yindan"){
             $db->Chiqeuyindanbot($i);
         }
 
         if(strpos($data,"Jiklo")!==false){
             $r2=$db->Getall($i);
-            $botId=$r2[9];
+            $botId=substr($data,5,10);
             $online=$r2[6];
 
           if($botId=="0000000000"){
@@ -2022,8 +2026,8 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
           if($online!=0 &&$online!=3 && $online!=1 && substr($data,5,10) != "0000000000" ){
               $db->Setbotlistonline($i,3);
 
-              $db->UyingaKirish("%%".$r2[0].str_pad((string)($r2[1]),4,'0',STR_PAD_LEFT).str_pad((string)($r2[2]),12,'0',STR_PAD_LEFT).
-              "$" .str_pad((string)($r2[3]),12,'0',STR_PAD_LEFT). "000000".str_pad((string)($r2[4]),12,'0',STR_PAD_LEFT) . "xb" . substr($data,5,10)."f");
+              $db->OnIncomBot($db->UyingaKirish("%%".$r2[0].str_pad((string)($r2[1]),4,'0',STR_PAD_LEFT).str_pad((string)($r2[2]),12,'0',STR_PAD_LEFT).
+                  "$" .str_pad((string)($r2[3]),12,'0',STR_PAD_LEFT). "000000".str_pad((string)($r2[4]),12,'0',STR_PAD_LEFT) . "xb" . substr($data,5,10)."f"),$i);
           }
      }
 
