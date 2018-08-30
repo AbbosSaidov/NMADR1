@@ -789,7 +789,7 @@ class DbOperation
                     $message=$cards[$n[0][$m * 2]].$cards[$n[0][$m * 2 + 1]].substr($yurishkimmiki,0,1).
                         str_pad((string)($minSatck / 2),12,'0',STR_PAD_LEFT)."!". str_pad((string)($minSatck ),12,'0',STR_PAD_LEFT).
                         $uyinchilar .substr($yurishkimmiki,$m+1,1) .str_pad((string)($lk),4,'0',STR_PAD_LEFT);
-                    $db->SEndMEssage($lk,substr($uyinchilar,$m,1),$message);
+                    $db->SEndMEssage($lk,substr($yurishkimmiki,$m+1,1),$message);
                 }
             }
         }
@@ -1134,14 +1134,12 @@ class DbOperation
             $iw=(int)substr($tr,$i,1);
             $stmtw->bind_param("ii", $userGrop,$iw);
             $stmtw->execute();
-            $stmtw->bind_result($data,$id);
-            $db->SetError("asd4 ".$iw,$userGrop);
+            $stmtw->bind_result($data2,$id2);
 
             while($stmtw->fetch()){
-                $db->SetError("asd5 ".$iw,$userGrop);
 
-                $db->OnIncomBot($data,$idnumber);
-                $db->DeleteMessages($iw,$userGrop,(int)$id);
+                $db->OnIncomBot($data2,$idnumber);
+                $db->DeleteMessages($iw,$userGrop,(int)$id2);
             }
         }
         return $messages;
@@ -1635,7 +1633,8 @@ class DbOperation
             //return " As".$keraklide;
             if (strlen($yurishkimmiki)>1 && (string)$Index == substr($yurishkimmiki,0,1) && $kartaTarqatildi=="true")
             {
-                $lk = $GroupNumber;
+
+                    $lk = $GroupNumber;
                 $a =substr($yurishkimmiki,0,1);  $b = substr($yurishkimmiki,1,strlen($yurishkimmiki)-1);
                 for($i = 0; $i < strlen($yurishkimmiki); $i++){
                     //1000000000350000000000050$^201020 a=1 b=13113
@@ -1954,7 +1953,7 @@ class DbOperation
         return $ki1;
     }
     function Setbotlistonline($i,$online){
-        $stmt2=$this->con->prepare("UPDATE botlist SET idBot=? WHERE id=?");
+        $stmt2=$this->con->prepare("UPDATE botlist SET online=? WHERE id=?");
         $stmt2->bind_param("ii",$online,$i);
         $stmt2->execute();
     }
@@ -2046,8 +2045,10 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
           if($online!=0 &&$online!=3 && $online!=1 && substr($data,5,10) != "0000000000" ){
               $db->Setbotlistonline($i,3);
 
-              $db->OnIncomBot($db->UyingaKirish("%%".$r2[0].str_pad((string)($r2[1]),4,'0',STR_PAD_LEFT).str_pad((string)($r2[2]),12,'0',STR_PAD_LEFT).
-                  "$" .str_pad((string)($r2[3]),12,'0',STR_PAD_LEFT). "000000".str_pad((string)($r2[4]),12,'0',STR_PAD_LEFT) . "xb" . substr($data,5,10)."f"),$i);
+              $rew=$db->UyingaKirish("%%".$r2[0].str_pad((string)($r2[1]),4,'0',STR_PAD_LEFT).str_pad((string)($r2[2]),12,'0',STR_PAD_LEFT).
+              "$" .str_pad((string)($r2[3]),12,'0',STR_PAD_LEFT). "000000".str_pad((string)($r2[4]),12,'0',STR_PAD_LEFT) . "xb" . substr($data,5,10)."f");
+
+              $db->OnIncomBot($rew,$i);
           }
      }
 
@@ -2064,15 +2065,21 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
             $r2=$db->Getall($i);
             $online=$r2[6];
             $index=$r2[8];
+            $online=$r2[6];$groupnumber=$r2[1];
+            $index=$r2[8];$pas=$r2[10];$keraklide=$r2[5];
+            $uyinchilar=$r2[7];$judgement=$r2[12];$pul=$r2[2];$yol=$r2[3];
+            $uyindanOdingiPuli=$r2[11];$Pas=$r2[10];
             // cl13sp143000000000010!00000000002026359871422201
-            if(substr($data,strlen($data)-4,4)==str_pad($r2[1],4,'0',STR_PAD_LEFT) && substr($data,strlen($data)-5,1)==(string)$index
-                && substr($data,8,1)==(string)$index &&$online==3){
-                        $db->Setall($i,$r2[2],"1","",1,0,(int)substr($data,22,12),substr($data,22,12),substr($data,0,8),substr($data,34,strlen($data)-39),(string)((int)$r2[2]-(int)substr($data,22,12)),3,"");
+
+            if(substr($data,strlen($data)-4,4)==str_pad($r2[1],4,'0',STR_PAD_LEFT) && substr($data,8,1)==(string)$index &&$online==3){
+                $db->Setall($i,$r2[2],"1","",1,0,(int)substr($data,22,12),substr($data,22,12)
+                    ,substr($data,0,8),substr($data,34,strlen($data)-39),(string)((int)$r2[2]-(int)substr($data,22,12)),3,"");
+
                 $db->UyinniDAvomEttir($index . str_pad($r2[2],12,'0',STR_PAD_LEFT) .
                     str_pad($r2[3],12,'0',STR_PAD_LEFT) . "$^" . $r2[5] . str_pad($r2[1],4,'0',STR_PAD_LEFT) . $r2[13]);
             }else{
-                if(substr($data,strlen($data)-4,4)==str_pad($r2[1],4,'0',STR_PAD_LEFT) && substr($data,strlen($data)-5,1)==(string)$index
-                    && substr($data,8,1)==(string)$index &&$online==3){
+                if(substr($data,strlen($data)-4,4)==str_pad($r2[1],4,'0',STR_PAD_LEFT)
+                    && $online==3){
                     if (substr($data,35,1) == (string)$index)
                         {
                             $db->Setall($i,$r2[2],"1","",1,0,(int)substr($data,22,12),substr($data,22,12),substr($data,0,8),substr($data,34,strlen($data)-39),(string)((int)$r2[2]-(int)substr($data,22,12)),3,"");
@@ -2216,7 +2223,7 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
             if (strlen($data)> 45)
             {
                 // print("1");//1000000000350000000000050$^20cl20he11he18di18cl19210102
-                if ($online == "3" && (string)$index == substr($data ,strlen($data)-5,1) &&
+                if ($online == "3" &&
                     str_pad($r2[1],4,'0',STR_PAD_LEFT) == substr($data ,strlen($data)-4,4))
                     {
                         //   print("2");
@@ -2303,7 +2310,7 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
             {   //1000000000990000000000010$^10220001
                 //1000000000990000000000010$^10240001
                 //  print("11 index=" + BotsList[i].Index + " " + data);
-                if ($online == "3" && (string)$index == substr($data ,strlen($data)-5,1) &&
+                if ($online == "3" &&
                     str_pad($r2[1],4,'0',STR_PAD_LEFT) == substr($data ,strlen($data)-4,4)&& $Pas != "0")
                     {
                         //3000000000980000000000020$^1021010
@@ -2468,7 +2475,7 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
                     if ($mik == 1)
                     {
 
-                            $db->Tugat3tali($i);
+                            $db->Tugat3tali($i,$r2);
 
 
                         if ($qaysiligiKartani == "p1" || $qaysiligiKartani == "p2" || $qaysiligiKartani == "se"
@@ -2487,7 +2494,7 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
                                 }
                                 else
                                 {
-                                    $db->Pasaytirish($data, $i);
+                                    $db->Pasaytirish($data, $i,$r2);
                                 }
                             }
                             else
@@ -2501,7 +2508,7 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
                         if ($mik == 2)
                         {
 
-                                $db->Tugat4tali($i);
+                                $db->Tugat4tali($i,$r2);
 
 
                             if ($qaysiligiKartani == "p2" || $qaysiligiKartani == "se"
@@ -2526,7 +2533,7 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
                                         }
                                         else
                                         {
-                                            $db->Pasaytirish($data, $i);
+                                            $db->Pasaytirish($data, $i,$r2);
                                         }
                                     }
                                 }
@@ -2541,7 +2548,7 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
                             if ($mik == 3)
                             {
 
-                                    $db->Tugat5tali($i);
+                                    $db->Tugat5tali($i,$r2);
 
                                 if ($qaysiligiKartani == "se"
                                 || $qaysiligiKartani == "sr" || $qaysiligiKartani == "fl" || $qaysiligiKartani == "fs")
@@ -2571,7 +2578,7 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
                                                 }
                                                 else
                                                 {
-                                                    $db->Pasaytirish($data, $i);
+                                                    $db->Pasaytirish($data, $i,$r2);
                                                     // Tenglashtirish(i);
                                                 }
                                             }
