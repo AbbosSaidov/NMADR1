@@ -145,10 +145,11 @@ $app->post('/BotdeEndi', function (Request $request, Response $response) {
                       $m=(int)$mk[$t];
                       break;
                   }
-              }
+                }
                 break;
             }
         }
+
         $db->CreateBot($grupde,$m);
 
         if ($result == USER_CREATED) {

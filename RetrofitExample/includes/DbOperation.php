@@ -830,12 +830,11 @@ class DbOperation
         return true;
     }
     //Chekifonline
-    function ChekIfOnline($userGrop){
+    function ChekIfOnline($userGrop,$BotOrClient){
         $db=new DbOperation();
         $GroupNumber=$userGrop;
         $uyinchilar=$db->Getuyinchilar($userGrop);
         for($i=0;$i<strlen($uyinchilar);$i++){
-
             $db->SetError($i." chek u=".$uyinchilar,$userGrop);
 
             $erw=$db->GetTimede($GroupNumber,"time".substr($uyinchilar,$i,1));
@@ -871,7 +870,7 @@ class DbOperation
         while($stmt->fetch()){
             $indexs=$index;
         }
-        if(strpos($uyinchilar,(string)$index)===false){
+        if(strlen((string)$index)>0&&strpos($uyinchilar,(string)$index)===false &&$BotOrClient=="true"){
             $sql="DELETE FROM botgrouplar WHERE groupnumber = ? AND indexs=?  ";
             $stmt = $this->con->prepare($sql);
             $stmt->bind_param("ii", $userGrop,$indexs);
@@ -881,7 +880,6 @@ class DbOperation
             $stmt->bind_param("ii", $userGrop,$indexs);
             $stmt->execute();
         }
-
     }
     //methoda uyinga kirish unchun
     function UyingaKirish($data){
@@ -1041,7 +1039,7 @@ class DbOperation
                                         }
                                     }
 
-                                    if($tr=="false"){ $db->ChekIfOnline($grup);
+                                    if($tr=="false"){ $db->ChekIfOnline($grup,$BotOrClient);
 
                                         $playersNumber=$db->GetHowmanyPlayers($grup);
                                         if($db->Getgrop2help($grup)=="true"&&
