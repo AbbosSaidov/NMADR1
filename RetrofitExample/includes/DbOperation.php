@@ -1676,10 +1676,10 @@ class DbOperation
                             $db->SetYurishKimmiki($yurishkimmiki,$lk);
                         }
                         if($keraklide >= $huy){
-                            for ($i = 0; $i < strlen($yurishkimmiki)-1; $i++)
+                            for ($t= 0; $t < strlen($yurishkimmiki)-1; $t++)
                             {
-                                $tikilgsnpul="TikilganPullar".substr($yurishkimmiki,$i+1,1);
-                                $OxirgiZapis="OxirgiZapis".substr($yurishkimmiki,$i+1,1);
+                                $tikilgsnpul="TikilganPullar".substr($yurishkimmiki,$t+1,1);
+                                $OxirgiZapis="OxirgiZapis".substr($yurishkimmiki,$t+1,1);
                                 $db->SetTikilganPullar($tikilgsnpul,(int)$db->GetTikilganPullar($lk,$tikilgsnpul)+(int)substr($db->GetOxirgiZapisplar($lk,$OxirgiZapis),27,12),$lk);
                             }
                             $db->SetHuy(strlen($yurishkimmiki)-1,$lk);
@@ -1690,18 +1690,19 @@ class DbOperation
                         }
                         if($yurishkimmiki==""){$yurishkimmiki="0";}
                         $data = $Index.str_pad($pul,12,"0",STR_PAD_LEFT).str_pad($yol,12,"0",STR_PAD_LEFT)."$^" .$keraklide.$mik .$pasde[$i*2+1];
-                        $db->SetError("uyinchilar34=".$uyinchilar,$GroupNumber);
                         $db->SEndMEssageToGroup($lk,$uyinchilar,$data.substr($yurishkimmiki,0,1).str_pad($lk,4,"0",STR_PAD_LEFT));
                         if ($keraklide >= $huy && $hu3 == 4)
                         {
-                            for ($i = 1; $i < 10; $i++)
+                            for ($t = 1; $t < 10; $t++)
                             {
-                                $javboblede="Javoblade".(string)$i;
+                                $javboblede="Javoblade".(string)$t;
                                 $db->SetJavoblade($javboblede,"",$lk);
                             }
                             $db->Sethu3(0,$lk);
                             Javobit($lk);
                         }
+                        $db->SetError("i=".$i*2,$GroupNumber);
+
                         if ($pasde[$i*2]=="true"&&($huy == 2 || strlen($yurishkimmiki) == 2)) {$db->Sethu3(0,$lk); $db->Pas($lk,1);  }
                         break;
                     }
@@ -1970,7 +1971,7 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
     }
     function Setall($i,$uyindanoldigiPuli,$Pas,$qaysiligiKartani,$keraklide,$mik,$engKatta,$yol,$uziniKartasi,$uyinchilar,$pul,$online,$urtadagikartalar){
         $stmt2=$this->con->prepare("UPDATE botlist SET uyindanOldingiPuli=?,Pas=?,qaysiligiKartani=?,keraklide=?,mik=?,EngKatta=?,yol=?,uziniKartasi=?,uyinchilar=?,pul=?,online=?,urtadagiKartalar=? WHERE id=?");
-        $stmt2->bind_param("issiiissssiis",$uyindanoldigiPuli,$Pas,$qaysiligiKartani,$keraklide,$mik,$engKatta,$yol,$uziniKartasi,$uyinchilar,$pul,$i,$online,$urtadagikartalar);
+        $stmt2->bind_param("issiiissssiis",$uyindanoldigiPuli,$Pas,$qaysiligiKartani,$keraklide,$mik,$engKatta,$yol,$uziniKartasi,$uyinchilar,$pul,$online,$urtadagikartalar,$i);
         $stmt2->execute();
     }
 
@@ -2064,37 +2065,44 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
         {
             $r2=$db->Getall($i);
             $online=$r2[6];
-            $index=$r2[8];
+            $index=$r2[8];$qaysiligiKartani=$r2[18];
             $online=$r2[6];$groupnumber=$r2[1];
             $index=$r2[8];$pas=$r2[10];$keraklide=$r2[5];
             $uyinchilar=$r2[7];$judgement=$r2[12];$pul=$r2[2];$yol=$r2[3];
             $uyindanOdingiPuli=$r2[11];$Pas=$r2[10];
+            $urtadagikartalar=$r2[15];
+
             // cl13sp143000000000010!00000000002026359871422201
-
             if(substr($data,strlen($data)-4,4)==str_pad($r2[1],4,'0',STR_PAD_LEFT) && substr($data,8,1)==(string)$index &&$online==3){
-                $db->Setall($i,$r2[2],"1","",1,0,(int)substr($data,22,12),substr($data,22,12)
-                    ,substr($data,0,8),substr($data,34,strlen($data)-39),(string)((int)$r2[2]-(int)substr($data,22,12)),3,"");
 
-                $db->UyinniDAvomEttir($index . str_pad($r2[2],12,'0',STR_PAD_LEFT) .
-                    str_pad($r2[3],12,'0',STR_PAD_LEFT) . "$^" . $r2[5] . str_pad($r2[1],4,'0',STR_PAD_LEFT) . $r2[13]);
+                $uyindanOdingiPuli=$r2[2];$uyinchilar=substr($data,34,strlen($data)-39);$pul=(string)((int)$r2[2]-(int)substr($data,22,12));
+                $pas="1";$keraklide=1;$mik=0;$EngKatta=(int)substr($data,22,12);$yol=substr($data,22,12);$uzinKartasi=substr($data,0,8);
+                $online=3;$qaysiligiKartani="";
+                $db->Setall($i,$uyindanOdingiPuli,$pas,$qaysiligiKartani,$keraklide,$mik,$EngKatta,$yol
+                    ,$uzinKartasi,$uyinchilar,$pul,$online,$urtadagikartalar);
+
+                $db->UyinniDAvomEttir($index .str_pad($pul,12,'0',STR_PAD_LEFT) .str_pad($yol,12,'0',STR_PAD_LEFT) . "$^" . $keraklide . str_pad($r2[1],4,'0',STR_PAD_LEFT) . $mik);
             }else{
-                if(substr($data,strlen($data)-4,4)==str_pad($r2[1],4,'0',STR_PAD_LEFT)
-                    && $online==3){
+                if(substr($data,strlen($data)-4,4)==str_pad($r2[1],4,'0',STR_PAD_LEFT) && $online==3){
+                    $uyindanOdingiPuli=$r2[2];$uyinchilar=substr($data,34,strlen($data)-39);$pul=(string)((int)$r2[2]-(int)substr($data,22,12));
+                    $pas="1";$keraklide=0;$mik=0;$EngKatta=(int)substr($data,22,12);$yol=substr($data,22,12);$uzinKartasi=substr($data,0,8);
+                    $online=3;$qaysiligiKartani="";
                     if (substr($data,35,1) == (string)$index)
                         {
-                            $db->Setall($i,$r2[2],"1","",1,0,(int)substr($data,22,12),substr($data,22,12),substr($data,0,8),substr($data,34,strlen($data)-39),(string)((int)$r2[2]-(int)substr($data,22,12)),3,"");
-                        }
+                            $db->Setall($i,$uyindanOdingiPuli,$pas,$qaysiligiKartani,$keraklide,$mik,$EngKatta,$yol
+                                ,$uzinKartasi,$uyinchilar,$pul,$online,$urtadagikartalar);                        }
                         else
                         {
-                            if (substr($data,35,1) == (string)$index)
+                            if (substr($data,34,1) == (string)$index)
                             {
-                                $db->Setall($i,$r2[2],"1","",1,0,(int)substr($data,22,12),(string)(((int)substr($data,22,12))/2),substr($data,0,8),substr($data,34,strlen($data)-39),(string)((int)$r2[2]-(int)substr($data,22,12)),3,"");
 
+                                $db->Setall($i,$uyindanOdingiPuli,$pas,$qaysiligiKartani,$keraklide,$mik,$EngKatta,(string)(((int)$yol)/2)
+                                    ,$uzinKartasi,$uyinchilar,$pul,$online,$urtadagikartalar);
                             }
                             else
                             {
-                                $db->Setall($i,$r2[2],"1","",1,0,(int)substr($data,22,12),"0",substr($data,0,8),substr($data,34,strlen($data)-39),(string)((int)$r2[2]-(int)substr($data,22,12)),3,"");
-                            }
+                                $db->Setall($i,$uyindanOdingiPuli,$pas,$qaysiligiKartani,$keraklide,$mik,$EngKatta,"0"
+                                    ,$uzinKartasi,$uyinchilar,$pul,$online,$urtadagikartalar);                            }
                         }
                    }
               }
@@ -2102,12 +2110,13 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
         if (strlen($data) > 9 && substr($data,0,9) == "Chiqishde")
         {   $r2=$db->Getall($i);
             $online=$r2[6];$groupnumber=$r2[1];
-            $index=$r2[8];$pas=$r2[10];$keraklide=$r2[5];
+            $index=$r2[8];$keraklide=$r2[5];$mik=$r2[13];
             $uyinchilar=$r2[7];$judgement=$r2[12];$pul=$r2[2];$yol=$r2[3];
-            $uyindanOdingiPuli=$r2[11];$Pas=$r2[10];
+            $uyindanOldingiPuli=$r2[11];$Pas=$r2[10];$UziniKartasi=$r2[14];
+            $EngKatta=$r2[15];$UrtadagiKartalar=$r2[15];
             // sp20sp171000000000005!0000000000101220001
             if(substr($data,strlen($data)-4,4) == str_pad($groupnumber,4,'0',STR_PAD_LEFT) &&
-                substr($data,strlen($data)-5,1) == (string)$index && $online == "3" && $pas != "0")
+                substr($data,strlen($data)-5,1) == (string)$index && $online == "3" && $Pas != "0")
                 {
                     $db->Setbotlistkeraklide($i,$keraklide+1);
 
@@ -2155,7 +2164,7 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
                         $pul =(string) ((int)($yol) + (int)($pul) + $judgement);
 
 
-                        if ((int)($pul) < $uyindanOdingiPuli) { $pul =(string)$uyindanOdingiPuli; }
+                        if ((int)($pul) < $uyindanOldingiPuli) { $pul =(string)$uyindanOldingiPuli; }
                          $db->Setall($i,0,"1","",0,0,0,"0","","",$pul,0);
 
                         $db->Chiqishde("Chiqishde".$index.str_pad($r2[1],4,'0',STR_PAD_LEFT),1);
@@ -2163,6 +2172,8 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
                     }
                     else
                     {
+                        $db->Setall($i,$uyindanOldingiPuli,$Pas,"",$keraklide,$mik,$EngKatta,$yol,$UziniKartasi,$uyinchilar,$pul,$online,$UrtadagiKartalar);
+
                         //       print("Yurdim Chiqishda");
                         $db->Yurish($i, $data,$r2);
                     }
@@ -2223,7 +2234,7 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
             if (strlen($data)> 45)
             {
                 // print("1");//1000000000350000000000050$^20cl20he11he18di18cl19210102
-                if ($online == "3" &&
+                if ($online == "3" && $index==(int)substr($data ,strlen($data)-5,1)&&
                     str_pad($r2[1],4,'0',STR_PAD_LEFT) == substr($data ,strlen($data)-4,4))
                     {
                         //   print("2");
@@ -2259,7 +2270,7 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
                         else
                         {
                             if ($mik == 4 && $Pas != "0"&& strlen($UziniKartasi)>1)
-                            {
+                            {                            $db->Setall($i,$uyindanOldingiPuli,$Pas,"",$keraklide,$mik,$EngKatta,$yol,$UziniKartasi,$uyinchilar,$pul,$online,$UrtadagiKartalar);
 
                                 $db->Tugat($i,$r2);
                             }
@@ -2301,6 +2312,8 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
                             //     print("MIK" + BotsList[i].mik);
                             if ($mik == 4 && $Pas != "0" && $UziniKartasi != null)
                             {
+                                $db->Setall($i,$uyindanOldingiPuli,$Pas,"",$keraklide,$mik,$EngKatta,$yol,$UziniKartasi,$uyinchilar,$pul,$online,$UrtadagiKartalar);
+
                                 $db->Tugat($i,$r2);
                             }
                          }
@@ -2309,13 +2322,13 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
             else
             {   //1000000000990000000000010$^10220001
                 //1000000000990000000000010$^10240001
-                //  print("11 index=" + BotsList[i].Index + " " + data);
-                if ($online == "3" &&
+                if ($online == "3" && $index==(int)substr($data ,strlen($data)-5,1)&&
                     str_pad($r2[1],4,'0',STR_PAD_LEFT) == substr($data ,strlen($data)-4,4)&& $Pas != "0")
                     {
                         //3000000000980000000000020$^1021010
                         $keraklide = (int)(substr($data,27,1));
                         $keraklide++;
+                        $db->SetError("ker=".$keraklide,323);
                     if ((int)(substr($data,13,12)) > (int)($EngKatta))
                     {
                         $EngKatta = substr($data,13,12);
@@ -2330,7 +2343,6 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
                         $pul = (string) ((int)($yol) + (int)($pul) + $judgement);
                             $Money = $pul;
                             $uyindanOldingiPuli = 0;
-                    //        print("AAAAAA2 " + BotsList[i].judgement);
 
                             $judgement = 0;
 
@@ -2368,7 +2380,6 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
                             }
                             $db->Setall($i,$uyindanOldingiPuli,$Pas,"",$keraklide,$mik,$EngKatta,$yol,$UziniKartasi,$uyinchilar,$pul,$online,$UrtadagiKartalar);
 
-                            //     print("MIK" + BotsList[i].mik);
                         }
                     }
                 }
@@ -2459,6 +2470,7 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
         $uyindanOldingiPuli=$r2[11];$Pas=$r2[10];$UziniKartasi=$r2[14];
         $EngKatta=$r2[14];$minstavka=$db->TurnLk((int)$groupnumber);
         $qaysiligiKartani=$r2[18];
+        $db->SetError($EngKatta." yol ".$yol,123123);
         if ((int)($EngKatta) > (int)($yol))
         {
             //   print("13");
@@ -3413,6 +3425,7 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
             $t = ( int)($EngKatta)  - ( int)($yol) ;
             $yol = $EngKatta;
         }
+        $db->SetError("yo=".$yol,123123);
         $pul = (string)((int)($pul)- $t);
         $Money = $pul;
         //  print("14 money" + BotsList[i].Money + " index=" + BotsList[i].Index);
