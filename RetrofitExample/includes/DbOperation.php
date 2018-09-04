@@ -2233,16 +2233,17 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
             $uyindanOldingiPuli=$r2[11];$Pas=$r2[10];$UziniKartasi=$r2[14];
             $EngKatta=$r2[15];$UrtadagiKartalar=$r2[15];
             $qaysiligiKartani=$r2[18];
+
             if (strlen($data)> 45)
             {
                 // print("1");//1000000000350000000000050$^20cl20he11he18di18cl19210102
-                if ($online == "3" && $index==(int)substr($data ,strlen($data)-5,1)&&
-                    str_pad($r2[1],4,'0',STR_PAD_LEFT) == substr($data ,strlen($data)-4,4))
+                if ($online == "3" &&  str_pad($r2[1],4,'0',STR_PAD_LEFT) == substr($data ,strlen($data)-4,4))
                     {
                         //   print("2");
 
+                        if($index==(int)substr($data ,strlen($data)-5,1)){ $keraklide=1;  }else{ $keraklide=0; }
+
                         $EngKatta = "0";
-                        $keraklide=1;
                         $mik++;
                         $yol = "0";
                         $UrtadagiKartalar = substr(29,20);
@@ -2251,7 +2252,9 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
                             $uyinchilar = str_replace(substr($data,0,1),"",$uyinchilar);
                             $UrtadagiKartalar = substr(30,20);
                         }
-                        if (strpos($data,"&")!==false&& substr(50,1) == "2")
+
+
+                        if (strpos($data,"&")!==false&& substr(50,1) == "2" &&$keraklide==1)
                         {
                             $pul =(string) ((int)($yol) + (int)($pul) + $judgement);
                             $Money = $pul;
@@ -2274,62 +2277,32 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
                             if ($mik == 4 && $Pas != "0"&& strlen($UziniKartasi)>1)
                             {
                                 $db->Setall($i,$uyindanOldingiPuli,$Pas,$qaysiligiKartani,$keraklide,$mik,$EngKatta,$yol,$UziniKartasi,$uyinchilar,$pul,$online,$UrtadagiKartalar);
-
+                                $r2[5]=$keraklide;$r2[5]=$mik;$r2[5]=$yol;
+                                $r2[7]=$uyinchilar;$r2[5]=$UziniKartasi;
+                                $r2[15]=$EngKatta;$r2[15]=$UrtadagiKartalar;
                                 $db->Tugat($i,$r2);
                             }
                             else
                             {
                                 //    print("8");
                                 // BotsList[i].keraklide++;
-                                $yol = $EngKatta;
                                 $db->Setall($i,$uyindanOldingiPuli,$Pas,$qaysiligiKartani,$keraklide,$mik,$EngKatta,$yol,$UziniKartasi,$uyinchilar,$pul,$online,$UrtadagiKartalar);
 
-                                $db->UyinniDAvomEttir($index . str_pad($pul,12,'0',STR_PAD_LEFT) .
-                                    str_pad($yol,12,'0',STR_PAD_LEFT) . "$^" .$keraklide . str_pad($r2[1],4,'0',STR_PAD_LEFT) . $mik);
+                                     if($keraklide==1){ $db->UyinniDAvomEttir($index . str_pad($pul,12,'0',STR_PAD_LEFT) .
+                                                str_pad($yol,12,'0',STR_PAD_LEFT) . "$^" .$keraklide . str_pad($r2[1],4,'0',STR_PAD_LEFT) . $mik); }
                             }
                         }
                     }
-                    else
-                    {
-                        // print("9"+" "+ BotsList[i].GroupNumber.PadLeft(4, '0')+" "+ data.Substring(data.Length - 4, 4)+" "+ Uchtalik+" "+ data );
-                        if ($online == "3" && str_pad($r2[1],4,'0',STR_PAD_LEFT) == substr($data ,strlen($data)-4,4))
-                        {
-                            //     BotsList[i].keraklide = int.Parse(data.Substring(29, 1));
-                            //   BotsList[i].mik = int.Parse(data.Substring(30, 1));
-                            //server:9000000000990000000000010$^57sp15cl11he11he17he16511102
-                            $EngKatta = "0";
-                            $keraklide = 0;
-                            $UrtadagiKartalar = substr(29,20);
-                            if (strpos($data,"&")!==false)
-                            {
-                                $uyinchilar = str_replace(substr($data,0,1),"",$uyinchilar);
-                                $UrtadagiKartalar = substr(30,20);
-                            }
-                            $yol = "0";
-                            $mik++;
-
-                            $db->Setall($i,$uyindanOldingiPuli,$Pas,$qaysiligiKartani,$keraklide,$mik,$EngKatta,$yol,$UziniKartasi,$uyinchilar,$pul,$online,$UrtadagiKartalar);
-
-
-
-                            //     print("MIK" + BotsList[i].mik);
-                            if ($mik == 4 && $Pas != "0" && $UziniKartasi != null)
-                            {
-                                $db->Tugat($i,$r2);
-                            }
-                         }
-                     }
                 }
             else
             {   //1000000000990000000000010$^10220001
                 //1000000000990000000000010$^10240001
-                if ($online == "3" && $index==(int)substr($data ,strlen($data)-5,1)&&
-                    str_pad($r2[1],4,'0',STR_PAD_LEFT) == substr($data ,strlen($data)-4,4)&& $Pas != "0")
+                if ($online == "3" && str_pad($r2[1],4,'0',STR_PAD_LEFT) == substr($data ,strlen($data)-4,4)&& $Pas != "0")
                     {
                         //3000000000980000000000020$^1021010
                         $keraklide = (int)(substr($data,27,1));
                         $keraklide++;
-                        $db->SetError("ker=".$keraklide,323);
+
                     if ((int)(substr($data,13,12)) > (int)($EngKatta))
                     {
                         $EngKatta = substr($data,13,12);
@@ -2338,8 +2311,9 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
                     {
                         $uyinchilar = str_replace(substr($data,0,1),"",$uyinchilar);
                     }
+
                     //1000000000450000000000000$^012&30102
-                    if (strpos($data,"&")!==false && substr($data,29,1) == "2")
+                    if ( $index==(int)substr($data ,strlen($data)-5,1)&&strpos($data,"&")!==false && substr($data,29,1) == "2")
                     {
                         $pul = (string) ((int)($yol) + (int)($pul) + $judgement);
                             $Money = $pul;
@@ -2353,7 +2327,9 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
                             $Pas = "1";
                             $UziniKartasi = "";
                             $UrtadagiKartalar = "";
-                         $db->Setall($i,$uyindanOldingiPuli,$Pas,$qaysiligiKartani,$keraklide,$mik,$EngKatta,$yol,$UziniKartasi,$uyinchilar,$pul,$online,$UrtadagiKartalar);
+                        $db->SetbotlistJudgement($i,$judgement);
+
+                        $db->Setall($i,$uyindanOldingiPuli,$Pas,$qaysiligiKartani,$keraklide,$mik,$EngKatta,$yol,$UziniKartasi,$uyinchilar,$pul,$online,$UrtadagiKartalar);
                         }
                     else
                     {
@@ -2361,30 +2337,9 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
                         $r2[5]=$keraklide;
                         $r2[7]=$uyinchilar;
                         $r2[15]=$EngKatta;
-                        $db->Yurish($i, $data,$r2);
-                    }
-                        //   print("MIK" + BotsList[i].mik);
-                    }
-                    else
-                    {
-                        //  print("17");
-                        if ($online == "3" && str_pad($r2[1],4,'0',STR_PAD_LEFT) == substr($data ,strlen($data)-4,4))
-                        {
-                            if (strpos($data,"&")!==false)
-                            {
-                                $uyinchilar = str_replace(substr($data,0,1),"",$uyinchilar);
-                            }
-                            //            print("18 "+ BotsList[i].keraklide);
-                            $keraklide = (int)(substr($data,27, 1));
-                        $keraklide++; //print("18 " + BotsList[i].keraklide);
-                        // BotsList[i].mik = int.Parse(data.Substring(30, 1));
-                        if ((int)($EngKatta) < (int)(substr($data,13, 12)))
-                            {
-                                $EngKatta = substr($data,13, 12);
-                            }
-                            $db->Setall($i,$uyindanOldingiPuli,$Pas,"",$keraklide,$mik,$EngKatta,$yol,$UziniKartasi,$uyinchilar,$pul,$online,$UrtadagiKartalar);
+                        if( $index==(int)substr($data ,strlen($data)-5,1)){$db->Yurish($i, $data,$r2);}
 
-                        }
+                    }
                     }
                 }
            }
