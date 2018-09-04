@@ -2231,6 +2231,7 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
             $uyinchilar=$r2[7];$judgement=$r2[12];$pul=$r2[2];$yol=$r2[3];
             $uyindanOldingiPuli=$r2[11];$Pas=$r2[10];$UziniKartasi=$r2[14];
             $EngKatta=$r2[15];$UrtadagiKartalar=$r2[15];
+            $qaysiligiKartani=$r2[18];
             if (strlen($data)> 45)
             {
                 // print("1");//1000000000350000000000050$^20cl20he11he18di18cl19210102
@@ -2265,12 +2266,13 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
                             $UziniKartasi = "";
                             $UrtadagiKartalar = "";
                             $db->SetbotlistJudgement($i,$judgement);
-                            $db->Setall($i,$uyindanOldingiPuli,$Pas,"",$keraklide,$mik,$EngKatta,$yol,$UziniKartasi,$uyinchilar,$pul,$online,$UrtadagiKartalar);
+                            $db->Setall($i,$uyindanOldingiPuli,$Pas,$qaysiligiKartani,$keraklide,$mik,$EngKatta,$yol,$UziniKartasi,$uyinchilar,$pul,$online,$UrtadagiKartalar);
                         }
                         else
                         {
                             if ($mik == 4 && $Pas != "0"&& strlen($UziniKartasi)>1)
-                            {                            $db->Setall($i,$uyindanOldingiPuli,$Pas,"",$keraklide,$mik,$EngKatta,$yol,$UziniKartasi,$uyinchilar,$pul,$online,$UrtadagiKartalar);
+                            {
+                                $db->Setall($i,$uyindanOldingiPuli,$Pas,$qaysiligiKartani,$keraklide,$mik,$EngKatta,$yol,$UziniKartasi,$uyinchilar,$pul,$online,$UrtadagiKartalar);
 
                                 $db->Tugat($i,$r2);
                             }
@@ -2279,7 +2281,7 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
                                 //    print("8");
                                 // BotsList[i].keraklide++;
                                 $yol = $EngKatta;
-                                $db->Setall($i,$uyindanOldingiPuli,$Pas,"",$keraklide,$mik,$EngKatta,$yol,$UziniKartasi,$uyinchilar,$pul,$online,$UrtadagiKartalar);
+                                $db->Setall($i,$uyindanOldingiPuli,$Pas,$qaysiligiKartani,$keraklide,$mik,$EngKatta,$yol,$UziniKartasi,$uyinchilar,$pul,$online,$UrtadagiKartalar);
 
                                 $db->UyinniDAvomEttir($index . str_pad($pul,12,'0',STR_PAD_LEFT) .
                                     str_pad($yol,12,'0',STR_PAD_LEFT) . "$^" .$keraklide . str_pad($r2[1],4,'0',STR_PAD_LEFT) . $mik);
@@ -2305,14 +2307,14 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
                             $yol = "0";
                             $mik++;
 
-                            $db->Setall($i,$uyindanOldingiPuli,$Pas,"",$keraklide,$mik,$EngKatta,$yol,$UziniKartasi,$uyinchilar,$pul,$online,$UrtadagiKartalar);
+                            $db->Setall($i,$uyindanOldingiPuli,$Pas,$qaysiligiKartani,$keraklide,$mik,$EngKatta,$yol,$UziniKartasi,$uyinchilar,$pul,$online,$UrtadagiKartalar);
 
 
 
                             //     print("MIK" + BotsList[i].mik);
                             if ($mik == 4 && $Pas != "0" && $UziniKartasi != null)
                             {
-                                $db->Setall($i,$uyindanOldingiPuli,$Pas,"",$keraklide,$mik,$EngKatta,$yol,$UziniKartasi,$uyinchilar,$pul,$online,$UrtadagiKartalar);
+                                $db->Setall($i,$uyindanOldingiPuli,$Pas,$qaysiligiKartani,$keraklide,$mik,$EngKatta,$yol,$UziniKartasi,$uyinchilar,$pul,$online,$UrtadagiKartalar);
 
                                 $db->Tugat($i,$r2);
                             }
@@ -2352,11 +2354,11 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
                             $Pas = "1";
                             $UziniKartasi = "";
                             $UrtadagiKartalar = "";
-                         $db->Setall($i,$uyindanOldingiPuli,$Pas,"",$keraklide,$mik,$EngKatta,$yol,$UziniKartasi,$uyinchilar,$pul,$online,$UrtadagiKartalar);
+                         $db->Setall($i,$uyindanOldingiPuli,$Pas,$qaysiligiKartani,$keraklide,$mik,$EngKatta,$yol,$UziniKartasi,$uyinchilar,$pul,$online,$UrtadagiKartalar);
                         }
                     else
                     {
-                        $db->Setall($i,$uyindanOldingiPuli,$Pas,"",$keraklide,$mik,$EngKatta,$yol,$UziniKartasi,$uyinchilar,$pul,$online,$UrtadagiKartalar);
+                        $db->Setall($i,$uyindanOldingiPuli,$Pas,$qaysiligiKartani,$keraklide,$mik,$EngKatta,$yol,$UziniKartasi,$uyinchilar,$pul,$online,$UrtadagiKartalar);
                         $db->Yurish($i, $data,$r2);
                     }
                         //   print("MIK" + BotsList[i].mik);
