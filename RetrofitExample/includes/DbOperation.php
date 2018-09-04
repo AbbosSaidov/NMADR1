@@ -1701,7 +1701,6 @@ class DbOperation
                             $db->Sethu3(0,$lk);
                             Javobit($lk);
                         }
-                        $db->SetError("i=".$i*2,$GroupNumber);
 
                         if ($pasde[$i*2]=="true"&&($huy == 2 || strlen($yurishkimmiki) == 2)) {$db->Sethu3(0,$lk); $db->Pas($lk,1);  }
                         break;
@@ -2174,7 +2173,9 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
                     {
                         $db->Setall($i,$uyindanOldingiPuli,$Pas,"",$keraklide,$mik,$EngKatta,$yol,$UziniKartasi,$uyinchilar,$pul,$online,$UrtadagiKartalar);
 
-                        //       print("Yurdim Chiqishda");
+                        $r2[5]=$keraklide;
+                        $r2[7]=$uyinchilar;
+                        $r2[15]=$EngKatta;
                         $db->Yurish($i, $data,$r2);
                     }
                 }
@@ -2314,8 +2315,6 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
                             //     print("MIK" + BotsList[i].mik);
                             if ($mik == 4 && $Pas != "0" && $UziniKartasi != null)
                             {
-                                $db->Setall($i,$uyindanOldingiPuli,$Pas,$qaysiligiKartani,$keraklide,$mik,$EngKatta,$yol,$UziniKartasi,$uyinchilar,$pul,$online,$UrtadagiKartalar);
-
                                 $db->Tugat($i,$r2);
                             }
                          }
@@ -2358,7 +2357,10 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
                         }
                     else
                     {
-                        $db->Setall($i,$uyindanOldingiPuli,$Pas,$qaysiligiKartani,$keraklide,$mik,$EngKatta,$yol,$UziniKartasi,$uyinchilar,$pul,$online,$UrtadagiKartalar);
+                        $db->Setall($i,$uyindanOldingiPuli,$Pas,$qaysiligiKartani,$keraklide,$mik,$EngKatta,$yol,$UziniKartasi,$uyinchilar,$pul,$online,$UrtadagiKartalar);$r2[6]=$online;
+                        $r2[5]=$keraklide;
+                        $r2[7]=$uyinchilar;
+                        $r2[15]=$EngKatta;
                         $db->Yurish($i, $data,$r2);
                     }
                         //   print("MIK" + BotsList[i].mik);
@@ -2465,7 +2467,9 @@ uyindanOldingiPuli,judgement,mik,uziniKartasi,EngKatta,urtadagiKartalar,money,mi
         }
     }
     function Yurish($i, $data,$r2)
-    {$db=new DbOperation();
+    {
+        $db=new DbOperation();
+
         $online=$r2[6];$groupnumber=$r2[1];$UrtadagiKartalar=$r2[15];
         $index=$r2[8];$keraklide=$r2[5];$mik=$r2[13];
         $uyinchilar=$r2[7];$judgement=$r2[12];$pul=$r2[2];$yol=$r2[3];
