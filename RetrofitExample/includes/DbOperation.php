@@ -711,7 +711,6 @@ class DbOperation
         $koo=$lk;
         $db=new DbOperation();
         $koo=$db->GetKartatarqatildi($koo);
-        $db->SetError("Uttide4",$lk);
         if($koo== "false")
         {
             $dssad = 0;
@@ -753,7 +752,6 @@ class DbOperation
             }
             $db->SetYurishKimmiki($koo2,$lk);
             $yurishkimmiki=$koo2;
-            $db->SetError("3 =Chiqishde = ".substr($yurishkimmiki,0,1)." dssa=".$dssad,$lk);
 
             if ($dssad >= $soni && $db->GetKartatarqatildi($lk) == "false")
             {
@@ -835,7 +833,6 @@ class DbOperation
         $GroupNumber=$userGrop;
         $uyinchilar=$db->Getuyinchilar($userGrop);
         for($i=0;$i<strlen($uyinchilar);$i++){
-            $db->SetError($i." chek u=".$uyinchilar,$userGrop);
 
             $erw=$db->GetTimede($GroupNumber,"time".substr($uyinchilar,$i,1));
             $OxirgiZapis=$db->GetOxirgiZapisplar($userGrop,"OxirgiZapis".substr($uyinchilar,$i,1));
@@ -1046,7 +1043,6 @@ class DbOperation
                                             ($i/2)*(int)$pul==($i/2)*$Pullar[$t] && $playersNumber < $odamlade[$i2] )
                                         {
                                             $GroupNumber = $grup;  $t=33;$i2=2;$i1=100;$i=4;$k=2;
-                                            $db->SetError("botde2 ".$data,21312);
 
                                             for($i3=0;$i3<2;$i3++){
                                                 if($GroupNumber%2==$i3){
@@ -1056,7 +1052,6 @@ class DbOperation
                                                     }
                                                     $db->SetHowmanyPlayers($playersNumber,$GroupNumber);
                                                     $uyinchilar =  uyinchilarade2($GroupNumber,$odamlade[$i3]);
-                                                    $db->SetError("uyinchilar=".$uyinchilar,$GroupNumber);
                                                     $rewrwr=uyinchiniGruppgaQushish($playersNumber,$GroupNumber,$BotOrClient,$Id,$Level,$Money,$Name,$pul,$yol,$uyinchilar);
                                                     $i3=2;
                                                 }
@@ -1378,7 +1373,6 @@ class DbOperation
                 for($i=0;$i<10;$i++){
                     $rt=$rt." ".$Golib[$i];
                 }
-                $db->SetError("Golib-".$kmn." ".$rt,$lk);
                 for ($i = 0; $i < 10; $i++)
                 {
                     for ($t = 0; $t < 10; $t++)
@@ -1894,9 +1888,6 @@ class DbOperation
 
 
 
-
-
-
     function Chiqeuyindanbot($i){
         $k=0;
         $stmt =$this->con->prepare("UPDATE botlist SET online = ?,mik=?,uyindanOldingiPuli=? WHERE id =?");
@@ -2104,8 +2095,6 @@ class DbOperation
                         }
                    }
               }
-            $r2=$db->Getall($i);
-            $db->SetError("UZINKI=".$r2[14]."  ".$uzinKartasi,321312);
         }
         if (strlen($data) > 9 && substr($data,0,9) == "Chiqishde")
         {   $r2=$db->Getall($i);
@@ -2276,7 +2265,6 @@ class DbOperation
                         }
                         else
                         {
-                            $db->SetError("mk=".$mik." pas=".$Pas." lenhg>1 ".strlen($UziniKartasi),213);
                             if ($mik == 4 && $Pas != "0"&& strlen($UziniKartasi)>1)
                             {
                                 $db->Setall($i,$uyindanOldingiPuli,$Pas,$qaysiligiKartani,$keraklide,$mik,$EngKatta,$yol,$UziniKartasi,$uyinchilar,$pul,$online,$UrtadagiKartalar);
@@ -2433,7 +2421,6 @@ class DbOperation
         $uyindanOldingiPuli=$r2[11];$Pas=$r2[10];$UziniKartasi=$r2[14];
         $EngKatta=$r2[15];$minstavka=$db->TurnLk((int)$groupnumber);
         $qaysiligiKartani=$r2[19];
-        $db->SetError($EngKatta." yol ".$yol,123123);
         if ((int)($EngKatta) > (int)($yol))
         {
             //   print("13");
@@ -2795,6 +2782,7 @@ class DbOperation
             }
         }
           $Nihoyat = $Nihoyat . $bhu . substr($den,0, 8);
+
         $db->RRniKiritish($Nihoyat . str_pad((string)($r2[1]),4,'0',STR_PAD_LEFT) . "000000000000");
     }
     function Tugat3tali($i,$r2)
@@ -3388,7 +3376,6 @@ class DbOperation
             $t = ( int)($EngKatta)  - ( int)($yol) ;
             $yol = $EngKatta;
         }
-        $db->SetError("yo=".$yol,123123);
         $pul = (string)((int)($pul)- $t);
         $Money = $pul;
         //  print("14 money" + BotsList[i].Money + " index=" + BotsList[i].Index);
