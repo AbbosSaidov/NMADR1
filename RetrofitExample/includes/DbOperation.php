@@ -1117,14 +1117,14 @@ class DbOperation
         $stmqt->bind_result($index,$idnumber);
 
         while($stmqt->fetch()){
-
             $mk="time".(string)$index;
             $tr=$tr.(string)$index;
+
+
             $erw=$db->GetTimede($userGrop,$mk);
             $db->SetTimede($userGrop,"time".(string)$index,substr($erw,0,10).time());
         }
         for($i=0;$i<strlen($tr);$i++){
-
             $stmtw = $this->con->prepare("SELECT message,id FROM messages WHERE gropnumber = ? AND Indexq=?");
             $iw=(int)substr($tr,$i,1);
             $stmtw->bind_param("ii", $userGrop,$iw);
@@ -1132,7 +1132,6 @@ class DbOperation
             $stmtw->bind_result($data2,$id2);
 
             while($stmtw->fetch()){
-
                 $db->OnIncomBot($data2,$idnumber);
                 $db->DeleteMessages($iw,$userGrop,(int)$id2);
             }
