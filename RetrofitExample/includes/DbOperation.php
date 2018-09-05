@@ -2074,22 +2074,22 @@ class DbOperation
                 $db->UyinniDAvomEttir($index .str_pad($pul,12,'0',STR_PAD_LEFT) .str_pad($yol,12,'0',STR_PAD_LEFT) . "$^" . $keraklide . str_pad($r2[1],4,'0',STR_PAD_LEFT) . $mik);
             }else{
                 if(substr($data,strlen($data)-4,4)==str_pad($r2[1],4,'0',STR_PAD_LEFT) && $online==3){
-                    $uyindanOdingiPuli=$r2[2];$uyinchilar=substr($data,34,strlen($data)-39);$pul=(string)((int)$r2[2]-(int)substr($data,22,12));
+                    $uyindanOdingiPuli=$r2[2];$uyinchilar=substr($data,34,strlen($data)-39);
                     $pas="1";$keraklide=0;$mik=0;$EngKatta=(int)substr($data,22,12);$yol=substr($data,22,12);$uzinKartasi=substr($data,0,8);
                     $online=3;$qaysiligiKartani="";
                     if (substr($data,35,1) == (string)$index)
-                        {
+                        {$pul=(string)((int)$r2[2]-(int)substr($data,22,12));
                             $db->Setall($i,$uyindanOdingiPuli,$pas,$qaysiligiKartani,$keraklide,$mik,$EngKatta,$yol
                                 ,$uzinKartasi,$uyinchilar,$pul,$online,$urtadagikartalar);                        }
                         else
                         {
                             if (substr($data,34,1) == (string)$index)
-                            {
+                            {$pul=(string)((int)$r2[2]-(int)substr($data,22,12)/2);
                                 $db->Setall($i,$uyindanOdingiPuli,$pas,$qaysiligiKartani,$keraklide,$mik,$EngKatta,(string)(((int)$yol)/2)
                                     ,$uzinKartasi,$uyinchilar,$pul,$online,$urtadagikartalar);
                             }
                             else
-                            {
+                            {$pul=(string)((int)$r2[2]-0);
                                 $db->Setall($i,$uyindanOdingiPuli,$pas,$qaysiligiKartani,$keraklide,$mik,$EngKatta,"0"
                                     ,$uzinKartasi,$uyinchilar,$pul,$online,$urtadagikartalar);                            }
                         }
