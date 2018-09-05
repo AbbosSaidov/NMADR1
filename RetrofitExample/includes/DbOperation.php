@@ -1191,6 +1191,7 @@ class DbOperation
                     }
                 }
             }
+            $db->SetError("mkds=".$mkds,132);
             $mkds = 9 - $mkds; $kmn = "";
             if ($mkds == 1)
             {
@@ -1580,7 +1581,7 @@ class DbOperation
                             substr($uyinchilar,$i,1)))-39),$lk,"OxirgiZapis".substr($uyinchilar,$i,1)
                 );
             }
-            //   $db->SetError("As-".$kmn,$lk);
+               $db->SetError("Assassin-".$kmn,$lk);
             if ($kmn != "") { $db->SEndMEssageToGroup($lk,$uyinchilar,$kmn); }
             sleep(6);
             $minSatck = $db->TurnLk($lk);
@@ -1658,7 +1659,7 @@ class DbOperation
                 }
                 $pasde=array("true",(string)$huy."&","false",(string)$huy.(string)$huy);
                 for($i=0;$i<2;$i++){
-                    if($Pas==$pasde[$i*2]){
+                    if($Pas==$pasde[$i*2]){$hu3=-1;
                         if($pasde[$i*2]=="true"){
                             if (strlen($yurishkimmiki) < 4)
                             {
