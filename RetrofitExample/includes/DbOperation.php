@@ -1185,19 +1185,20 @@ class DbOperation
                         if (substr($uyinchilar,$t,1) == $i)
                         {
                             $Massiv2[$i] = $db->GetTikilganPullar($lk,"TikilganPullar".(string)$i);
+
                             $Massiv[$i] = $Massiv2[$i];
                             $t = 10;
                         }
                     }
                 }
             }
-            $db->SetError("mkds=".$mkds,132);
             $mkds = 9 - $mkds; $kmn = "";
             if ($mkds == 1)
             {
                 for($i = 1; $i < 10;$i++)
                 {
                     $kmn = $kmn.$db->GetJavoblade($lk,"Javoblade".(string)$i);
+
                 }
             }
             else
@@ -1259,6 +1260,8 @@ class DbOperation
                         $asosiy = str_replace(substr($t1,$i,1),"",$asosiy);
                     }
                 }
+                $db->SetError("kmn1=".$kmn,132);
+
                 $Pullar = array();
                 $g = array();
                 for ($i=0;$i<10;$i++)
@@ -1305,6 +1308,7 @@ class DbOperation
                 for($i=0;$i<10;$i++){
                     $rt=$rt." ".$Pullar[$i];
                     $rt2=$rt2." ".$g[$i];
+                    $db->SetError("Pullar1=".$Pullar[$i]." g=".$g[$i],132);
                 }
                 // $db->SetError("Pullar-".$kmn." ".$rt." ".$rt2,$lk);
                 $sdasd="";
@@ -1327,7 +1331,7 @@ class DbOperation
                         {//kmn= 12:3:7:4:6:59:8:
                             for ($t2 = 0; $t2 <strlen($g[$i]); $t2++)
                             {//4-1 400 4001 4001 4:1: 4 1
-                                //        $db->SetError($g[$i]." gi t=".$t." t2=".$t2." kmn=".$kmn." ".sizeof($g[$i]),$lk);
+                                //    $db->SetError($g[$i]." gi t=".$t." t2=".$t2." kmn=".$kmn." ".sizeof($g[$i]),$lk);
                                 if (substr($kmn,$t,1)!=":" && substr($kmn,$t,1) == substr($g[$i],$t2,1))
                                 {
                                     $Golib[$dfg] = substr($kmn,$t,1).$Pullar[$i];
@@ -1369,6 +1373,8 @@ class DbOperation
                         $dfg++; $dfg2++; $dfg3++;
                     }
                 }
+                $db->SetError("kmn2=".$kmn,132);
+
                 $rt=";";
                 for($i=0;$i<10;$i++){
                     $rt=$rt." ".$Golib[$i];
@@ -1405,6 +1411,8 @@ class DbOperation
                         $kmn = $kmn.substr($db->GetJavoblade($lk,"Javoblade".substr($Golib[$i],0,1)),0,19).str_pad(substr($Golib[$i],1,strlen($Golib[$i])-1) ,12,"0",STR_PAD_LEFT);
                     }
                 }
+                $db->SetError("kmn3=".$kmn,132);
+
                 for ($i = 0; $i < 10; $i++)
                 {
                     if ($Golib2[$i] != null)
@@ -1558,6 +1566,8 @@ class DbOperation
                     }
                 }
             }
+            $db->SetError("kmn4=".$kmn,132);
+
             for ($i = 0; $i < strlen($kmn); $i++)
             {
                 if (strlen($kmn) > $i + 2 &&substr($kmn,$i,2) == "RR")
