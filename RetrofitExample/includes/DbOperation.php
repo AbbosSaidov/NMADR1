@@ -1221,7 +1221,7 @@ class DbOperation
                         //print(i + " " + asosiy + " d=" + Javoblade[lk, int.Parse(asosiy.Substring(i, 1))]);
                         //113579RR3p121di22he2121020
                         //     $toshde = (int)(substr($db->GetJavoblade($lk,"Javoblade".substr($asosiy,$i,1)),2,1));
-                        if (strlen($javoblade[(int)substr($asosiy,$i,1)]) > 20)
+                        if (strlen($javoblade[(int)substr($asosiy,$i,1)]) > 20 &&(int)(substr($javoblade[(int)substr($asosiy,$i,1)],19,strlen($javoblade[(int)substr($asosiy,$i,1)])-19)) >0)
                         {
                             $ObshiyPul = (string)((int)(substr($javoblade[(int)substr($asosiy,$i,1)],19,strlen($javoblade[(int)substr($asosiy,$i,1)])-19)));
                         }
@@ -1260,7 +1260,7 @@ class DbOperation
                         $asosiy = str_replace(substr($t1,$i,1),"",$asosiy);
                     }
                 }
-                $db->SetError("kmn1=".$kmn,132);
+                $db->SetError("kmn1=".$kmn." obshiypul=".$ObshiyPul,132);
 
                 $Pullar = array();
                 $g = array();
@@ -1273,7 +1273,7 @@ class DbOperation
                 sort($Massiv2);
                 for($i = 0; $i < sizeof($Massiv2); $i++)
                 {
-                    //     $db->SetError("MAssiv2 =".$Massiv2[$i],$lk);
+                    $db->SetError("MAssiv2 =".$Massiv2[$i],$lk);
                     if($Massiv2[$i]!=0){
                         for($ml = 0; $ml < 10; $ml++)
                         {
@@ -1308,7 +1308,6 @@ class DbOperation
                 for($i=0;$i<10;$i++){
                     $rt=$rt." ".$Pullar[$i];
                     $rt2=$rt2." ".$g[$i];
-                    $db->SetError("Pullar1=".$Pullar[$i]." g=".$g[$i],132);
                 }
                 // $db->SetError("Pullar-".$kmn." ".$rt." ".$rt2,$lk);
                 $sdasd="";
