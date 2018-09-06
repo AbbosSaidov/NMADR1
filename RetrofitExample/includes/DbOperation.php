@@ -1119,7 +1119,9 @@ class DbOperation
             $mk="time".(string)$index;
             $tr=$tr.(string)$index;
             $tr2[$l]=$idnumber;
-         $l++;
+
+            $l++;
+
 
             $erw=$db->GetTimede($userGrop,$mk);
             $db->SetTimede($userGrop,"time".(string)$index,substr($erw,0,10).time());
