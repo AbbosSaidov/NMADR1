@@ -1099,7 +1099,6 @@ class DbOperation
             if(strlen($nmadr)>4 && substr($nmadr,1,4)=="true"){
                 $index=substr($nmadr,0,1);
 
-
                 $timede2=$db->GetTimede2($userGrop,"time".$index);
                 //     $db->SetError("asd2 ".$timede2,$userGrop);
                 if(time()-(int)$timede2>28){
@@ -1110,29 +1109,32 @@ class DbOperation
             }
         }
         //Check the bots here
-        $tr="";
+        $tr="";$tr2=array();
         $stmqt = $this->con->prepare("SELECT indexs,idnumber FROM botgrouplar WHERE groupnumber = ?");
         $stmqt->bind_param("i", $userGrop);
         $stmqt->execute();
         $stmqt->bind_result($index,$idnumber);
-
+         $l=0;
         while($stmqt->fetch()){
             $mk="time".(string)$index;
             $tr=$tr.(string)$index;
-
+            $tr2[$l]=$idnumber;
+         $l++;
 
             $erw=$db->GetTimede($userGrop,$mk);
             $db->SetTimede($userGrop,"time".(string)$index,substr($erw,0,10).time());
         }
+
         for($i=0;$i<strlen($tr);$i++){
             $stmtw = $this->con->prepare("SELECT message,id FROM messages WHERE gropnumber = ? AND Indexq=?");
             $iw=(int)substr($tr,$i,1);
+            $iw2=(int)$tr2[$i];
             $stmtw->bind_param("ii", $userGrop,$iw);
             $stmtw->execute();
             $stmtw->bind_result($data2,$id2);
 
             while($stmtw->fetch()){
-                $db->OnIncomBot($data2,$idnumber);
+                $db->OnIncomBot($data2,$iw2);
                 $db->DeleteMessages($iw,$userGrop,(int)$id2);
             }
         }
@@ -1610,10 +1612,10 @@ class DbOperation
             $kartaTarqatildi=$db->GetKartatarqatildi($GroupNumber);
             $uyinchilar=$db->Getuyinchilar($GroupNumber);
             $huy=$db->GetHuy($GroupNumber);
-            $Level ="000001";
-            $Id="0000000001";
-            $Name ="NameByMe";$Money ="";
-            if($GroupNumber>0 && $GroupNumber < 3200 && strlen($oxirgizapis) > 68)
+            $Level ="000001";$Name ="NameByMe";
+            $Id="0000000001";$Money ="";
+
+            if($GroupNumber > 0 && $GroupNumber < 3200 && strlen($oxirgizapis) > 68)
             {
                 $Level = substr($oxirgizapis,39,6);
                 $Id = substr($oxirgizapis,59,10);
@@ -1631,10 +1633,9 @@ class DbOperation
             //return " As".$keraklide;
             if (strlen($yurishkimmiki)>1 && (string)$Index == substr($yurishkimmiki,0,1) && $kartaTarqatildi=="true")
             {
-
                     $lk = $GroupNumber;
-                $a =substr($yurishkimmiki,0,1);  $b = substr($yurishkimmiki,1,strlen($yurishkimmiki)-1);
-                for($i = 0; $i < strlen($yurishkimmiki); $i++){
+                    $a =substr($yurishkimmiki,0,1);  $b = substr($yurishkimmiki,1,strlen($yurishkimmiki)-1);
+                   for($i = 0; $i < strlen($yurishkimmiki); $i++){
                     //1000000000350000000000050$^201020 a=1 b=13113
                     if ($i + 2 == strlen($yurishkimmiki))
                     {
@@ -2059,7 +2060,7 @@ class DbOperation
         {
             $r2=$db->Getall($i);
             $online=$r2[6];
-            $index=$r2[8];$qaysiligiKartani=$r2[18];
+           $qaysiligiKartani=$r2[18];
             $online=$r2[6];$groupnumber=$r2[1];
             $index=$r2[8];$pas=$r2[10];$keraklide=$r2[5];
             $uyinchilar=$r2[7];$judgement=$r2[12];$pul=$r2[2];$yol=$r2[3];
@@ -2075,9 +2076,14 @@ class DbOperation
                 $db->Setall($i,$uyindanOdingiPuli,$pas,$qaysiligiKartani,$keraklide,$mik,$EngKatta,$yol
                     ,$uzinKartasi,$uyinchilar,$pul,$online,$urtadagikartalar);
 
+                  $db->SetError("as=".$index,324);
+
                 $db->UyinniDAvomEttir($index .str_pad($pul,12,'0',STR_PAD_LEFT) .str_pad($yol,12,'0',STR_PAD_LEFT) . "$^" . $keraklide . str_pad($r2[1],4,'0',STR_PAD_LEFT) . $mik);
+
             }else{
                 if(substr($data,strlen($data)-4,4)==str_pad($r2[1],4,'0',STR_PAD_LEFT) && $online==3){
+                    $db->SetError("as2=".$index,324);
+
                     $uyindanOdingiPuli=$r2[2];$uyinchilar=substr($data,34,strlen($data)-39);
                     $pas="1";$keraklide=0;$mik=0;$EngKatta=(int)substr($data,22,12);$yol=substr($data,22,12);$uzinKartasi=substr($data,0,8);
                     $online=3;$qaysiligiKartani="";
