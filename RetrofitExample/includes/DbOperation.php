@@ -1260,7 +1260,6 @@ class DbOperation
                         $asosiy = str_replace(substr($t1,$i,1),"",$asosiy);
                     }
                 }
-                $db->SetError("kmn1=".$kmn." obshiypul=".$ObshiyPul,132);
 
                 $Pullar = array();
                 $g = array();
@@ -1273,7 +1272,6 @@ class DbOperation
                 sort($Massiv2);
                 for($i = 0; $i < sizeof($Massiv2); $i++)
                 {
-                    $db->SetError("MAssiv2 =".$Massiv2[$i],$lk);
                     if($Massiv2[$i]!=0){
                         for($ml = 0; $ml < 10; $ml++)
                         {
@@ -1372,7 +1370,6 @@ class DbOperation
                         $dfg++; $dfg2++; $dfg3++;
                     }
                 }
-                $db->SetError("kmn2=".$kmn,132);
 
                 $rt=";";
                 for($i=0;$i<10;$i++){
@@ -1410,7 +1407,6 @@ class DbOperation
                         $kmn = $kmn.substr($db->GetJavoblade($lk,"Javoblade".substr($Golib[$i],0,1)),0,19).str_pad(substr($Golib[$i],1,strlen($Golib[$i])-1) ,12,"0",STR_PAD_LEFT);
                     }
                 }
-                $db->SetError("kmn3=".$kmn,132);
 
                 for ($i = 0; $i < 10; $i++)
                 {
@@ -1565,7 +1561,6 @@ class DbOperation
                     }
                 }
             }
-            $db->SetError("kmn4=".$kmn,132);
 
             for ($i = 0; $i < strlen($kmn); $i++)
             {
@@ -1590,7 +1585,7 @@ class DbOperation
                             substr($uyinchilar,$i,1)))-39),$lk,"OxirgiZapis".substr($uyinchilar,$i,1)
                 );
             }
-               $db->SetError("Assassin-".$kmn,$lk);
+             //  $db->SetError("Assassin-".$kmn,$lk);
             if ($kmn != "") { $db->SEndMEssageToGroup($lk,$uyinchilar,$kmn); }
             sleep(6);
             $minSatck = $db->TurnLk($lk);
