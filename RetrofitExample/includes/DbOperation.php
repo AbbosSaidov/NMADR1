@@ -855,10 +855,12 @@ class DbOperation
                 $db->Chiqishde($data21,0);
             }else{
                 if(strlen($OxirgiZapis)>68 && strpos($uyinchilar,substr($uyinchilar,$i,1))!==false&& strlen($erw)<10 ){
+
                     $db->Chiqishde($data21,0);
                 }else{
                     if(strlen($OxirgiZapis)>68 && strpos($uyinchilar,substr($uyinchilar,$i,1))!==false && strlen($erw)>10 &&
                         time()-(int)substr($erw,10,strlen($erw)-10)<7 && $db->GetKartatarqatildi($GroupNumber)=="false" ){
+
                         $minStavka = $db->TurnLk($GroupNumber);
                         if ((int)substr($OxirgiZapis,14, 12) < $minStavka)
                         {
@@ -866,6 +868,7 @@ class DbOperation
                         }
                     }else{
                         if(strpos($uyinchilar,substr($uyinchilar,$i,1))!==false &&(strlen($OxirgiZapis)<68 || strlen($erw)<10) ){
+
                             $db->Chiqishde($data21,0);
                         }
                     }
@@ -1141,17 +1144,16 @@ class DbOperation
         $id=(string)$userindex .str_pad((string)($userGrop),4,'0',STR_PAD_LEFT);
         $l=0;
         while($stmqt->fetch()){
-       $db->SetOcheredBot($userGrop,$ocheredbot.$id);
-       $ocherde=$db->GetOcheredBot($userGrop,$idnumber);
-
-             if(strlen($ocherde)<6 || (strlen($ocherde)>9&&substr($ocherde,0,5)!=substr($ocherde,5,5)&&substr($ocherde,0,5)==$id)){
-        $mk="time".(string)$index;
-        $tr=$tr.(string)$index;
-        $tr2[$l]=$idnumber;
-        $l++;
-        $erw=$db->GetTimede($userGrop,$mk);
-        $db->SetTimede($userGrop,"time".(string)$index,substr($erw,0,10).time());
-              }
+        $db->SetOcheredBot($userGrop,$ocheredbot.$id);
+        $ocherde=$db->GetOcheredBot($userGrop,$idnumber);
+             if(strlen($ocherde) < 6 || (strlen($ocherde) > 9 && substr($ocherde,0,5) != substr($ocherde,5,5) && substr($ocherde,0,5) == $id)){
+             $mk="time".(string)$index;
+             $tr=$tr.(string)$index;
+             $tr2[$l]=$idnumber;
+             $l++;
+             $erw=$db->GetTimede($userGrop,$mk);
+             $db->SetTimede($userGrop,"time".(string)$index,substr($erw,0,5).time());
+             }
         }
 
         for($i=0;$i<strlen($tr);$i++){
