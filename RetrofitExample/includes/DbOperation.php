@@ -1138,20 +1138,20 @@ class DbOperation
         $stmqt->execute();
         $stmqt->bind_result($index,$idnumber,$ocheredbot);
 
+        $id=(string)$userindex .str_pad((string)($userGrop),4,'0',STR_PAD_LEFT);
         $l=0;
         while($stmqt->fetch()){
        $db->SetOcheredBot($userGrop,$ocheredbot.$id);
        $ocherde=$db->GetOcheredBot($userGrop,$idnumber);
 
-
-if(strlen($ocherde)<11 || (strlen($ocherde)>19&&substr($ocherde,0,10)==substr($ocherde,10,10)&&substr($ocherde,0,10)==$id)){
-    $mk="time".(string)$index;
-    $tr=$tr.(string)$index;
-    $tr2[$l]=$idnumber;
-    $l++;
-    $erw=$db->GetTimede($userGrop,$mk);
-    $db->SetTimede($userGrop,"time".(string)$index,substr($erw,0,10).time());
-}
+             if(strlen($ocherde)<6 || (strlen($ocherde)>9&&substr($ocherde,0,5)!=substr($ocherde,5,5)&&substr($ocherde,0,5)==$id)){
+        $mk="time".(string)$index;
+        $tr=$tr.(string)$index;
+        $tr2[$l]=$idnumber;
+        $l++;
+        $erw=$db->GetTimede($userGrop,$mk);
+        $db->SetTimede($userGrop,"time".(string)$index,substr($erw,0,10).time());
+              }
         }
 
         for($i=0;$i<strlen($tr);$i++){
