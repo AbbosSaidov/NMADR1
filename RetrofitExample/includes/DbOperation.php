@@ -859,23 +859,32 @@ class DbOperation
             }
         }
         $uyinchilar=$db->Getuyinchilar($userGrop);
-        $stmt = $this->con->prepare("SELECT indexs FROM botgrouplar WHERE groupnumber = ? ");
+        $stmt = $this->con->prepare("SELECT indexs,id FROM botgrouplar WHERE groupnumber = ? ");
         $stmt->bind_param("i", $userGrop);
         $stmt->execute();
-        $stmt->bind_result($index);
+        $stmt->bind_result($index ,$lkk);
+        $jk=array();$d=0;
 
         while($stmt->fetch()){
-            $indexs=$index;
+            if(strlen((string)$index)>0 && strpos($uyinchilar,(string)$index)===false && $BotOrClient=="true"){
+             /*   $sql="DELETE FROM botgrouplar WHERE groupnumber = ? AND indexs=?  ";
+                $stmt2 = $this->con->prepare($sql);
+                $stmt2->bind_param("ii", $userGrop,$index);
+                $stmt2->execute();*/
+                $jk[0][$d]=$lkk;
+                $jk[1][$d]=$index;
+                $d++;
+            }
         }
-        if(strlen((string)$index)>0&&strpos($uyinchilar,(string)$index)===false &&$BotOrClient=="true"){
-            $sql="DELETE FROM botgrouplar WHERE groupnumber = ? AND indexs=?  ";
-            $stmt = $this->con->prepare($sql);
-            $stmt->bind_param("ii", $userGrop,$indexs);
-            $stmt->execute();
-            $sql="DELETE FROM botlist WHERE groupnumber = ? AND indexq=?  ";
-            $stmt = $this->con->prepare($sql);
-            $stmt->bind_param("ii", $userGrop,$indexs);
-            $stmt->execute();
+        for($i=0;$i<$d;$i++){
+            $sql="DELETE FROM botgrouplar WHERE groupnumber = ? AND indexs=? AND id=?   ";
+            $stmt2 = $this->con->prepare($sql);
+            $stmt2->bind_param("iii", $userGrop,$jk[1][$i],$jk[0][$i]);
+            $stmt2->execute();
+            $sql="DELETE FROM botlist WHERE groupnumber = ? AND indexq=? AND id=? ";
+            $stmt3 = $this->con->prepare($sql);
+            $stmt3->bind_param("iii", $userGrop,$jk[1][$i],$jk[0][$i]);
+            $stmt3->execute();
         }
     }
     //methoda uyinga kirish unchun
@@ -2078,13 +2087,13 @@ class DbOperation
                 $db->Setall($i,$uyindanOdingiPuli,$pas,$qaysiligiKartani,$keraklide,$mik,$EngKatta,$yol
                     ,$uzinKartasi,$uyinchilar,$pul,$online,$urtadagikartalar);
 
-                  $db->SetError("as=".$index,324);
+                  $db->SetError("as=".$index." i=".$i,324);
 
                 $db->UyinniDAvomEttir($index .str_pad($pul,12,'0',STR_PAD_LEFT) .str_pad($yol,12,'0',STR_PAD_LEFT) . "$^" . $keraklide . str_pad($r2[1],4,'0',STR_PAD_LEFT) . $mik);
 
             }else{
                 if(substr($data,strlen($data)-4,4)==str_pad($r2[1],4,'0',STR_PAD_LEFT) && $online==3){
-                    $db->SetError("as2=".$index,324);
+                    $db->SetError("as2=".$index." i=".$i,324);
 
                     $uyindanOdingiPuli=$r2[2];$uyinchilar=substr($data,34,strlen($data)-39);
                     $pas="1";$keraklide=0;$mik=0;$EngKatta=(int)substr($data,22,12);$yol=substr($data,22,12);$uzinKartasi=substr($data,0,8);
