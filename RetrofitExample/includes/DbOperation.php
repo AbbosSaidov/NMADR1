@@ -228,6 +228,19 @@ class DbOperation
         $stmt->bind_param("si",$time,$GroupNumber);
         $stmt->execute();
     }
+    function SetOcheredBot($GroupNumber,$ochered){
+        $stmt =$this->con->prepare("UPDATE botgrouplar SET ochered = ? WHERE groupnumber =?");
+        $stmt->bind_param("si",$ochered,$GroupNumber);
+        $stmt->execute();
+    }
+    function GetOcheredBot($GroupNumber,$id){
+        $stmt2=$this->con->prepare("SELECT ochered FROM botgrouplar WHERE id=?");
+        $stmt2->bind_param("i",$GroupNumber);
+        $stmt2->execute();
+        $stmt2->bind_result($ki1);
+        $stmt2->fetch();
+        return $ki1;
+    }
     function GetTimede($GroupNumber,$timede){
         $stmt2=$this->con->prepare("SELECT $timede FROM timede WHERE GroupNumber=?");
         $stmt2->bind_param("i",$GroupNumber);
@@ -267,6 +280,7 @@ class DbOperation
         $stmt->bind_param("iss",$userGrop,$userId,$timed);
         $stmt->execute();
     }
+
     function DeleteOchered($userGrop,$id){
         $sql="DELETE FROM ochered WHERE groupnumber = ? AND idPlayer=? ";
         $stmt = $this->con->prepare($sql);
@@ -1119,21 +1133,25 @@ class DbOperation
         }
         //Check the bots here
         $tr="";$tr2=array();
-        $stmqt = $this->con->prepare("SELECT indexs,idnumber FROM botgrouplar WHERE groupnumber = ?");
+        $stmqt = $this->con->prepare("SELECT indexs,idnumber,ochered FROM botgrouplar WHERE groupnumber = ?");
         $stmqt->bind_param("i", $userGrop);
         $stmqt->execute();
-        $stmqt->bind_result($index,$idnumber);
-         $l=0;
+        $stmqt->bind_result($index,$idnumber,$ocheredbot);
+
+        $l=0;
         while($stmqt->fetch()){
-            $mk="time".(string)$index;
-            $tr=$tr.(string)$index;
-            $tr2[$l]=$idnumber;
-
-            $l++;
+       $db->SetOcheredBot($userGrop,$ocheredbot.$id);
+       $ocherde=$db->GetOcheredBot($userGrop,$idnumber);
 
 
-            $erw=$db->GetTimede($userGrop,$mk);
-            $db->SetTimede($userGrop,"time".(string)$index,substr($erw,0,10).time());
+if(strlen($ocherde)<11 || (strlen($ocherde)>19&&substr($ocherde,0,10)==substr($ocherde,10,10)&&substr($ocherde,0,10)==$id)){
+    $mk="time".(string)$index;
+    $tr=$tr.(string)$index;
+    $tr2[$l]=$idnumber;
+    $l++;
+    $erw=$db->GetTimede($userGrop,$mk);
+    $db->SetTimede($userGrop,"time".(string)$index,substr($erw,0,10).time());
+}
         }
 
         for($i=0;$i<strlen($tr);$i++){
@@ -1149,6 +1167,8 @@ class DbOperation
                 $db->DeleteMessages($iw,$userGrop,(int)$id2);
             }
         }
+        $db->SetOcheredBot($userGrop,"");
+
         return $messages;
     }
     function DeleteMessages($userindex,$userGrop,$id){
