@@ -1167,7 +1167,7 @@ class DbOperation
         while($stmqt->fetch()){
         $idOchered=$db->SetOcheredBot($userGrop,$idnumber,$id);
         $ocherde=$db->GetOcheredBot($idnumber);
-             if($ocherde[1][0]==$idOchered &&$ocherde[0][0]=$id){
+             if($ocherde[1][0]==$idOchered && $ocherde[0][0]=$id){
              $mk="time".(string)$index;
              $tr=$tr.(string)$index;
              $tr2[$l]=$idnumber;
