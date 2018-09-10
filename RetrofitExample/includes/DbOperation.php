@@ -237,10 +237,10 @@ class DbOperation
         return $stmt->insert_id;
     }
     function DeleteOcheredBot($botId,$id){
-        $sql="DELETE FROM ocheredbot WHERE botId = ? AND id=? ";
-        $stmt = $this->con->prepare($sql);
-        $stmt->bind_param("ii", $botId,$id);
-        $stmt->execute();
+            $sql="DELETE FROM ocheredbot WHERE botId = ? AND id=? ";
+            $stmt = $this->con->prepare($sql);
+            $stmt->bind_param("ii", $botId,$id);
+            $stmt->execute();
     }
     function GetOcheredBot($BotId){
         $stmt2=$this->con->prepare("SELECT indexPlayer ,id FROM ocheredbot WHERE  botId=?");
@@ -1150,27 +1150,31 @@ class DbOperation
                 }
             }
         }
-        //Check the bots here
+
+
+
+
+
+        //Check the bots hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         $tr="";$tr2=array();
-        $stmqt = $this->con->prepare("SELECT indexs,idnumber,ochered FROM botgrouplar WHERE groupnumber = ?");
+        $stmqt = $this->con->prepare("SELECT indexs,idnumber FROM botgrouplar WHERE groupnumber = ?");
         $stmqt->bind_param("i", $userGrop);
         $stmqt->execute();
-        $stmqt->bind_result($index,$idnumber,$ocheredbot);
+        $stmqt->bind_result($index,$idnumber);
 
         $id=(string)$userindex .str_pad((string)($userGrop),4,'0',STR_PAD_LEFT);
         $l=0;
         while($stmqt->fetch()){
-
         $idOchered=$db->SetOcheredBot($userGrop,$idnumber,$id);
         $ocherde=$db->GetOcheredBot($idnumber);
              if($ocherde[1][0]==$idOchered &&$ocherde[0][0]=$id){
-
              $mk="time".(string)$index;
              $tr=$tr.(string)$index;
              $tr2[$l]=$idnumber;
              $l++;
              $erw=$db->GetTimede($userGrop,$mk);
              $db->SetTimede($userGrop,"time".(string)$index,substr($erw,0,5).time());
+                 $db->DeleteOcheredBot($idnumber,$idOchered);
              }else{
                  $db->DeleteOcheredBot($idnumber,$idOchered);
              }
@@ -1190,10 +1194,7 @@ class DbOperation
                 $db->DeleteMessages($iw,$userGrop,(int)$id2);
             }
         }
-        if(strlen($tr)!=0 && strlen($idOchered)>0){
 
-            $db->DeleteOcheredBot($idnumber,$idOchered);
-        }
         return $messages;
     }
     function DeleteMessages($userindex,$userGrop,$id){
