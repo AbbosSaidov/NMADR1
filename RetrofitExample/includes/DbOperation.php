@@ -156,7 +156,6 @@ class DbOperation
             $stmt2->bind_param("iss",$groupnumber,$index,$message);
             $stmt2->execute();
             $db=new DbOperation();
-            $db->SetError("index=".$index." message=".$message,123475);
         }
     }
     function Getgrop2help($grouppy){
@@ -237,9 +236,10 @@ class DbOperation
         return $stmt->insert_id;
     }
     function DeleteOcheredBot($botId,$id){
-            $sql="DELETE FROM ocheredbot WHERE botId = ? AND id=? ";
+
+            $sql="DELETE FROM ocheredbot WHERE botId = ? ";
             $stmt = $this->con->prepare($sql);
-            $stmt->bind_param("ii", $botId,$id);
+            $stmt->bind_param("i", $botId);
             $stmt->execute();
     }
     function GetOcheredBot($BotId){
@@ -866,7 +866,6 @@ class DbOperation
             $OxirgiZapis=$db->GetOxirgiZapisplar($userGrop,"OxirgiZapis".substr($uyinchilar,$i,1));
             $data21 = "Chiqishde" .substr($uyinchilar,$i,1).str_pad((string)($GroupNumber),4,'0',STR_PAD_LEFT);
             if(strpos($uyinchilar,substr($uyinchilar,$i,1))!==false && strlen($erw)>10 && time()-(int)substr($erw,10,strlen($erw)-10)>7 && $BotOrClient=="true"){
-                $db->SetError("asds3",213131);
 
                 $db->Chiqishde($data21,0);
             }else{
@@ -1169,20 +1168,20 @@ class DbOperation
 
              $idOchered=$db->SetOcheredBot($userGrop,$idnumber,$id);
              $ocherde=$db->GetOcheredBot($idnumber);
-
              if($ocherde[1][0]==$idOchered && $ocherde[0][0]=$id){
-             $mk="time".(string)$index;
-             $tr=$tr.(string)$index;
-             $tr2[$l]=$idnumber;
-             $tr3[$l]=$idOchered;
-             $l++;
-             $erw=$db->GetTimede($userGrop,$mk);
-             $db->SetTimede($userGrop,"time".(string)$index,substr($erw,0,5).time());
+              $mk="time".(string)$index;
+              $tr=$tr.(string)$index;
+              $tr2[$l]=$idnumber;
+              $tr3[$l]=$idOchered;
+              $l++;
+               $erw=$db->GetTimede($userGrop,$mk);
+               $db->SetTimede($userGrop,"time".(string)$index,substr($erw,0,5).time());
              }
              else
              {
-             $db->DeleteOcheredBot($idnumber,$idOchered);
+               // $db->DeleteOcheredBot($idnumber,$idOchered);
              }
+
         }
 
         for($i=0;$i<strlen($tr);$i++){
@@ -1193,11 +1192,11 @@ class DbOperation
                 $stmtw->execute();
                 $stmtw->bind_result($data2,$id2);
 
-            while($stmtw->fetch()){
-                $db->OnIncomBot($data2,$iw2);
-                $db->DeleteMessages($iw,$userGrop,(int)$id2);
-            }
-            $db->DeleteOcheredBot((int)$tr2[$i],(int)$tr3[$i]);
+                while($stmtw->fetch()){
+                   $db->OnIncomBot($data2,$iw2);
+                   $db->DeleteMessages($iw,$userGrop,(int)$id2);
+                }
+           if($i+1==strlen($tr)){$db->DeleteOcheredBot((int)$tr2[$i],(int)$tr3[$i]);}
         }
 
         return $messages;
