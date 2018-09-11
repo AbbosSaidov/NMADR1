@@ -1181,7 +1181,6 @@ class DbOperation
              {
                // $db->DeleteOcheredBot($idnumber,$idOchered);
              }
-
         }
 
         for($i=0;$i<strlen($tr);$i++){
