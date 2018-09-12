@@ -1150,7 +1150,7 @@ class DbOperation
         }
 
 
-
+/**
 
 
         //Check the bots hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -1166,7 +1166,9 @@ class DbOperation
         while($stmqt->fetch()){
              $idOchered=$db->SetOcheredBot($userGrop,$idnumber,$id);
              $ocherde=$db->GetOcheredBot($idnumber);
-             if($ocherde[1][0]==$idOchered && $ocherde[0][0]=$id){
+
+
+            if($ocherde[1][0]==$idOchered && $ocherde[0][0]=$id){
               $mk="time".(string)$index;
               $tr=$tr.(string)$index;
               $tr2[$l]=$idnumber;
@@ -1174,6 +1176,7 @@ class DbOperation
               $l++;
                $erw=$db->GetTimede($userGrop,$mk);
                $db->SetTimede($userGrop,"time".(string)$index,substr($erw,0,5).time());
+
              }
              else
              {
@@ -1194,7 +1197,62 @@ class DbOperation
                    $db->DeleteMessages($iw,$userGrop,(int)$id2);
                 }
 
-           if($i+1==strlen($tr)){$db->DeleteOcheredBot((int)$tr2[$i],(int)$tr3[$i]);}
+              $db->DeleteOcheredBot((int)$tr2[$i],(int)$tr3[$i]);
+        }
+        */
+        return $messages;
+    }
+    function getMessagesBot($userindex,$userGrop)
+    {
+
+        //Check the bots hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        $db= new DbOperation();
+        $messages = array();
+
+        $tr="";$tr2=array();
+        $tr3=array();
+        $stmqt = $this->con->prepare("SELECT indexs,idnumber FROM botgrouplar WHERE groupnumber = ?");
+        $stmqt->bind_param("i", $userGrop);
+        $stmqt->execute();
+        $stmqt->bind_result($index,$idnumber);
+
+        $id=(string)$userindex .str_pad((string)($userGrop),4,'0',STR_PAD_LEFT);
+        $l=0;
+        while($stmqt->fetch()){
+             $idOchered=$db->SetOcheredBot($userGrop,$idnumber,$id);
+             $ocherde=$db->GetOcheredBot($idnumber);
+
+
+            if($ocherde[1][0]==$idOchered && $ocherde[0][0]=$id){
+              $mk="time".(string)$index;
+              $tr=$tr.(string)$index;
+              $tr2[$l]=$idnumber;
+              $tr3[$l]=$idOchered;
+              $l++;
+               $erw=$db->GetTimede($userGrop,$mk);
+               $db->SetTimede($userGrop,"time".(string)$index,substr($erw,0,5).time());
+
+             }
+             else
+             {
+                $db->DeleteOcheredBot($idnumber,$idOchered);
+             }
+        }
+
+        for($i=0;$i<strlen($tr);$i++){
+                $stmtw = $this->con->prepare("SELECT message,id FROM messages WHERE gropnumber = ? AND Indexq=?");
+                $iw=(int)substr($tr,$i,1);
+                $iw2=(int)$tr2[$i];
+                $stmtw->bind_param("ii", $userGrop,$iw);
+                $stmtw->execute();
+                $stmtw->bind_result($data2,$id2);
+
+                while($stmtw->fetch()){
+                   $db->OnIncomBot($data2,$iw2);
+                   $db->DeleteMessages($iw,$userGrop,(int)$id2);
+                }
+
+              $db->DeleteOcheredBot((int)$tr2[$i],(int)$tr3[$i]);
         }
 
         return $messages;
