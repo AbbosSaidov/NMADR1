@@ -198,12 +198,12 @@ $app->post('/Chiqishde', function (Request $request, Response $response) {
     }
 });
 
-$app->get('/BotMessage/{id}/{group}', function (Request $request, Response $response) {
+$app->get('/BotMessage/{id}/{group}', function (Request $request, Response $response){
     $userid = $request->getAttribute('id');
     $userGropde= $request->getAttribute('group');
 
     $db = new DbOperation();
-    $messages = $db->getMessages($userid,$userGropde);
+    $messages = $db->getMessagesBot($userid,$userGropde);
     $response->getBody()->write(json_encode(array("messages" => $messages)));
 });
 $app->get('/messages/{id}/{group}', function (Request $request, Response $response) {

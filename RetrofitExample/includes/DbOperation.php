@@ -1272,8 +1272,8 @@ class DbOperation
         $stmt->execute();
     }
     function Javobit($lk){
-        sleep(3);
         $db=new DbOperation();
+        sleep(3);
         $ObshiyPul = "0";
         $uyinchilar=$db->Getuyinchilar($lk);
         for ($i = 0; $i < strlen($uyinchilar); $i++)
@@ -2461,7 +2461,6 @@ class DbOperation
                     }
                 }
            }
-
         if (strpos($data,"RR")!==false)
         {
             //  print("30" +" "+data.Length);
