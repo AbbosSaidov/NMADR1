@@ -236,10 +236,9 @@ class DbOperation
         return $stmt->insert_id;
     }
     function DeleteOcheredBot($botId,$id){
-
-            $sql="DELETE FROM ocheredbot WHERE botId = ? ";
+            $sql="DELETE FROM ocheredbot WHERE botId = ? AND id=? ";
             $stmt = $this->con->prepare($sql);
-            $stmt->bind_param("i", $botId);
+            $stmt->bind_param("ii", $botId,$id);
             $stmt->execute();
     }
     function GetOcheredBot($BotId){
@@ -1165,7 +1164,6 @@ class DbOperation
         $id=(string)$userindex .str_pad((string)($userGrop),4,'0',STR_PAD_LEFT);
         $l=0;
         while($stmqt->fetch()){
-
              $idOchered=$db->SetOcheredBot($userGrop,$idnumber,$id);
              $ocherde=$db->GetOcheredBot($idnumber);
              if($ocherde[1][0]==$idOchered && $ocherde[0][0]=$id){
@@ -1179,7 +1177,7 @@ class DbOperation
              }
              else
              {
-               // $db->DeleteOcheredBot($idnumber,$idOchered);
+                $db->DeleteOcheredBot($idnumber,$idOchered);
              }
         }
 
@@ -1195,6 +1193,7 @@ class DbOperation
                    $db->OnIncomBot($data2,$iw2);
                    $db->DeleteMessages($iw,$userGrop,(int)$id2);
                 }
+
            if($i+1==strlen($tr)){$db->DeleteOcheredBot((int)$tr2[$i],(int)$tr3[$i]);}
         }
 
