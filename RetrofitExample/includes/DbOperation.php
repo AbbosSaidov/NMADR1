@@ -1204,7 +1204,6 @@ class DbOperation
     }
     function getMessagesBot($userindex,$userGrop)
     {
-
         //Check the bots hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         $db= new DbOperation();
         $messages = array();
@@ -1272,8 +1271,8 @@ class DbOperation
         $stmt->execute();
     }
     function Javobit($lk){
-        $db=new DbOperation();
         sleep(3);
+        $db=new DbOperation();
         $ObshiyPul = "0";
         $uyinchilar=$db->Getuyinchilar($lk);
         for ($i = 0; $i < strlen($uyinchilar); $i++)
