@@ -151,11 +151,13 @@ class DbOperation
     }
     function SEndMEssageToGroup($groupnumber,$indexs,$message){
         for($i=0;$i<strlen($indexs);$i++){
+
             $index=(int)substr($indexs,$i,1);
             $stmt2=$this->con->prepare("INSERT INTO messages (gropnumber,indexq,message) VALUES (?,?,?)");
             $stmt2->bind_param("iss",$groupnumber,$index,$message);
             $stmt2->execute();
             $db=new DbOperation();
+            $db->SetError("index=".$index." message=".$message,23432423);
         }
     }
     function Getgrop2help($grouppy){
@@ -1321,7 +1323,9 @@ class DbOperation
         { $javoblade=array();
             $javoblade[0]="";
             for($l=1;$l<10;$l++){
+
                 $javoblade[$l]=$db->GetJavoblade($lk,"Javoblade".(string)$l);
+                $db->SetError("javob".$l."=".$javoblade[$l],43242);
             }
             $d=array();
             $d[0] = "st"; $d[1] = "p1"; $d[2] = "p2"; $d[3] = "se";
@@ -2165,13 +2169,14 @@ class DbOperation
           }
      }
 
-
-        if (strpos($data,"%%")!==false)
-        {   $botId =$db->GetbotlistId($i);
+        if(strpos($data,"%%")!==false)
+        {  $db->SetError("YES=".$data,234234);
+            $botId =$db->GetbotlistId($i);
 
             if(substr($data,59,10)==$botId){
                $db->SetbotlistIndex($i,(int)substr($data,69,1));
             }
+
         }
         if (strpos($data,"!")!==false)
         {
