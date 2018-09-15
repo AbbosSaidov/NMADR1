@@ -1043,9 +1043,6 @@ class DbOperation
                                         $ochered=$db->getOchered($grup);
                                         $rt="false";
 
-                                        /*  if(sizeof($ochered)>0){
-                                            $db->SetError($l." ochered=".$ochered[0]." id=".$Id,$grup);
-                                        }*/
 
                                         if(sizeof($ochered)>0){
                                             if(substr($ochered[0],0,10)==$Id){
@@ -2043,9 +2040,12 @@ class DbOperation
         $stmt2->bind_param("si",$uyinchilar,$i);
         $stmt2->execute();
     }
-    function SetbotlistIndex($i,$index){
-        $stmt2=$this->con->prepare("UPDATE botlist SET Indexq=? WHERE id=?");
-        $stmt2->bind_param("ii",$index,$i);
+    function SetbotlistIndexAndGroup($i,$index,$groupnumber){
+        $stmt2=$this->con->prepare("UPDATE botlist SET Indexq=? ,groupnumber=? WHERE id=?");
+        $stmt2->bind_param("iii",$index,$i,$groupnumber);
+        $stmt2->execute();
+        $stmt2=$this->con->prepare("UPDATE botgrouplar SET indexs=? ,groupnumber=? WHERE id=?");
+        $stmt2->bind_param("iii",$index,$i,$groupnumber);
         $stmt2->execute();
     }
     function SetbotlistJudgement($i,$judgement){
@@ -2174,7 +2174,7 @@ class DbOperation
             $botId =$db->GetbotlistId($i);
 
             if(substr($data,59,10)==$botId){
-               $db->SetbotlistIndex($i,(int)substr($data,69,1));
+               $db->SetbotlistIndexAndGroup($i,(int)substr($data,69,1),(int)substr($data,10,4));
             }
 
         }
