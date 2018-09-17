@@ -157,7 +157,7 @@ class DbOperation
             $stmt2->bind_param("iss",$groupnumber,$index,$message);
             $stmt2->execute();
             $db=new DbOperation();
-            $db->SetError("index=".$index." message=".$message,23432423);
+            $db->SetError("Client=".$index." message=".$message,234234);
         }
     }
     function Getgrop2help($grouppy){
@@ -1216,20 +1216,22 @@ class DbOperation
 
         $id=(string)$userindex .str_pad((string)($userGrop),4,'0',STR_PAD_LEFT);
         $l=0;
+
         while($stmqt->fetch()){
+
              $idOchered=$db->SetOcheredBot($userGrop,$idnumber,$id);
              $ocherde=$db->GetOcheredBot($idnumber);
 
-
             if($ocherde[1][0]==$idOchered && $ocherde[0][0]=$id){
-              $mk="time".(string)$index;
+
+
+                $mk="time".(string)$index;
               $tr=$tr.(string)$index;
               $tr2[$l]=$idnumber;
               $tr3[$l]=$idOchered;
               $l++;
                $erw=$db->GetTimede($userGrop,$mk);
                $db->SetTimede($userGrop,"time".(string)$index,substr($erw,0,5).time());
-
              }
              else
              {
@@ -1245,8 +1247,10 @@ class DbOperation
                 $stmtw->execute();
                 $stmtw->bind_result($data2,$id2);
 
+
                 while($stmtw->fetch()){
-                   $db->OnIncomBot($data2,$iw2);
+
+                    $db->OnIncomBot($data2,$iw2);
                    $db->DeleteMessages($iw,$userGrop,(int)$id2);
                 }
 
@@ -2042,10 +2046,10 @@ class DbOperation
     }
     function SetbotlistIndexAndGroup($i,$index,$groupnumber){
         $stmt2=$this->con->prepare("UPDATE botlist SET Indexq=? ,groupnumber=? WHERE id=?");
-        $stmt2->bind_param("iii",$index,$i,$groupnumber);
+        $stmt2->bind_param("iii",$index,$groupnumber,$i);
         $stmt2->execute();
         $stmt2=$this->con->prepare("UPDATE botgrouplar SET indexs=? ,groupnumber=? WHERE id=?");
-        $stmt2->bind_param("iii",$index,$i,$groupnumber);
+        $stmt2->bind_param("iii",$index,$groupnumber,$i);
         $stmt2->execute();
     }
     function SetbotlistJudgement($i,$judgement){
@@ -2153,7 +2157,7 @@ class DbOperation
 
         if(strpos($data,"Jiklo")!==false){
             $r2=$db->Getall($i);
-            $botId=substr($data,5,10);
+            $botId=$db->GetbotlistId($i);
             $online=$r2[6];
 
           if($botId=="0000000000"){
@@ -2170,7 +2174,7 @@ class DbOperation
      }
 
         if(strpos($data,"%%")!==false)
-        {  $db->SetError("YES=".$data,234234);
+        {
             $botId =$db->GetbotlistId($i);
 
             if(substr($data,59,10)==$botId){
@@ -2544,6 +2548,7 @@ class DbOperation
     }
     function Yurish($i, $data,$r2)
     {
+
         $db=new DbOperation();
 
         $online=$r2[6];$groupnumber=$r2[1];$UrtadagiKartalar=$r2[15];
