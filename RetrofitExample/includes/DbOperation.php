@@ -2162,7 +2162,6 @@ class DbOperation
               $db->SetbotlistId($i,substr($data,5,10));
           }
           if($online!=0 &&$online!=3 && $online!=1 && substr($data,5,10) != "0000000000" ){
-              $db->Setbotlistonline($i,3);
 
               $rew=$db->UyingaKirish("%%".$r2[0].str_pad((string)($r2[1]),4,'0',STR_PAD_LEFT).str_pad((string)($r2[2]),12,'0',STR_PAD_LEFT).
               "$" .str_pad((string)($r2[3]),12,'0',STR_PAD_LEFT). "000000".str_pad((string)($r2[4]),12,'0',STR_PAD_LEFT) . "xb" . substr($data,5,10)."f");
@@ -2180,6 +2179,8 @@ class DbOperation
             if(substr($data,59,10)==$botId){
                $db->SetbotlistIndexAndGroup($i,(int)substr($data,69,1),(int)substr($data,10,4));
             }
+            $db->Setbotlistonline($i,3);
+
         }
         if (strpos($data,"!")!==false)
         {
