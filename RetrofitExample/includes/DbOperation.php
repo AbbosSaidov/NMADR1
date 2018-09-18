@@ -150,14 +150,16 @@ class DbOperation
         $stmt2->execute();
     }
     function SEndMEssageToGroup($groupnumber,$indexs,$message){
+        $db=new DbOperation();
+
+        $db->SetError("Client=".substr($message,0,1)." message=".$message,234234);
+
         for($i=0;$i<strlen($indexs);$i++){
 
             $index=(int)substr($indexs,$i,1);
             $stmt2=$this->con->prepare("INSERT INTO messages (gropnumber,indexq,message) VALUES (?,?,?)");
             $stmt2->bind_param("iss",$groupnumber,$index,$message);
             $stmt2->execute();
-            $db=new DbOperation();
-            $db->SetError("Client=".$index." message=".$message,234234);
         }
     }
     function Getgrop2help($grouppy){
@@ -1224,21 +1226,19 @@ class DbOperation
 
             if($ocherde[1][0]==$idOchered && $ocherde[0][0]=$id){
 
-
-                $mk="time".(string)$index;
+              $mk="time".(string)$index;
               $tr=$tr.(string)$index;
               $tr2[$l]=$idnumber;
               $tr3[$l]=$idOchered;
               $l++;
-               $erw=$db->GetTimede($userGrop,$mk);
-               $db->SetTimede($userGrop,"time".(string)$index,substr($erw,0,5).time());
+              $erw=$db->GetTimede($userGrop,$mk);
+              $db->SetTimede($userGrop,"time".(string)$index,substr($erw,0,5).time());
              }
              else
              {
                 $db->DeleteOcheredBot($idnumber,$idOchered);
              }
         }
-
         for($i=0;$i<strlen($tr);$i++){
                 $stmtw = $this->con->prepare("SELECT message,id FROM messages WHERE gropnumber = ? AND Indexq=?");
                 $iw=(int)substr($tr,$i,1);
@@ -1247,16 +1247,14 @@ class DbOperation
                 $stmtw->execute();
                 $stmtw->bind_result($data2,$id2);
 
-
+            if($db->Getbotlistonline($iw2)==3){
                 while($stmtw->fetch()){
-
                     $db->OnIncomBot($data2,$iw2);
-                   $db->DeleteMessages($iw,$userGrop,(int)$id2);
+                    $db->DeleteMessages($iw,$userGrop,(int)$id2);
                 }
-
-              $db->DeleteOcheredBot((int)$tr2[$i],(int)$tr3[$i]);
+            }
+            $db->DeleteOcheredBot((int)$tr2[$i],(int)$tr3[$i]);
         }
-
         return $messages;
     }
     function DeleteMessages($userindex,$userGrop,$id){
@@ -2177,10 +2175,11 @@ class DbOperation
         {
             $botId =$db->GetbotlistId($i);
 
+            $db->SetError("%%="." id=".$i,324324);
+
             if(substr($data,59,10)==$botId){
                $db->SetbotlistIndexAndGroup($i,(int)substr($data,69,1),(int)substr($data,10,4));
             }
-
         }
         if (strpos($data,"!")!==false)
         {
@@ -2361,6 +2360,8 @@ class DbOperation
             $EngKatta=$r2[15];$UrtadagiKartalar=$r2[16];
             $qaysiligiKartani=$r2[19];
 
+            $db->SetError("index Bot=".$index." id=".$i." gr=".$groupnumber,324324);
+
             if (strlen($data)> 45)
             {
                 // print("1");//1000000000350000000000050$^20cl20he11he18di18cl19210102
@@ -2464,7 +2465,7 @@ class DbOperation
                         $r2[5]=$keraklide;
                         $r2[7]=$uyinchilar;
                         $r2[15]=$EngKatta;
-                        if( $index==(int)substr($data ,strlen($data)-5,1)){$db->Yurish($i, $data,$r2);}
+                        if($index==(int)substr($data ,strlen($data)-5,1)){$db->Yurish($i, $data,$r2);}
                     }
                     }
                 }
