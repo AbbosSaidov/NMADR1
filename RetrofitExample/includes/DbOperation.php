@@ -150,9 +150,7 @@ class DbOperation
         $stmt2->execute();
     }
     function SEndMEssageToGroup($groupnumber,$indexs,$message){
-        $db=new DbOperation();
-
-        $db->SetError("Client=".substr($message,0,1)." message=".$message,234234);
+        //$db=new DbOperation();
 
         for($i=0;$i<strlen($indexs);$i++){
 
@@ -1211,11 +1209,11 @@ class DbOperation
 
         $tr="";$tr2=array();
         $tr3=array();
+
         $stmqt = $this->con->prepare("SELECT indexs,idnumber FROM botgrouplar WHERE groupnumber = ?");
         $stmqt->bind_param("i", $userGrop);
         $stmqt->execute();
         $stmqt->bind_result($index,$idnumber);
-
         $id=(string)$userindex .str_pad((string)($userGrop),4,'0',STR_PAD_LEFT);
         $l=0;
 
@@ -1225,12 +1223,11 @@ class DbOperation
              $ocherde=$db->GetOcheredBot($idnumber);
 
             if($ocherde[1][0]==$idOchered && $ocherde[0][0]=$id){
-
               $mk="time".(string)$index;
               $tr=$tr.(string)$index;
               $tr2[$l]=$idnumber;
               $tr3[$l]=$idOchered;
-              $l++;
+                $l++;
               $erw=$db->GetTimede($userGrop,$mk);
               $db->SetTimede($userGrop,"time".(string)$index,substr($erw,0,5).time());
              }
@@ -1239,6 +1236,7 @@ class DbOperation
                 $db->DeleteOcheredBot($idnumber,$idOchered);
              }
         }
+
         for($i=0;$i<strlen($tr);$i++){
                 $stmtw = $this->con->prepare("SELECT message,id FROM messages WHERE gropnumber = ? AND Indexq=?");
                 $iw=(int)substr($tr,$i,1);
@@ -1255,6 +1253,7 @@ class DbOperation
             }
             $db->DeleteOcheredBot((int)$tr2[$i],(int)$tr3[$i]);
         }
+
         return $messages;
     }
     function DeleteMessages($userindex,$userGrop,$id){
@@ -2113,11 +2112,11 @@ class DbOperation
         $t = 1;
         $u=2;
         $stmt =$this->con->prepare("UPDATE botlist SET online = ?,groupnumber=?,money=?,pul=?,minstavka=?,Indexq=? WHERE id =?");
-        $stmt->bind_param("iissiis",$u,$Nomerstol,$money,$pul,$min,$index,$id);
+        $stmt->bind_param("iissiii",$u,$Nomerstol,$money,$pul,$min,$index,$id);
         $stmt->execute();
 
         $stmt =$this->con->prepare("INSERT INTO  botgrouplar (indexs,idnumber,groupnumber) VALUES(?,?,?)");
-        $stmt->bind_param("isi",$index,$id,$Nomerstol);
+        $stmt->bind_param("iii",$index,$id,$Nomerstol);
         $stmt->execute();
         $db->registerUser("%??" . $idbot . $namew.str_pad((string)($pul),12,'0',STR_PAD_LEFT). "00" . "f" .str_pad((string)($id),12,'0',STR_PAD_LEFT));
         break;
@@ -2149,11 +2148,10 @@ class DbOperation
     function OnIncomBot($data,$i)
     {
         $db=new DbOperation();
-        if(strlen($data)>12 && substr($data,0,13) == "ChiqeO'yindan"){
+        if (strlen($data)>12 && substr($data,0,13) == "ChiqeO'yindan"){
             $db->Chiqeuyindanbot($i);
         }
-
-        if(strpos($data,"Jiklo")!==false){
+        if (strpos($data,"Jiklo")!==false){
             $r2=$db->Getall($i);
             $botId=$db->GetbotlistId($i);
             $online=$r2[6];
@@ -2169,12 +2167,11 @@ class DbOperation
               $db->OnIncomBot($rew,$i);
           }
      }
-
-        if(strpos($data,"%%")!==false)
+        if (strpos($data,"%%")!==false)
         {
             $botId =$db->GetbotlistId($i);
 
-            $db->SetError("%%="." id=".$i,324324);
+          //  $db->SetError("%%="." id=".$i,324324);
 
             if(substr($data,59,10)==$botId){
                $db->SetbotlistIndexAndGroup($i,(int)substr($data,69,1),(int)substr($data,10,4));
@@ -2361,7 +2358,6 @@ class DbOperation
             $EngKatta=$r2[15];$UrtadagiKartalar=$r2[16];
             $qaysiligiKartani=$r2[19];
 
-            $db->SetError("index Bot=".$index." id=".$i." gr=".$groupnumber,324324);
 
             if (strlen($data)> 45)
             {
@@ -2473,9 +2469,7 @@ class DbOperation
            }
         if (strpos($data,"RR")!==false)
         {
-            //  print("30" +" "+data.Length);
             $tr = 0;
-
             for ($i2 = 0; $i2 < strlen($data); $i2++)
             {
                 if ($i2 + 2 < strlen($data) && substr($data,$i2, 2) == "RR")
@@ -2508,11 +2502,13 @@ class DbOperation
         $EngKatta=$r2[15];$UrtadagiKartalar=$r2[16];$Money=$r2[17];$minstavka=$db->TurnLk((int)$groupnumber);
         for ($t = 0; $t < $tr; $t++)
         {
+
             $data = substr($datab,$t * strlen($datab) / $tr, strlen($datab)/ $tr);
 
             if ((string)$index == substr($data,2, 1) &&
             str_pad($groupnumber,4,'0',STR_PAD_LEFT) == substr($data,15, 4))
             {
+
                 // print("32");
                 $judgement = 0;
                 $pul = (string)((int)($pul) + (int)(substr($data,19, strlen($data)- 19)));
@@ -2529,10 +2525,11 @@ class DbOperation
             }
             else
             {
-                if (str_pad($groupnumber,4,'0',STR_PAD_LEFT) == substr($data,15, 4)
+                if(str_pad($groupnumber,4,'0',STR_PAD_LEFT) == substr($data,15, 4)
                 && $Pas == "1" && $online == 3 && $mik == 4 &&
-                    (string)$index == substr($data,2, 1) && $tr - 1 == $t)
+                    (string)$index != substr($data,2, 1) && $tr - 1 == $t)
                 {
+
                     $uyindanOldingiPuli = 0;
 
                     $mik = 0;
@@ -2541,6 +2538,14 @@ class DbOperation
                     {
                         $db->Chiqishde("Chiqishde".$index.str_pad($groupnumber,4,'0',STR_PAD_LEFT),1);
                         $online = "0";
+                        $sql="DELETE FROM botgrouplar WHERE groupnumber = ?  AND id=?   ";
+                        $stmt2 = $this->con->prepare($sql);
+                        $stmt2->bind_param("ii", $groupnumber,$i);
+                        $stmt2->execute();
+                        $sql="DELETE FROM botlist WHERE groupnumber = ? AND id=? ";
+                        $stmt3 = $this->con->prepare($sql);
+                        $stmt3->bind_param("ii", $groupnumber,$i);
+                        $stmt3->execute();
 
                     }
                     $db->Setall($i,$uyindanOldingiPuli,$Pas,"",$keraklide,$mik,$EngKatta,$yol,$UziniKartasi,$uyinchilar,$pul,$online,$UrtadagiKartalar);
