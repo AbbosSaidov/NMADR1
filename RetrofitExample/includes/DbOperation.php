@@ -1227,7 +1227,7 @@ class DbOperation
               $tr=$tr.(string)$index;
               $tr2[$l]=$idnumber;
               $tr3[$l]=$idOchered;
-                $l++;
+              $l++;
               $erw=$db->GetTimede($userGrop,$mk);
               $db->SetTimede($userGrop,"time".(string)$index,substr($erw,0,5).time());
              }
@@ -1235,14 +1235,12 @@ class DbOperation
              {
                 $db->DeleteOcheredBot($idnumber,$idOchered);
              }
+
         }
 
         for($i=0;$i<strlen($tr);$i++){
 
                 $stmtw = $this->con->prepare("SELECT message,id FROM messages WHERE gropnumber = ? AND Indexq=?");
-
-                $db->SetError("i=".$i." tr=".$tr,32423);
-
                 $iw=(int)substr($tr,$i,1);
                 $iw2=(int)$tr2[$i];
                 $stmtw->bind_param("ii", $userGrop,$iw);
