@@ -1222,7 +1222,7 @@ class DbOperation
              $idOchered=$db->SetOcheredBot($userGrop,$idnumber,$id);
              $ocherde=$db->GetOcheredBot($idnumber);
 
-            if($ocherde[1][0]==$idOchered && $ocherde[0][0]=$id){
+            if($ocherde[1][0]==$idOchered && $ocherde[0][0]=$id && strpos($tr,(string)$index)===false){
               $mk="time".(string)$index;
               $tr=$tr.(string)$index;
               $tr2[$l]=$idnumber;
@@ -1238,7 +1238,11 @@ class DbOperation
         }
 
         for($i=0;$i<strlen($tr);$i++){
+
                 $stmtw = $this->con->prepare("SELECT message,id FROM messages WHERE gropnumber = ? AND Indexq=?");
+
+                $db->SetError("i=".$i." tr=".$tr,32423);
+
                 $iw=(int)substr($tr,$i,1);
                 $iw2=(int)$tr2[$i];
                 $stmtw->bind_param("ii", $userGrop,$iw);
@@ -1252,6 +1256,7 @@ class DbOperation
                 }
             }
             $db->DeleteOcheredBot((int)$tr2[$i],(int)$tr3[$i]);
+
         }
 
         return $messages;
