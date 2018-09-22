@@ -1027,16 +1027,18 @@ class DbOperation
                     //botde21 %%0402000000040000$000000000000000000000000040000xb0000000598f 0 2 0 0 0
                     if($k*$GroupNumber<$Ifgruplar[$i] &&$GroupNumber>$k*$Ifgruplar[$i+1] &&$Ifgruplar2[$k]*$GroupNumber<2100&&$GroupNumber>$Ifgruplar2[$k]){
                         for($i1 = $i; $i1 < 100; $i1 = $i1 + 2){
-                            for($i2=0;$i2<($i/2)+1;$i2++){
-                                for($t=0;$t<($i/2)*12+1;$t++){
+
+                            if($GroupNumber%2==0){$i2=0;}else{$i2=1;}$t=0;
 
                                     for($m=0;$m<13;$m++){
                                         if((int)$pul==$Pullar[$m]){
                                             $t=$m;
-                                            $m=13;
+                                            break;
                                         }
                                     }
+
                                     $grup=$k*($i1 +($Gruplar[$t]+$i2)*($i/2))+$GroupNumber-$k*($i/2);
+
                                     $db->Creategrop2help($grup,"true");
                                     $tr="false";
                                     for($l=0;$l<11;$l++){
@@ -1076,8 +1078,8 @@ class DbOperation
                                     }
 
                                     if($tr=="false"){ $db->ChekIfOnline($grup,$BotOrClient);
-
                                         $playersNumber=$db->GetHowmanyPlayers($grup);
+
                                         if($db->Getgrop2help($grup)=="true"&&
                                             ($i/2)*(int)$pul==($i/2)*$Pullar[$t] && $playersNumber < $odamlade[$i2] )
                                         {
@@ -1098,8 +1100,6 @@ class DbOperation
                                         }
                                     }
                                     $db->DeleteOchered($grup,$Id);
-                                }
-                            }
                         }
                     }
                 }
