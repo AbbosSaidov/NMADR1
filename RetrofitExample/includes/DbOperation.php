@@ -1258,6 +1258,7 @@ class DbOperation
                 }
             }
             $db->DeleteOcheredBot((int)$tr2[$i],(int)$tr3[$i]);
+
         }
 
         return $messages;
