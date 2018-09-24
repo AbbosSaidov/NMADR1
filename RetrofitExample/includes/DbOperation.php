@@ -918,6 +918,10 @@ class DbOperation
             $stmt3 = $this->con->prepare($sql);
             $stmt3->bind_param("iii", $userGrop,$jk[1][$i],$jk[0][$i]);
             $stmt3->execute();
+            $sql="DELETE FROM ocheredbot WHERE groupnumber = ?  AND botId=? ";
+            $stmt3 = $this->con->prepare($sql);
+            $stmt3->bind_param("ii", $userGrop,$jk[0][$i]);
+            $stmt3->execute();
         }
     }
     //methoda uyinga kirish unchun
@@ -1223,6 +1227,7 @@ class DbOperation
              $ocherde=$db->GetOcheredBot($idnumber);
 
             if($ocherde[1][0]==$idOchered && $ocherde[0][0]=$id && strpos($tr,(string)$index)===false){
+             //   $db->SetError("sad",234234);
               $mk="time".(string)$index;
               $tr=$tr.(string)$index;
               $tr2[$l]=$idnumber;
@@ -1235,7 +1240,6 @@ class DbOperation
              {
                 $db->DeleteOcheredBot($idnumber,$idOchered);
              }
-
         }
 
         for($i=0;$i<strlen($tr);$i++){
@@ -1254,7 +1258,6 @@ class DbOperation
                 }
             }
             $db->DeleteOcheredBot((int)$tr2[$i],(int)$tr3[$i]);
-
         }
 
         return $messages;
