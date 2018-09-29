@@ -867,7 +867,6 @@ class DbOperation
             $OxirgiZapis=$db->GetOxirgiZapisplar($userGrop,"OxirgiZapis".substr($uyinchilar,$i,1));
             $data21 = "Chiqishde" .substr($uyinchilar,$i,1).str_pad((string)($GroupNumber),4,'0',STR_PAD_LEFT);
             if(strpos($uyinchilar,substr($uyinchilar,$i,1))!==false && strlen($erw)>10 && time()-(int)substr($erw,10,strlen($erw)-10)>7 && $BotOrClient=="true"){
-
                 $db->Chiqishde($data21,0);
             }else{
                 if(strlen($OxirgiZapis)>68 && strpos($uyinchilar,substr($uyinchilar,$i,1))!==false&& strlen($erw)<10 ){
@@ -876,20 +875,19 @@ class DbOperation
                 }else{
                     if(strlen($OxirgiZapis)>68 && strpos($uyinchilar,substr($uyinchilar,$i,1))!==false && strlen($erw)>10 &&
                         time()-(int)substr($erw,10,strlen($erw)-10)<7 && $db->GetKartatarqatildi($GroupNumber)=="false" ){
-
                         $minStavka = $db->TurnLk($GroupNumber);
-                        if ((int)substr($OxirgiZapis,14, 12) < $minStavka)
+                        if((int)substr($OxirgiZapis,14, 12) < $minStavka)
                         {
                             $db->Chiqishde($data21,0);
                         }
                     }else{
                         if(strpos($uyinchilar,substr($uyinchilar,$i,1))!==false &&(strlen($OxirgiZapis)<68 || strlen($erw)<10) ){
-
                             $db->Chiqishde($data21,0);
                         }
                     }
                 }
             }
+
         }
         $uyinchilar=$db->Getuyinchilar($userGrop);
         $stmt = $this->con->prepare("SELECT indexs,id FROM botgrouplar WHERE groupnumber = ? ");
@@ -1218,7 +1216,7 @@ class DbOperation
         $stmqt->bind_param("i", $userGrop);
         $stmqt->execute();
         $stmqt->bind_result($index,$idnumber);
-        $id=(string)$userindex .str_pad((string)($userGrop),4,'0',STR_PAD_LEFT);
+        $id=str_pad((string)($userGrop),4,'0',STR_PAD_LEFT);
         $l=0;
 
         while($stmqt->fetch()){
@@ -1227,7 +1225,7 @@ class DbOperation
              $ocherde=$db->GetOcheredBot($idnumber);
 
             if($ocherde[1][0]==$idOchered && $ocherde[0][0]=$id && strpos($tr,(string)$index)===false){
-             //   $db->SetError("sad",234234);
+              //   $db->SetError("sad",234234);
               $mk="time".(string)$index;
               $tr=$tr.(string)$index;
               $tr2[$l]=$idnumber;
@@ -1238,7 +1236,7 @@ class DbOperation
              }
              else
              {
-                $db->DeleteOcheredBot($idnumber,$idOchered);
+                 $db->DeleteOcheredBot($idnumber,$idOchered);
              }
         }
 
@@ -1257,6 +1255,7 @@ class DbOperation
                     $db->DeleteMessages($iw,$userGrop,(int)$id2);
                 }
             }
+
             $db->DeleteOcheredBot((int)$tr2[$i],(int)$tr3[$i]);
 
         }
