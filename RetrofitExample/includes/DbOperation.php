@@ -861,8 +861,8 @@ class DbOperation
         $db=new DbOperation();
         $GroupNumber=$userGrop;
         $uyinchilar=$db->Getuyinchilar($userGrop);
-        for($i=0;$i<strlen($uyinchilar);$i++){
 
+        for($i=0;$i<strlen($uyinchilar);$i++){
             $erw=$db->GetTimede($GroupNumber,"time".substr($uyinchilar,$i,1));
             $OxirgiZapis=$db->GetOxirgiZapisplar($userGrop,"OxirgiZapis".substr($uyinchilar,$i,1));
             $data21 = "Chiqishde" .substr($uyinchilar,$i,1).str_pad((string)($GroupNumber),4,'0',STR_PAD_LEFT);
@@ -887,7 +887,6 @@ class DbOperation
                     }
                 }
             }
-
         }
         $uyinchilar=$db->Getuyinchilar($userGrop);
         $stmt = $this->con->prepare("SELECT indexs,id FROM botgrouplar WHERE groupnumber = ? ");
@@ -1216,15 +1215,15 @@ class DbOperation
         $stmqt->bind_param("i", $userGrop);
         $stmqt->execute();
         $stmqt->bind_result($index,$idnumber);
-        $id=str_pad((string)($userGrop),4,'0',STR_PAD_LEFT);
+        $id=(string)$userindex.str_pad((string)($userGrop),4,'0',STR_PAD_LEFT);
         $l=0;
 
         while($stmqt->fetch()){
 
              $idOchered=$db->SetOcheredBot($userGrop,$idnumber,$id);
              $ocherde=$db->GetOcheredBot($idnumber);
-
-            if($ocherde[1][0]==$idOchered && $ocherde[0][0]=$id && strpos($tr,(string)$index)===false){
+            /***/
+            if($ocherde[1][0]==$idOchered && $ocherde[0][0]==$id && strpos($tr,(string)$index)===false){
               //   $db->SetError("sad",234234);
               $mk="time".(string)$index;
               $tr=$tr.(string)$index;
@@ -1232,7 +1231,7 @@ class DbOperation
               $tr3[$l]=$idOchered;
               $l++;
               $erw=$db->GetTimede($userGrop,$mk);
-              $db->SetTimede($userGrop,"time".(string)$index,substr($erw,0,5).time());
+              $db->SetTimede($userGrop,"time".(string)$index,substr($erw,0,10).time());
              }
              else
              {
@@ -2015,7 +2014,6 @@ class DbOperation
         }
         return "Zo'r";
     }
-
 
 
     function Chiqeuyindanbot($i){
