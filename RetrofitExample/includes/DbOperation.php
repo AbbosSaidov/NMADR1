@@ -1026,8 +1026,8 @@ class DbOperation
             for($k=0;$k<2;$k++){
                 for($i=0;$i<4;$i=$i+2){
                     //botde21 %%0402000000040000$000000000000000000000000040000xb0000000598f 0 2 0 0 0
-                    if($k*$GroupNumber<$Ifgruplar[$i] &&$GroupNumber>$k*$Ifgruplar[$i+1] &&$Ifgruplar2[$k]*$GroupNumber<2100&&$GroupNumber>$Ifgruplar2[$k]){
-                        for($i1 = $i; $i1 < 100; $i1 = $i1 + 2){
+                    if($k*$GroupNumber<$Ifgruplar[$i]&&$GroupNumber>$k*$Ifgruplar[$i+1]&&$Ifgruplar2[$k]*$GroupNumber<2100&&$GroupNumber>$Ifgruplar2[$k]){
+                        for($i1 = $i;$i1 < 100;$i1 = $i1 + 2){
 
                             if($GroupNumber%2==0){$i2=0;}else{$i2=1;}$t=0;
 
@@ -1215,15 +1215,14 @@ class DbOperation
         $stmqt->bind_param("i", $userGrop);
         $stmqt->execute();
         $stmqt->bind_result($index,$idnumber);
-        $id=(string)$userindex.str_pad((string)($userGrop),4,'0',STR_PAD_LEFT);
+        $id=(string)$userindex.str_pad((string)($userGrop),4,'0',STR_PAD_LEFT).(string)time();
         $l=0;
 
         while($stmqt->fetch()){
-
              $idOchered=$db->SetOcheredBot($userGrop,$idnumber,$id);
              $ocherde=$db->GetOcheredBot($idnumber);
             /***/
-            if($ocherde[1][0]==$idOchered && $ocherde[0][0]==$id && strpos($tr,(string)$index)===false){
+            if($ocherde[1][0]==$idOchered && substr($ocherde[0][0],0,5)==substr($id,0,5)&& strpos($tr,(string)$index)===false){
               //   $db->SetError("sad",234234);
               $mk="time".(string)$index;
               $tr=$tr.(string)$index;
@@ -1235,7 +1234,22 @@ class DbOperation
              }
              else
              {
-                 $db->DeleteOcheredBot($idnumber,$idOchered);
+                 if(time()-(int)substr($id,5,strlen($id)-5)>10){
+                     if($ocherde[1][1]==$idOchered && substr($ocherde[0][1],0,5)==substr($id,0,5) && strpos($tr,(string)$index)===false){
+                         //   $db->SetError("sad",234234);
+                         $mk="time".(string)$index;
+                         $tr=$tr.(string)$index;
+                         $tr2[$l]=$idnumber;
+                         $tr3[$l]=$idOchered;
+                         $l++;
+                         $erw=$db->GetTimede($userGrop,$mk);
+                         $db->SetTimede($userGrop,"time".(string)$index,substr($erw,0,10).time());
+                     }else{
+                         $db->DeleteOcheredBot($idnumber,$idOchered);
+                     }
+                 }else{
+                     $db->DeleteOcheredBot($idnumber,$idOchered);
+                 }
              }
         }
 
