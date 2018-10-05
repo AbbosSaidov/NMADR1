@@ -888,7 +888,7 @@ class DbOperation
                 }
             }
         }
-        $uyinchilar=$db->Getuyinchilar($userGrop);
+      /**  $uyinchilar=$db->Getuyinchilar($userGrop);
         $stmt = $this->con->prepare("SELECT indexs,id FROM botgrouplar WHERE groupnumber = ? ");
         $stmt->bind_param("i", $userGrop);
         $stmt->execute();
@@ -897,16 +897,14 @@ class DbOperation
 
         while($stmt->fetch()){
             if(strlen((string)$index)>0 && strpos($uyinchilar,(string)$index)===false && $BotOrClient=="true"){
-             /*   $sql="DELETE FROM botgrouplar WHERE groupnumber = ? AND indexs=?  ";
-                $stmt2 = $this->con->prepare($sql);
-                $stmt2->bind_param("ii", $userGrop,$index);
-                $stmt2->execute();*/
+
                 $jk[0][$d]=$lkk;
                 $jk[1][$d]=$index;
                 $d++;
             }
         }
         for($i=0;$i<$d;$i++){
+            $db->SetError("sdfCCC",324);
             $sql="DELETE FROM botgrouplar WHERE groupnumber = ? AND indexs=? AND id=?   ";
             $stmt2 = $this->con->prepare($sql);
             $stmt2->bind_param("iii", $userGrop,$jk[1][$i],$jk[0][$i]);
@@ -919,7 +917,7 @@ class DbOperation
             $stmt3 = $this->con->prepare($sql);
             $stmt3->bind_param("ii", $userGrop,$jk[0][$i]);
             $stmt3->execute();
-        }
+        }**/
     }
     //methoda uyinga kirish unchun
     function UyingaKirish($data){
@@ -1219,6 +1217,7 @@ class DbOperation
         $l=0;
 
         while($stmqt->fetch()){
+
              $idOchered=$db->SetOcheredBot($userGrop,$idnumber,$id);
              $ocherde=$db->GetOcheredBot($idnumber);
             /***/
@@ -1847,6 +1846,30 @@ class DbOperation
         }
         return "Zo'r";
     }
+    function DeleteBot($lk,$index){
+        $stmt = $this->con->prepare("SELECT id FROM botgrouplar WHERE groupnumber = ? AND indexs=? ");
+        $stmt->bind_param("ii", $lk,$index);
+        $stmt->execute();
+        $stmt->bind_result($id44 );
+        $ids=array();$r=0;
+        while($stmt->fetch()){
+            $ids[$r]=$id44;$r++;
+        }
+        for($i=0;$i<$r;$i++){
+            $sql="DELETE FROM botgrouplar WHERE groupnumber = ? AND indexs=? AND id=?   ";
+            $stmt2 = $this->con->prepare($sql);
+            $stmt2->bind_param("iii", $lk,$index,$ids[$i]);
+            $stmt2->execute();
+            $sql="DELETE FROM botlist WHERE groupnumber = ? AND indexq=? AND id=? ";
+            $stmt3 = $this->con->prepare($sql);
+            $stmt3->bind_param("iii", $lk,$index,$ids[$i]);
+            $stmt3->execute();
+            $sql="DELETE FROM ocheredbot WHERE groupnumber = ?  AND botId=? ";
+            $stmt4 = $this->con->prepare($sql);
+            $stmt4->bind_param("ii", $lk,$ids[$i]);
+            $stmt4->execute();
+        }
+    }
     //Rrnikirishi
     function RRniKiritish($data){
         if (strlen($data)>19&&substr($data,0,2)=="RR")
@@ -1917,6 +1940,8 @@ class DbOperation
         $yurishkimmiki="";
 
         if(strpos($uyinchilar,(string)$index)!==false){
+
+            $db->DeleteBot($lk,$index);
 
             $db->SetUyinchilar(str_replace($index,"",$uyinchilar),$lk);
             $uyinchilar=str_replace($index,"",$uyinchilar);
@@ -2139,7 +2164,7 @@ class DbOperation
         $db->registerUser("%??" . $idbot . $namew.str_pad((string)($pul),12,'0',STR_PAD_LEFT). "00" . "f" .str_pad((string)($id),12,'0',STR_PAD_LEFT));
         break;
     }
-              if ($t != 1){
+              if($t != 1){
             $chars = "BCDFGHJKLMNPQRSTVWXYZ";
             $chars2 = "qwrtypsdfghjklzxcvbnm";
             $chars3 = "aioue";
