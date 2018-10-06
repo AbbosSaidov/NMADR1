@@ -1802,15 +1802,15 @@ class DbOperation
                 for($i=0;$i<2;$i++){
                     if($Pas==$pasde[$i*2]){$hu3=-1;
                         if($pasde[$i*2]=="true"){
-                            if (strlen($yurishkimmiki) < 4)
-                            {
-                                $db->SetHuy(strlen($yurishkimmiki)-1,$lk);
-                                $huy=strlen($yurishkimmiki)-1;$pasde[3]=(string)$huy.(string)$huy;
-                            }
+
                             $yurishkimmiki=str_replace((string)$Index,"",$yurishkimmiki);
                             $db->SetYurishKimmiki($yurishkimmiki,$lk);
+
+                                $db->SetHuy(strlen($yurishkimmiki)-1,$lk);
+                                $huy=strlen($yurishkimmiki)-1;$pasde[3]=(string)$huy.(string)$huy;
+
                         }
-                        if($keraklide >= $huy){
+                        if($huy > 1 && $keraklide >= $huy){
                             for ($t= 0; $t < strlen($yurishkimmiki)-1; $t++)
                             {
                                 $tikilgsnpul="TikilganPullar".substr($yurishkimmiki,$t+1,1);
@@ -1838,7 +1838,8 @@ class DbOperation
                             $db->Javobit($lk);
                         }
 
-                        if ($pasde[$i*2]=="true"&&($huy == 2 || strlen($yurishkimmiki) == 2)) {$db->Sethu3(0,$lk); $db->Pas($lk,1);  }
+                        if ($pasde[$i*2]=="true"&&( strlen($yurishkimmiki) == 2)) {
+                            $db->Sethu3(0,$lk); $db->Pas($lk,1);  }
                         break;
                     }
                 }
@@ -2053,7 +2054,6 @@ class DbOperation
         }
         return "Zo'r";
     }
-
 
     function Chiqeuyindanbot($i){
         $k=0;
