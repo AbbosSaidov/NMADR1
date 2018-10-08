@@ -1800,17 +1800,18 @@ class DbOperation
                 }
                 $pasde=array("true",(string)$huy."&","false",(string)$huy.(string)$huy);
                 for($i=0;$i<2;$i++){
-                    if($Pas==$pasde[$i*2]){$hu3=-1;
+                    if($Pas==$pasde[$i*2]){
+                        $hu3=-1;
                         if($pasde[$i*2]=="true"){
-
-                            $yurishkimmiki=str_replace((string)$Index,"",$yurishkimmiki);
-                            $db->SetYurishKimmiki($yurishkimmiki,$lk);
-
+                                $yurishkimmiki=str_replace((string)$Index,"",$yurishkimmiki);
+                                $db->SetYurishKimmiki($yurishkimmiki,$lk);
+                             if(strlen($yurishkimmiki)<3){
                                 $db->SetHuy(strlen($yurishkimmiki)-1,$lk);
-                                $huy=strlen($yurishkimmiki)-1;$pasde[3]=(string)$huy.(string)$huy;
-
+                                $huy=strlen($yurishkimmiki);
+                                $pasde[1]=(string)$huy."&";
+                            }
                         }
-                        if($huy > 1 && $keraklide >= $huy){
+                        if(strlen($yurishkimmiki) > 2 && $keraklide >= $huy){
                             for ($t= 0; $t < strlen($yurishkimmiki)-1; $t++)
                             {
                                 $tikilgsnpul="TikilganPullar".substr($yurishkimmiki,$t+1,1);
@@ -1838,7 +1839,7 @@ class DbOperation
                             $db->Javobit($lk);
                         }
 
-                        if ($pasde[$i*2]=="true"&&( strlen($yurishkimmiki) == 2)) {
+                        if ($pasde[$i*2]=="true"&&(strlen($yurishkimmiki) == 2)) {
                             $db->Sethu3(0,$lk); $db->Pas($lk,1);  }
                         break;
                     }
