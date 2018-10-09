@@ -1822,7 +1822,7 @@ class DbOperation
                             $huy=strlen($yurishkimmiki)-1;
                             $hu3=$db->Gethu3($lk)+1;
                             $db->Sethu3($hu3,$lk);
-                            $pasde[$i*2+1]=$db->GetXAmmakartalar($lk).$huy;
+                            if($pasde[$i*2]=="true"){ $huy=strlen($yurishkimmiki);$pasde[$i*2+1]="&".$db->GetXAmmakartalar($lk).$huy;}else{$pasde[$i*2+1]=$db->GetXAmmakartalar($lk).$huy;}
                         }
                         if($yurishkimmiki==""){$yurishkimmiki="0";}
                         $data = $Index.str_pad($pul,12,"0",STR_PAD_LEFT).str_pad($yol,12,"0",STR_PAD_LEFT)."$^" .$keraklide.$mik .$pasde[$i*2+1];
