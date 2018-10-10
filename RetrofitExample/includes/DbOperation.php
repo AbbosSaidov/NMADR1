@@ -1879,8 +1879,9 @@ class DbOperation
             //RR1at21sp21sp1621020
             $lk =(int)(substr($data,15,4)) ;
             $index = (int)(substr($data,2,1));
+            $javabde=$db->GetJavoblade($lk,"Javoblade".(string)$index);
             //st,p1,p2,se,fl,sr,fs  RR2p122he12di12
-            if ($db->GetJavoblade($lk,"Javoblade".(string)$index) == "" ||$db->GetJavoblade($lk,"Javoblade".(string)$index) == null)
+            if ($javabde == "" || $javabde == null)
             {
                 $db->SetJavoblade("Javoblade".(string)$index,$data,$lk);
             }
@@ -2968,7 +2969,6 @@ class DbOperation
             }
         }
           $Nihoyat = $Nihoyat . $bhu . substr($den,0, 8);
-
         $db->RRniKiritish($Nihoyat . str_pad((string)($r2[1]),4,'0',STR_PAD_LEFT) . "000000000000");
     }
     function Tugat3tali($i,$r2)
