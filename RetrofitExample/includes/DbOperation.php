@@ -1721,7 +1721,7 @@ class DbOperation
                         substr($uyinchilar,$i,1)))-39),$lk,"OxirgiZapis".substr($uyinchilar,$i,1)
             );
         }
-        //  $db->SetError("Assassin-".$kmn,$lk);
+          $db->SetError("Assassin-".$kmn,$lk);
         if ($kmn != "") { $db->SEndMEssageToGroup($lk,$uyinchilar,$kmn); }
         sleep(6);
         $minSatck = $db->TurnLk($lk);
@@ -1835,7 +1835,6 @@ class DbOperation
                                 $db->SetJavoblade($javboblede,"",$lk);
                             }
                             $db->Sethu3(0,$lk);
-                            $db->SetError("Javobit",234234);
                             $db->Javobit($lk);
                         }
 
