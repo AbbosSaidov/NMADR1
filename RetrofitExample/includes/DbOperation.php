@@ -1220,9 +1220,15 @@ class DbOperation
 
              $idOchered=$db->SetOcheredBot($userGrop,$idnumber,$id);
              $ocherde=$db->GetOcheredBot($idnumber);
-            /***/
+             if($index==5){
+              $db->SetError(" Get Message=".$ocherde[1][0]." Get Message=".
+                  $idOchered." Get Message=".substr($ocherde[0][0],0,5).
+                  " Get Message=".substr($id,0,5)." Get Message=".strpos($tr,(string)$index),3232);
+             }
             if($ocherde[1][0]==$idOchered && substr($ocherde[0][0],0,5)==substr($id,0,5)&& strpos($tr,(string)$index)===false){
-              //   $db->SetError("sad",234234);
+                if($index==5){
+                    $db->SetError("2 - Get Message",3232);
+                }
               $mk="time".(string)$index;
               $tr=$tr.(string)$index;
               $tr2[$l]=$idnumber;
@@ -1230,10 +1236,11 @@ class DbOperation
               $l++;
               $erw=$db->GetTimede($userGrop,$mk);
               $db->SetTimede($userGrop,"time".(string)$index,substr($erw,0,10).time());
+
              }
              else
              {
-                 if(time()-(int)substr($id,5,strlen($id)-5)>10){
+                 if(time()-(int)substr($ocherde[0][0],5,strlen($ocherde[0][0])-5)>10){
                      if($ocherde[1][1]==$idOchered && substr($ocherde[0][1],0,5)==substr($id,0,5) && strpos($tr,(string)$index)===false){
                          //   $db->SetError("sad",234234);
                          $mk="time".(string)$index;
@@ -1243,6 +1250,7 @@ class DbOperation
                          $l++;
                          $erw=$db->GetTimede($userGrop,$mk);
                          $db->SetTimede($userGrop,"time".(string)$index,substr($erw,0,10).time());
+
                      }else{
                          $db->DeleteOcheredBot($idnumber,$idOchered);
                      }
@@ -1250,6 +1258,7 @@ class DbOperation
                      $db->DeleteOcheredBot($idnumber,$idOchered);
                  }
              }
+
         }
 
         for($i=0;$i<strlen($tr);$i++){
@@ -1260,6 +1269,7 @@ class DbOperation
                 $stmtw->bind_param("ii", $userGrop,$iw);
                 $stmtw->execute();
                 $stmtw->bind_result($data2,$id2);
+
 
             if($db->Getbotlistonline($iw2)==3){
                 while($stmtw->fetch()){
