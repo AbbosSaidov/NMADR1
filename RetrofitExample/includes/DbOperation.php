@@ -1815,10 +1815,11 @@ class DbOperation
                                  if(strlen($data)>34){
 
                                      $stmqt = $this->con->prepare("SELECT indexs,idnumber FROM botgrouplar WHERE groupnumber = ?");
-                                     $stmqt->bind_param("i", $userGrop);
+                                     $stmqt->bind_param("i", $GroupNumber);
                                      $stmqt->execute();
                                      $stmqt->bind_result($index4,$idnumber);
                                      while($stmqt->fetch()){
+                                        // $db->SetError("index=".$index4." yur=".substr($yurishkimmiki,0,1),324);
                                          if(substr($yurishkimmiki,0,1)==(string)$index4){  $db->OnIncomBot("TakeiT" . substr($yurishkimmiki,0,1) .
                                              str_pad((string)$GroupNumber,4,"0",STR_PAD_LEFT) . str_pad((string)substr($data,strlen($data)-12,12),12,"0",STR_PAD_LEFT),
                                              $idnumber); }
