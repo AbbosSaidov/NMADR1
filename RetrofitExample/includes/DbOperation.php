@@ -1220,15 +1220,9 @@ class DbOperation
 
              $idOchered=$db->SetOcheredBot($userGrop,$idnumber,$id);
              $ocherde=$db->GetOcheredBot($idnumber);
-             if($index==5){
-              $db->SetError(" Get Message=".$ocherde[1][0]." Get Message=".
-                  $idOchered." Get Message=".substr($ocherde[0][0],0,5).
-                  " Get Message=".substr($id,0,5)." Get Message=".strpos($tr,(string)$index),3232);
-             }
+
             if($ocherde[1][0]==$idOchered && substr($ocherde[0][0],0,5)==substr($id,0,5)&& strpos($tr,(string)$index)===false){
-                if($index==5){
-                    $db->SetError("2 - Get Message",3232);
-                }
+
               $mk="time".(string)$index;
               $tr=$tr.(string)$index;
               $tr2[$l]=$idnumber;
@@ -1768,7 +1762,7 @@ class DbOperation
                 $Name = substr($oxirgizapis,2,8);
                 $Money = substr($oxirgizapis,45,12);
             }
-            if (strpos($data,"&")!==false )
+            if(strpos($data,"&")!==false )
             {
                 $Pas = "true";
             }
@@ -1819,6 +1813,12 @@ class DbOperation
                                 $db->SetHuy(strlen($yurishkimmiki)-1,$lk);
                                 $huy=strlen($yurishkimmiki);
                                 $pasde[1]=(string)$huy."&";
+                                 if(strlen($data)>34){
+
+                                     $db->OnIncomBot("TakeiT" . substr($yurishkimmiki,0,1) .
+                                     str_pad((string)$GroupNumber,4,"0",STR_PAD_LEFT) . str_pad((string)substr($data,strlen($data)-12,12),12,"0",STR_PAD_LEFT),
+                                     int.Parse(BotGrouplar[lk][i].IdNumber));
+                            }
                             }
                         }
                         if(strlen($yurishkimmiki) > 2 && $keraklide >= $huy){
@@ -2433,15 +2433,15 @@ class DbOperation
                         }
 
 
-                        if (strpos($data,"&")!==false&& substr(50,1) == "2" &&$keraklide==1)
+                        if(strpos($data,"&") !== false && substr(50,1) == "2" && $keraklide == 1)
                         {
-                            $pul =(string) ((int)($yol) + (int)($pul) + $judgement);
+                            $pul =(string)((int)($yol) + (int)($pul) + $judgement);
                             $Money = $pul;
                             $uyindanOldingiPuli = 0;
                             //   print("AAAAAA2 " + BotsList[i].judgement);
 
                             $judgement = 0;
-
+                            $db->SetError("pul1=".$pul,32423);
                             $yol = "0";
                             $mik = 0;
                             $keraklide = 0;
@@ -2475,7 +2475,7 @@ class DbOperation
             else
             {   //1000000000990000000000010$^10220001
                 //1000000000990000000000010$^10240001
-                if ($online == "3" && str_pad($r2[1],4,'0',STR_PAD_LEFT) == substr($data ,strlen($data)-4,4)&& $Pas != "0")
+                if($online == "3" && str_pad($r2[1],4,'0',STR_PAD_LEFT) == substr($data ,strlen($data)-4,4)&& $Pas != "0")
                     {
                         //3000000000980000000000020$^1021010
                         $keraklide = (int)(substr($data,27,1));
@@ -2491,13 +2491,14 @@ class DbOperation
                     }
 
                     //1000000000450000000000000$^012&30102
-                    if ( $index==(int)substr($data ,strlen($data)-5,1)&&strpos($data,"&")!==false && substr($data,29,1) == "2")
+                    if($index==(int)substr($data ,strlen($data)-5,1)&&strpos($data,"&")!==false && substr($data,29,1) == "2")
                     {
                         $pul = (string) ((int)($yol) + (int)($pul) + $judgement);
                             $Money = $pul;
                             $uyindanOldingiPuli = 0;
 
                             $judgement = 0;
+                        $db->SetError("pul2=".$pul,32423);
 
                             $yol = "0";
                             $mik = 0;
@@ -2583,7 +2584,6 @@ class DbOperation
                 && $Pas == "1" && $online == 3 && $mik == 4 &&
                     (string)$index != substr($data,2, 1) && $tr - 1 == $t)
                 {
-
                     $uyindanOldingiPuli = 0;
 
                     $mik = 0;
