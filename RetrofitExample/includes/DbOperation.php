@@ -1252,7 +1252,6 @@ class DbOperation
                      $db->DeleteOcheredBot($idnumber,$idOchered);
                  }
              }
-
         }
 
         for($i=0;$i<strlen($tr);$i++){
@@ -1815,11 +1814,17 @@ class DbOperation
                                 $pasde[1]=(string)$huy."&";
                                  if(strlen($data)>34){
 
-                                     $db->OnIncomBot("TakeiT" . substr($yurishkimmiki,0,1) .
-                                     str_pad((string)$GroupNumber,4,"0",STR_PAD_LEFT) . str_pad((string)substr($data,strlen($data)-12,12),12,"0",STR_PAD_LEFT),
-                                     int.Parse(BotGrouplar[lk][i].IdNumber));
-                            }
-                            }
+                                     $stmqt = $this->con->prepare("SELECT indexs,idnumber FROM botgrouplar WHERE groupnumber = ?");
+                                     $stmqt->bind_param("i", $userGrop);
+                                     $stmqt->execute();
+                                     $stmqt->bind_result($index4,$idnumber);
+                                     while($stmqt->fetch()){
+                                         if(substr($yurishkimmiki,0,1)==(string)$index4){  $db->OnIncomBot("TakeiT" . substr($yurishkimmiki,0,1) .
+                                             str_pad((string)$GroupNumber,4,"0",STR_PAD_LEFT) . str_pad((string)substr($data,strlen($data)-12,12),12,"0",STR_PAD_LEFT),
+                                             $idnumber); }
+                                     }
+                                 }
+                             }
                         }
                         if(strlen($yurishkimmiki) > 2 && $keraklide >= $huy){
                             for ($t= 0; $t < strlen($yurishkimmiki)-1; $t++)
