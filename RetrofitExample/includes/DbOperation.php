@@ -856,10 +856,9 @@ class DbOperation
                 $stmt = $this->con->prepare($sql);
                 $stmt->bind_param("i", $ki);
                 $stmt->execute();
-            $db->OnIncomBot("Jiklo".str_pad($ki,10,"0",STR_PAD_LEFT),(int)$BotlistNumber);
+               $db->OnIncomBot("Jiklo".str_pad($ki,10,"0",STR_PAD_LEFT),(int)$BotlistNumber);
             }
         }
-
         return true;
     }
     //Chekifonline
