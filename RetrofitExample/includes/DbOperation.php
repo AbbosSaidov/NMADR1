@@ -822,17 +822,18 @@ class DbOperation
         }
     }
     function registerUser($data)
-    {$db=new DbOperation();
+    {
+        $db=new DbOperation();
         $BotOrClient = "true";
         $Id = "";  $Money = 0;$ki=0;
         $ImageNumber=12;$BotlistNumber=0;
-        if (strlen($data) > 2 && substr($data,0, 3) == "%??" && strlen($data) >= 35)
+        if(strlen($data) > 2 && substr($data,0, 3) == "%??" && strlen($data) >= 35)
         {
             $Id = substr($data,3, 10);
             $ki=(int)$Id;
             $Money = substr($data,21, 12);
             $ImageNumber = substr($data,33, 2);
-            if (strlen($data)>40&&substr($data,35, 1) == "f")
+            if(strlen($data)>40&&substr($data,35, 1) == "f")
             {
                 $BotOrClient = "false";
                 $BotlistNumber = substr($data,36, 12);
