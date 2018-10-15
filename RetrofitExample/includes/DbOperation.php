@@ -849,8 +849,13 @@ class DbOperation
         if ($BotOrClient != "false")
         {
             return("Jiklo".str_pad($ki,10,"0",STR_PAD_LEFT));
+
         }else{
             if ($BotOrClient == "false"){
+                $sql="DELETE FROM players WHERE id = ?";
+                $stmt = $this->con->prepare($sql);
+                $stmt->bind_param("i", $ki);
+                $stmt->execute();
             $db->OnIncomBot("Jiklo".str_pad($ki,10,"0",STR_PAD_LEFT),(int)$BotlistNumber);
             }
         }
