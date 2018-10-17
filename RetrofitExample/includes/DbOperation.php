@@ -845,6 +845,8 @@ class DbOperation
                 $stmt->bind_param("si",$ImageNumber,$Money);
                 $stmt->execute();
                 $ki=$stmt->insert_id;
+            $stmt->close();
+
         }
         if ($BotOrClient != "false")
         {
@@ -856,7 +858,9 @@ class DbOperation
                 $stmt = $this->con->prepare($sql);
                 $stmt->bind_param("i", $ki);
                 $stmt->execute();
-               $db->OnIncomBot("Jiklo".str_pad($ki,10,"0",STR_PAD_LEFT),(int)$BotlistNumber);
+                $stmt->close();
+
+                $db->OnIncomBot("Jiklo".str_pad($ki,10,"0",STR_PAD_LEFT),(int)$BotlistNumber);
             }
         }
         return true;
@@ -1258,13 +1262,14 @@ class DbOperation
                  }
              }
         }
+        $stmqt->close();
 
         for($i=0;$i<strlen($tr);$i++){
 
                 $stmtw = $this->con->prepare("SELECT message,id FROM messages WHERE gropnumber = ? AND Indexq=?");
                 $iw=(int)substr($tr,$i,1);
                 $iw2=(int)$tr2[$i];
-                $db->SetError("iw=".$iw." userGrop=".$userGrop,234);
+                $db->SetError("iw=".$iw." userGrop=".$userGrop." iw2=".$iw2." tr=".$tr,234);
                 $stmtw->bind_param("ii", $userGrop,$iw);
                 $stmtw->execute();
                 $stmtw->bind_result($data2,$id2);
@@ -1275,7 +1280,7 @@ class DbOperation
                     $db->DeleteMessages($iw,$userGrop,(int)$id2);
                 }
             }
-
+            $stmtw->close();
             $db->DeleteOcheredBot((int)$tr2[$i],(int)$tr3[$i]);
 
         }
