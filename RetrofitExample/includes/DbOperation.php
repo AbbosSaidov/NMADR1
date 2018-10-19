@@ -2148,6 +2148,42 @@ class DbOperation
           return "Ass";
     }
 
+//PullQushis
+    function PulQushishde($data){
+        $db=new DbOperation();
+        if(strlen($data)>19 && substr($data,0, 1) == "!")
+        {
+            $lk = (int)(substr($data,3,4));
+        $minSatck = $db->TurnLk($lk);
+        //!##01018000000000120
+        if (substr($data,0, 3) == "!@#")
+        {
+            $db->SEndMEssageToGroup($lk,$db->Getuyinchilar($lk),$data);
+            //uyinni boshlash kere
+            OxirgiZapisplar[int.Parse(data.Substring(3, 4)), int.Parse(data.Substring(7, 1))] =
+            OxirgiZapisplar[int.Parse(data.Substring(3, 4)), int.Parse(data.Substring(7, 1))].Substring(0, 14)
+        + data.Substring(8, 12) + OxirgiZapisplar[int.Parse(data.Substring(3, 4)),
+            int.Parse(data.Substring(7, 1))].Substring(26, OxirgiZapisplar[int.Parse(data.Substring(3, 4)),
+              int.Parse(data.Substring(7, 1))].Length - 26);
+
+          // combinatsiya();
+          //  XammaKartalar[lk] = cards[n[0]] + cards[n[1]] + cards[n[2]] + cards[n[3]] + cards[n[4]];
+            StartCoroutine(YurishAsosiy(lk, minSatck,2));
+        }
+            if (substr($data,0, 3) == "!##")
+            {
+                $db->SEndMEssageToGroup($lk,$db->Getuyinchilar($lk),$data);
+
+                OxirgiZapisplar[int.Parse(data.Substring(3, 4)), int.Parse(data.Substring(7, 1))] =
+                OxirgiZapisplar[int.Parse(data.Substring(3, 4)), int.Parse(data.Substring(7, 1))].Substring(0, 14)
+            + data.Substring(8, 12) + OxirgiZapisplar[int.Parse(data.Substring(3, 4)),
+                int.Parse(data.Substring(7, 1))].Substring(26, OxirgiZapisplar[int.Parse(data.Substring(3, 4)),
+                int.Parse(data.Substring(7, 1))].Length-26);
+            }
+        }
+
+        return "nmadrde";
+    }
 
     function Chiqeuyindanbot($i){
         $k=0;

@@ -152,6 +152,33 @@ $app->post('/www', function (Request $request, Response $response){
         $response->getBody()->write(json_encode($responseData));
     }
 });
+$app->post('/Qushishde', function (Request $request, Response $response){
+    if (isTheseParametersAvailable(array('data'))){
+        $requestData = $request->getParsedBody();
+        $data = $requestData['data'];
+
+        $db = new DbOperation();
+        $responseData = array();
+
+        $result = $db->PulQushishde($data);
+
+        if ($result == USER_CREATED){
+            $responseData['error'] = false;
+            $responseData['message'] = 'Registered successfully';
+
+        } elseif ($result == USER_CREATION_FAILED) {
+            $responseData['error'] = true;
+            $responseData['message'] = 'Some error occurred';
+        } elseif ($result == USER_EXIST) {
+            $responseData['error'] = true;
+            $responseData['message'] = 'This email already exist, please login';
+        }else{
+            $responseData['group']=$result;
+        }
+
+        $response->getBody()->write(json_encode($responseData));
+    }
+});
 
 $app->post('/BotdeEndi', function (Request $request, Response $response){
     if (isTheseParametersAvailable(array('data'))) {
