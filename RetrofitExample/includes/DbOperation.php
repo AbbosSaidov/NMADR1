@@ -2156,6 +2156,7 @@ class DbOperation
             $lk = (int)(substr($data,3,4));
         $minSatck = $db->TurnLk($lk);
         //!##01018000000000120
+
         if (substr($data,0, 3) == "!@#")
         {
             $db->SEndMEssageToGroup($lk,$db->Getuyinchilar($lk),$data);
