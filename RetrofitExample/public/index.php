@@ -13,7 +13,7 @@ $app = new \Slim\App([
 ]);
 
 
-$app->post('/register', function (Request $request, Response $response) {
+$app->post('/register', function (Request $request, Response $response){
 
     if (isTheseParametersAvailable(array('data'))) {
         $requestData = $request->getParsedBody();
@@ -69,7 +69,6 @@ $app->post('/uyingaKirish', function (Request $request, Response $response){
     }
 });
 
-
 $app->post('/UyinniDavomEtishi', function (Request $request, Response $response) {
     if (isTheseParametersAvailable(array('data'))) {
         $requestData = $request->getParsedBody();
@@ -97,6 +96,7 @@ $app->post('/UyinniDavomEtishi', function (Request $request, Response $response)
         $response->getBody()->write(json_encode($responseData));
     }
 });
+
 $app->post('/RRniKiritish', function (Request $request, Response $response) {
     if (isTheseParametersAvailable(array('data'))) {
         $requestData = $request->getParsedBody();
@@ -124,7 +124,36 @@ $app->post('/RRniKiritish', function (Request $request, Response $response) {
         $response->getBody()->write(json_encode($responseData));
     }
 });
-$app->post('/BotdeEndi', function (Request $request, Response $response) {
+
+$app->post('/www', function (Request $request, Response $response){
+    if (isTheseParametersAvailable(array('data'))){
+        $requestData = $request->getParsedBody();
+        $data = $requestData['data'];
+
+        $db = new DbOperation();
+        $responseData = array();
+
+        $result = $db->Www($data);
+
+        if ($result == USER_CREATED){
+            $responseData['error'] = false;
+            $responseData['message'] = 'Registered successfully';
+
+        } elseif ($result == USER_CREATION_FAILED) {
+            $responseData['error'] = true;
+            $responseData['message'] = 'Some error occurred';
+        } elseif ($result == USER_EXIST) {
+            $responseData['error'] = true;
+            $responseData['message'] = 'This email already exist, please login';
+        }else{
+            $responseData['group']=$result;
+        }
+
+        $response->getBody()->write(json_encode($responseData));
+    }
+});
+
+$app->post('/BotdeEndi', function (Request $request, Response $response){
     if (isTheseParametersAvailable(array('data'))) {
         $requestData = $request->getParsedBody();
         $data = $requestData['data'];
@@ -170,7 +199,7 @@ $app->post('/BotdeEndi', function (Request $request, Response $response) {
     }
 });
 
-$app->post('/Chiqishde', function (Request $request, Response $response) {
+$app->post('/Chiqishde', function (Request $request, Response $response){
     if (isTheseParametersAvailable(array('data'))) {
         $requestData = $request->getParsedBody();
         $data = $requestData['data'];
@@ -206,6 +235,7 @@ $app->get('/BotMessage/{id}/{group}', function (Request $request, Response $resp
     $messages = $db->getMessagesBot($userid,$userGropde);
     $response->getBody()->write(json_encode(array("messages" => $messages)));
 });
+
 $app->get('/messages/{id}/{group}', function (Request $request, Response $response) {
     $userid = $request->getAttribute('id');
     $userGropde= $request->getAttribute('group');

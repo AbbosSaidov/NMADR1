@@ -2081,6 +2081,73 @@ class DbOperation
         }
         return "Zo'r";
     }
+//WWWWLobbi
+
+    function Www($data){
+    $db=new DbOperation();
+    if(strlen($data)>10 && substr($data,0,3) == "www")
+    {
+        if (((int)(substr($data,7, 2)) + 2) % 2 == 0)
+        {
+            for($i = (int)(substr($data,3, 2))+2; $i < 50; $i=$i+2)
+                {
+                    $t = 0;
+                    $tr = (int)(substr($data,5, 2)) * 100 + $i + 700 * ((int)(substr($data,9, 2)) - 1);
+                    for ($k = 1; $k < 6; $k++)
+                    {
+                        if ($db->GetOxirgiZapisplar($tr,$k) == "")
+                        {
+                            $t = 1;
+                        }
+                    }
+                    if ($t == 1)
+                    {
+                        $po = "";
+                        for($k = 1; $k < 6; $k++)
+                        {
+                            $zapis=$db->GetOxirgiZapisplar($tr,$k);
+                            if ($zapis != "")
+                            {
+                                $po = $po . substr($zapis,2, 8) .
+                                    substr($zapis,14, 12) . substr($zapis,69, 1) . "LLLL";
+                            }
+                        }
+                        return("mmm" . str_pad((string)($tr),4,'0',STR_PAD_LEFT) . $po);break;
+                    }
+                }
+            }
+        else
+        {
+            for ($i = (int)(substr($data,3, 2)) + 2; $i < 50; $i = $i + 2)
+                {
+                    $t = 0;//www00000001
+                    $tr = (int)(substr($data,5, 2)) * 100 + $i + 700 * ((int)(substr($data,9, 2)) - 1) ;
+                    for ($k = 1; $k < 10; $k++)
+                    {
+                        if ($db->GetOxirgiZapisplar($tr,$k) == "")
+                        {
+                            $t = 1;
+                        }
+                    }
+                    if ($t == 1)
+                    {
+                        $po = "";
+                        for ($k = 1; $k <10; $k++)
+                        {
+                            $zapis=$db->GetOxirgiZapisplar($tr,$k);
+                            if ($zapis != "")
+                            {
+                                $po = $po.substr($zapis,2, 8).substr($zapis,14, 12).substr($zapis,69, 1)."LLLL";
+                            }
+                        }
+                        return("mmm" .str_pad((string)($tr),4,'0',STR_PAD_LEFT) . $po); break;
+                    }
+                }
+            }
+    }
+    return "Ass";
+}
+
 
     function Chiqeuyindanbot($i){
         $k=0;
