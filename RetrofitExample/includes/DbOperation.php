@@ -2084,7 +2084,7 @@ class DbOperation
 //WWWWLobbi
 
     function Www($data){
-    $db=new DbOperation();
+              $db=new DbOperation();
     if(strlen($data)>10 && substr($data,0,3) == "www")
     {
         if (((int)(substr($data,7, 2)) + 2) % 2 == 0)
@@ -2144,9 +2144,9 @@ class DbOperation
                     }
                 }
             }
+        }
+          return "Ass";
     }
-    return "Ass";
-}
 
 
     function Chiqeuyindanbot($i){
