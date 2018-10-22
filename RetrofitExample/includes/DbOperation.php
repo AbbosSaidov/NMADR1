@@ -2027,8 +2027,7 @@ class DbOperation
         }
         return "Zo'r";
     }
-//WWWWLobbi
-
+    //WWWWLobbi
     function Www($data){
               $db=new DbOperation();
     if(strlen($data)>10 && substr($data,0,3) == "www")
