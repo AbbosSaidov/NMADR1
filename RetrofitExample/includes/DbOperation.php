@@ -1029,13 +1029,11 @@ class DbOperation
         $Ifgruplar=array(3300,2100,2,0);
         $Ifgruplar2=array(1,0);
         if($trwe){
-
             for($k=0;$k<2;$k++){
                 for($i=0;$i<4;$i=$i+2){
                     //botde21 %%0402000000040000$000000000000000000000000040000xb0000000598f 0 2 0 0 0
                     if($k*$GroupNumber<$Ifgruplar[$i]&&$GroupNumber>$k*$Ifgruplar[$i+1]&&$Ifgruplar2[$k]*$GroupNumber<2100&&$GroupNumber>$Ifgruplar2[$k]){
                         for($i1 = $i;$i1 < 100;$i1 = $i1 + 2){
-
                             if($GroupNumber%2==0){$i2=0;}else{$i2=1;}$t=0;
 
                                     for($m=0;$m<13;$m++){
@@ -1108,7 +1106,7 @@ class DbOperation
                                         }
                                     }
                                     $db->DeleteOchered($grup,$Id);
-                        }
+                            }
                     }
                 }
             }
@@ -1155,58 +1153,6 @@ class DbOperation
                 }
             }
         }
-
-
-/**
-
-
-        //Check the bots hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-        $tr="";$tr2=array();
-        $tr3=array();
-        $stmqt = $this->con->prepare("SELECT indexs,idnumber FROM botgrouplar WHERE groupnumber = ?");
-        $stmqt->bind_param("i", $userGrop);
-        $stmqt->execute();
-        $stmqt->bind_result($index,$idnumber);
-
-        $id=(string)$userindex .str_pad((string)($userGrop),4,'0',STR_PAD_LEFT);
-        $l=0;
-        while($stmqt->fetch()){
-             $idOchered=$db->SetOcheredBot($userGrop,$idnumber,$id);
-             $ocherde=$db->GetOcheredBot($idnumber);
-
-
-            if($ocherde[1][0]==$idOchered && $ocherde[0][0]=$id){
-              $mk="time".(string)$index;
-              $tr=$tr.(string)$index;
-              $tr2[$l]=$idnumber;
-              $tr3[$l]=$idOchered;
-              $l++;
-               $erw=$db->GetTimede($userGrop,$mk);
-               $db->SetTimede($userGrop,"time".(string)$index,substr($erw,0,5).time());
-
-             }
-             else
-             {
-                $db->DeleteOcheredBot($idnumber,$idOchered);
-             }
-        }
-
-        for($i=0;$i<strlen($tr);$i++){
-                $stmtw = $this->con->prepare("SELECT message,id FROM messages WHERE gropnumber = ? AND Indexq=?");
-                $iw=(int)substr($tr,$i,1);
-                $iw2=(int)$tr2[$i];
-                $stmtw->bind_param("ii", $userGrop,$iw);
-                $stmtw->execute();
-                $stmtw->bind_result($data2,$id2);
-
-                while($stmtw->fetch()){
-                   $db->OnIncomBot($data2,$iw2);
-                   $db->DeleteMessages($iw,$userGrop,(int)$id2);
-                }
-
-              $db->DeleteOcheredBot((int)$tr2[$i],(int)$tr3[$i]);
-        }
-        */
         return $messages;
     }
     function getMessagesBot($userindex,$userGrop)
@@ -1784,7 +1730,7 @@ class DbOperation
             {
                     $lk = $GroupNumber;
                     $a =substr($yurishkimmiki,0,1);  $b = substr($yurishkimmiki,1,strlen($yurishkimmiki)-1);
-                   for($i = 0; $i < strlen($yurishkimmiki); $i++){
+                for($i = 0; $i < strlen($yurishkimmiki); $i++){
                     //1000000000350000000000050$^201020 a=1 b=13113
                     if ($i + 2 == strlen($yurishkimmiki))
                     {
@@ -2148,41 +2094,36 @@ class DbOperation
           return "Ass";
     }
 
-//PullQushis
+          //PullQushis
     function PulQushishde($data){
         $db=new DbOperation();
         if(strlen($data)>19 && substr($data,0, 1) == "!")
         {
             $lk = (int)(substr($data,3,4));
-        $minSatck = $db->TurnLk($lk);
-        //!##01018000000000120
+            $index = (int)(substr($data,7,1));
+            $oxirgiZapis=$db->GetOxirgiZapisplar($lk,"OxirgiZapis".(string)$index);
+            $minSatck = $db->TurnLk($lk);
+            //!##01018000000000120
 
         if (substr($data,0, 3) == "!@#")
         {
             $db->SEndMEssageToGroup($lk,$db->Getuyinchilar($lk),$data);
             //uyinni boshlash kere
-            OxirgiZapisplar[int.Parse(data.Substring(3, 4)), int.Parse(data.Substring(7, 1))] =
-            OxirgiZapisplar[int.Parse(data.Substring(3, 4)), int.Parse(data.Substring(7, 1))].Substring(0, 14)
-        + data.Substring(8, 12) + OxirgiZapisplar[int.Parse(data.Substring(3, 4)),
-            int.Parse(data.Substring(7, 1))].Substring(26, OxirgiZapisplar[int.Parse(data.Substring(3, 4)),
-              int.Parse(data.Substring(7, 1))].Length - 26);
+            $db->SetOxirgiZapislar(
+                substr($oxirgiZapis,0,14).substr($data,8,12).substr($oxirgiZapis,26,strlen($oxirgiZapis)-26)
+                ,$lk,"OxirgiZapis".$index);
 
-          // combinatsiya();
-          //  XammaKartalar[lk] = cards[n[0]] + cards[n[1]] + cards[n[2]] + cards[n[3]] + cards[n[4]];
-            StartCoroutine(YurishAsosiy(lk, minSatck,2));
+            $db->YurishAsosiy($lk, $minSatck, 2);
         }
-            if (substr($data,0, 3) == "!##")
+            if(substr($data,0, 3) == "!##")
             {
                 $db->SEndMEssageToGroup($lk,$db->Getuyinchilar($lk),$data);
 
-                OxirgiZapisplar[int.Parse(data.Substring(3, 4)), int.Parse(data.Substring(7, 1))] =
-                OxirgiZapisplar[int.Parse(data.Substring(3, 4)), int.Parse(data.Substring(7, 1))].Substring(0, 14)
-            + data.Substring(8, 12) + OxirgiZapisplar[int.Parse(data.Substring(3, 4)),
-                int.Parse(data.Substring(7, 1))].Substring(26, OxirgiZapisplar[int.Parse(data.Substring(3, 4)),
-                int.Parse(data.Substring(7, 1))].Length-26);
+                $db->SetOxirgiZapislar(
+                    substr($oxirgiZapis,0,14).substr($data,8,12).substr($oxirgiZapis,26,strlen($oxirgiZapis)-26)
+                    ,$lk,"OxirgiZapis".$index);
             }
         }
-
         return "nmadrde";
     }
 

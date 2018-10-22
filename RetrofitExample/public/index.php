@@ -152,6 +152,7 @@ $app->post('/www', function (Request $request, Response $response){
         $response->getBody()->write(json_encode($responseData));
     }
 });
+
 $app->post('/Qushishde', function (Request $request, Response $response){
     if (isTheseParametersAvailable(array('data'))){
         $requestData = $request->getParsedBody();
