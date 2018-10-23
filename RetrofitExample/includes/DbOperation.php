@@ -2093,7 +2093,7 @@ class DbOperation
           return "Ass";
     }
 
-          //PullQushis
+    //PullQushis
     function PulQushishde($data){
         $db=new DbOperation();
         if(strlen($data)>19 && substr($data,0, 1) == "!")
