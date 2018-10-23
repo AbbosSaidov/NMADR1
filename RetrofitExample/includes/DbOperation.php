@@ -2123,6 +2123,18 @@ class DbOperation
                     ,$lk,"OxirgiZapis".$index);
             }
         }
+
+        //chat
+        if(strlen($data)>3 && substr($data,0,2)=="MM"){
+            $lk = (int)(substr($data,2,4));
+            $db->SEndMEssageToGroup($lk,$db->Getuyinchilar($lk),$data);
+        }
+        //Smile
+        if(strlen($data)>10&& substr($data,0,5)=="Smile"){
+            $lk = (int)(substr($data,5,4));
+            $db->SEndMEssageToGroup($lk,$db->Getuyinchilar($lk),$data);
+        }
+
         return "nmadrde";
     }
 
