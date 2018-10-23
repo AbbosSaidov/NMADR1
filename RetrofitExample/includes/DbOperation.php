@@ -1215,7 +1215,6 @@ class DbOperation
                 $stmtw = $this->con->prepare("SELECT message,id FROM messages WHERE gropnumber = ? AND Indexq=?");
                 $iw=(int)substr($tr,$i,1);
                 $iw2=(int)$tr2[$i];
-                $db->SetError("iw=".$iw." userGrop=".$userGrop." iw2=".$iw2." tr=".$tr,234);
                 $stmtw->bind_param("ii", $userGrop,$iw);
                 $stmtw->execute();
                 $stmtw->bind_result($data2,$id2);
