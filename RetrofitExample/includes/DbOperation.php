@@ -2122,7 +2122,6 @@ class DbOperation
                     ,$lk,"OxirgiZapis".$index);
             }
         }
-
         //chat
         if(strlen($data)>3 && substr($data,0,2)=="MM"){
             $lk = (int)(substr($data,2,4));
@@ -2132,6 +2131,72 @@ class DbOperation
         if(strlen($data)>10&& substr($data,0,5)=="Smile"){
             $lk = (int)(substr($data,5,4));
             $db->SEndMEssageToGroup($lk,$db->Getuyinchilar($lk),$data);
+        }
+
+        //Search
+        if(strlen($data)>8){
+            if (substr($data,0,8) == "Searchde")
+            {
+                if (strlen($data) > 15)
+                {
+                    if (substr($data,8, 8) != "NameByMe")
+                    {
+                        if (strlen($data)==18 /*&& substr($data,8, 10).Any(char.IsDigit)*/)
+                        {
+                            //if was id
+                            $ij = "";
+                            $stmt = $this->con->prepare("SELECT Imagenumber,money,ContactName,id FROM players WHERE id = ?");
+                            $jkewe=(int)(substr($data,8,10));
+                            $stmt->bind_param("i",$jkewe );
+                            $stmt->execute();
+                            $stmt->bind_result($imageNumber,$money,$Name,$idde);
+                            while($stmt->fetch()){
+                                $ij=$imageNumber.str_pad((string)$money,12,'0',STR_PAD_LEFT).$Name.str_pad((string)$idde,10,'0',STR_PAD_LEFT);
+                                break;
+                            }
+                       return("SearchResult:1"  . $ij);
+                        }
+                        else
+                        {
+                            $ij = "";
+                            $gi = 0;
+                            //was Name
+                            $stmt = $this->con->prepare("SELECT Imagenumber,money,ContactName,id FROM players WHERE ContactName = ?");
+                            $jkewe=(substr($data,8,strlen($data)-8));
+                            $stmt->bind_param("s",$jkewe );
+                            $stmt->execute();
+                            $stmt->bind_result($imageNumber,$money,$Name,$idde);
+                            while($stmt->fetch()){
+                                $ij=$imageNumber.str_pad((string)$money,12,'0',STR_PAD_LEFT).$Name.str_pad((string)$idde,10,'0',STR_PAD_LEFT);
+                                $gi++;
+                            }
+
+                       return("SearchResult:" . $gi . $ij);
+                    }
+                    }
+                    else
+                    {
+                        return("SearchResult:0");
+                    }
+                }
+                else
+                {
+                    //was Name
+                    $ij = "";
+                $gi = 0;
+                //was Name
+                    $stmt = $this->con->prepare("SELECT Imagenumber,money,ContactName,id FROM players WHERE ContactName = ?");
+                    $jkewe=(substr($data,8,strlen($data)-8));
+                    $stmt->bind_param("s",$jkewe );
+                    $stmt->execute();
+                    $stmt->bind_result($imageNumber,$money,$Name,$idde);
+                    while($stmt->fetch()){
+                        $ij=$imageNumber.str_pad((string)$money,12,'0',STR_PAD_LEFT).$Name.str_pad((string)$idde,10,'0',STR_PAD_LEFT);
+                        $gi++;
+                    }
+                       return("SearchResult:" . $gi . $ij);
+                }
+            }
         }
 
         return "nmadrde";
