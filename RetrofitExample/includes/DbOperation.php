@@ -725,9 +725,7 @@ class DbOperation
     function Pas($lk,$i){
         $db=new DbOperation();
         //$i=1 6 , $i=0 0
-        $db->SetError("Uttide1",$lk);
         if($i==1){  sleep(6);}else{sleep(1);}
-        $db->SetError("Uttide2",$lk);
         $minSatck = $db->TurnLk($lk);
 
         $db->SetKartatarqatildi("false",$lk);
@@ -1895,6 +1893,8 @@ class DbOperation
                             break;
                         }else{
                             $db->setOchered($Id,$lk,(string)time());
+                            $db->SetError("data=".$data." size=".sizeof($ochered),453);
+
                         }
                     }else{
                         if($l!=1&&$rt=="false"){
@@ -2021,7 +2021,6 @@ class DbOperation
         if(strlen($Id)>7){ $db->DeleteOchered($lk,$Id);}
 
         if(strlen($yurishkimmiki)==2 &&substr($yurishkimmiki,1,1)==substr($yurishkimmiki,0,1) && strlen($uyinchilar)>1){
-            $db->SetError("Uttide",$lk);
 
             $db->Pas($lk,0);
         }
