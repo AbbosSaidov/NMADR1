@@ -845,15 +845,14 @@ class DbOperation
                 $stmt->bind_param("si",$ImageNumber,$Money);
                 $stmt->execute();
                 $ki=$stmt->insert_id;
-            $stmt->close();
-
+                $stmt->close();
         }
         if ($BotOrClient != "false")
         {
             return("Jiklo".str_pad($ki,10,"0",STR_PAD_LEFT));
 
         }else{
-            if ($BotOrClient == "false"){
+            if($BotOrClient == "false"){
                 $sql="DELETE FROM players WHERE id = ?";
                 $stmt = $this->con->prepare($sql);
                 $stmt->bind_param("i", $ki);
@@ -1783,15 +1782,21 @@ class DbOperation
                              }
                         }
                         if(strlen($yurishkimmiki) > 2 && $keraklide >= $huy){
+                            $lops=0;
                             for ($t= 0; $t < strlen($yurishkimmiki)-1; $t++)
                             {
                                 $tikilgsnpul="TikilganPullar".substr($yurishkimmiki,$t+1,1);
                                 $OxirgiZapis="OxirgiZapis".substr($yurishkimmiki,$t+1,1);
-                                $db->SetTikilganPullar($tikilgsnpul,(int)$db->GetTikilganPullar($lk,$tikilgsnpul)+(int)substr($db->GetOxirgiZapisplar($lk,$OxirgiZapis),27,12),$lk);
+                                $OxirgiZapis2=$db->GetOxirgiZapisplar($lk,$OxirgiZapis);
+                                if((int)substr($OxirgiZapis2,14,12)!=0){
+                                    $lops++;
+                                }
+                                $db->SetTikilganPullar($tikilgsnpul,(int)$db->GetTikilganPullar($lk,$tikilgsnpul)+(int)substr($OxirgiZapis2,27,12),$lk);
                             }
                             $db->SetHuy(strlen($yurishkimmiki)-1,$lk);
                             $huy=strlen($yurishkimmiki)-1;
                             $hu3=$db->Gethu3($lk)+1;
+                            if($lops<2){$hu3=4;$mik=3;}
                             $db->Sethu3($hu3,$lk);
                             if($pasde[$i*2]=="true"){ $huy=strlen($yurishkimmiki);$pasde[$i*2+1]="&".$db->GetXAmmakartalar($lk).$huy;}else{$pasde[$i*2+1]=$db->GetXAmmakartalar($lk).$huy;}
                         }
@@ -1861,7 +1866,7 @@ class DbOperation
     }
     //Chiqishde
     function Chiqishde($data,$ochered)
-    {//0=ocheredsiz 1=ocheredli
+    {   //0=ocheredsiz 1=ocheredli
         $db=new DbOperation();
         $lk = (int)(substr($data,10,4));
         $index = substr($data,9,1);
@@ -1869,10 +1874,9 @@ class DbOperation
         if($ochered==1){
             $oxirgizapis=$db->GetOxirgiZapisplar($lk,"OxirgiZapis".$index);
             if(strlen($oxirgizapis)>68){
-
                 $Id=substr($oxirgizapis,59,10);
-
                 for($l=0;$l<11;$l++){
+
                     $ochered=$db->getOchered($lk);
                     $rt="false";
 
@@ -1886,7 +1890,6 @@ class DbOperation
                             }
                         }
                     }
-
                     if($l==0){
                         if(sizeof($ochered)>2){
                             break;
@@ -1898,8 +1901,6 @@ class DbOperation
                             sleep(1);
                         }
                     }
-
-
                     if($l==8){
                         break;
                     }
@@ -2017,7 +2018,7 @@ class DbOperation
             }
         }
 
-        if($ochered==1&&strlen($Id)>7){ $db->DeleteOchered($lk,$Id);}
+        if(strlen($Id)>7){ $db->DeleteOchered($lk,$Id);}
 
         if(strlen($yurishkimmiki)==2 &&substr($yurishkimmiki,1,1)==substr($yurishkimmiki,0,1) && strlen($uyinchilar)>1){
             $db->SetError("Uttide",$lk);
@@ -2154,7 +2155,7 @@ class DbOperation
                                 $ij=$imageNumber.str_pad((string)$money,12,'0',STR_PAD_LEFT).$Name.str_pad((string)$idde,10,'0',STR_PAD_LEFT);
                                 break;
                             }
-                       return("SearchResult:1"  . $ij);
+                          return("SearchResult:1"  . $ij);
                         }
                         else
                         {
@@ -2170,9 +2171,8 @@ class DbOperation
                                 $ij=$imageNumber.str_pad((string)$money,12,'0',STR_PAD_LEFT).$Name.str_pad((string)$idde,10,'0',STR_PAD_LEFT);
                                 $gi++;
                             }
-
-                       return("SearchResult:" . $gi . $ij);
-                    }
+                           return("SearchResult:" . $gi . $ij);
+                        }
                     }
                     else
                     {
@@ -2556,16 +2556,18 @@ class DbOperation
                     {
                         //   print("2");
 
-                        if($index==(int)substr($data ,strlen($data)-5,1)){ $keraklide=1;  }else{ $keraklide=0; }
+                        if($index==(int)substr($data ,strlen($data)-5,1)){ $keraklide=1;  }else{$keraklide=0; }
 
                         $EngKatta = "0";
+
+                        $mik=substr($data,28,1);
                         $mik++;
                         $yol = "0";
-                        $UrtadagiKartalar = substr(29,20);
+                        $UrtadagiKartalar = substr($data,29,20);
                         if (strpos($data,"&")!==false)
                         {
                             $uyinchilar = str_replace(substr($data,0,1),"",$uyinchilar);
-                            $UrtadagiKartalar = substr(30,20);
+                            $UrtadagiKartalar = substr($data,30,20);
                         }
 
 
@@ -2682,7 +2684,7 @@ class DbOperation
                 }
         }
     }
-    function RRUchun($tr, $datab,$i)
+    function RRUchun($tr,$datab,$i)
     {
         $db = new DbOperation();
         $r2=$db->Getall($i);
@@ -2693,13 +2695,11 @@ class DbOperation
         $EngKatta=$r2[15];$UrtadagiKartalar=$r2[16];$Money=$r2[17];$minstavka=$db->TurnLk((int)$groupnumber);
         for ($t = 0; $t < $tr; $t++)
         {
-
             $data = substr($datab,$t * strlen($datab) / $tr, strlen($datab)/ $tr);
 
             if ((string)$index == substr($data,2, 1) &&
             str_pad($groupnumber,4,'0',STR_PAD_LEFT) == substr($data,15, 4))
             {
-
                 // print("32");
                 $judgement = 0;
                 $pul = (string)((int)($pul) + (int)(substr($data,19, strlen($data)- 19)));
