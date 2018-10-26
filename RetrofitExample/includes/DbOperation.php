@@ -872,7 +872,7 @@ class DbOperation
             $erw=$db->GetTimede($GroupNumber,"time".substr($uyinchilar,$i,1));
             $OxirgiZapis=$db->GetOxirgiZapisplar($userGrop,"OxirgiZapis".substr($uyinchilar,$i,1));
             $data21 = "Chiqishde" .substr($uyinchilar,$i,1).str_pad((string)($GroupNumber),4,'0',STR_PAD_LEFT);
-            if(strpos($uyinchilar,substr($uyinchilar,$i,1))!==false && time()-(int)substr($erw,10,strlen($erw)-10)>7 && $BotOrClient=="true"){
+            if(strpos($uyinchilar,substr($uyinchilar,$i,1))!==false && time()-(int)substr($erw,10,strlen($erw)-10)>4 && $BotOrClient=="true"){
                $db->SetError("Chiqish=".$data21,23423);
                 $db->Chiqishde($data21,0);
             }else{
