@@ -794,7 +794,7 @@ class DbOperation
                 {
                     $db->SetUyinchilar(substr($uyinchilar,1,1).substr($uyinchilar,2,strlen($uyinchilar)-2).substr($uyinchilar,0,1),$lk);
                     $uyinchilar=substr($uyinchilar,1,1).substr($uyinchilar,2,strlen($uyinchilar-2)).substr($uyinchilar,0,1);
-                    if (strpos($yurishkimmiki, substr($uyinchilar,1,1))!== false&& strpos($yurishkimmiki, substr($uyinchilar,0,1))!== false)
+                    if(strpos($yurishkimmiki, substr($uyinchilar,1,1))!== false&& strpos($yurishkimmiki, substr($uyinchilar,0,1))!== false)
                     {
                         break;
                     }
@@ -809,7 +809,7 @@ class DbOperation
 
 
 
-                for ($m = 0; $m < $totti; $m++)
+                for($m = 0; $m < $totti; $m++)
                 {
                     $message=$cards[$n[0][$m * 2]].$cards[$n[0][$m * 2 + 1]].substr($yurishkimmiki,0,1).
                         str_pad((string)($minSatck / 2),12,'0',STR_PAD_LEFT)."!". str_pad((string)($minSatck ),12,'0',STR_PAD_LEFT).
@@ -872,22 +872,26 @@ class DbOperation
             $erw=$db->GetTimede($GroupNumber,"time".substr($uyinchilar,$i,1));
             $OxirgiZapis=$db->GetOxirgiZapisplar($userGrop,"OxirgiZapis".substr($uyinchilar,$i,1));
             $data21 = "Chiqishde" .substr($uyinchilar,$i,1).str_pad((string)($GroupNumber),4,'0',STR_PAD_LEFT);
-            if(strpos($uyinchilar,substr($uyinchilar,$i,1))!==false && strlen($erw)>10 && time()-(int)substr($erw,10,strlen($erw)-10)>7 && $BotOrClient=="true"){
+            if(strpos($uyinchilar,substr($uyinchilar,$i,1))!==false && time()-(int)substr($erw,10,strlen($erw)-10)>7 && $BotOrClient=="true"){
+               $db->SetError("Chiqish=".$data21,23423);
                 $db->Chiqishde($data21,0);
             }else{
                 if(strlen($OxirgiZapis)>68 && strpos($uyinchilar,substr($uyinchilar,$i,1))!==false&& strlen($erw)<10 ){
-
+                    $db->SetError("Chiqish2=".$data21,23423);
                     $db->Chiqishde($data21,0);
                 }else{
                     if(strlen($OxirgiZapis)>68 && strpos($uyinchilar,substr($uyinchilar,$i,1))!==false && strlen($erw)>10 &&
                         time()-(int)substr($erw,10,strlen($erw)-10)<7 && $db->GetKartatarqatildi($GroupNumber)=="false" ){
                         $minStavka = $db->TurnLk($GroupNumber);
                         if((int)substr($OxirgiZapis,14, 12) < $minStavka)
-                        {
+                        {               $db->SetError("Chiqish4=".$data21,23423);
+
                             $db->Chiqishde($data21,0);
                         }
                     }else{
-                        if(strpos($uyinchilar,substr($uyinchilar,$i,1))!==false &&(strlen($OxirgiZapis)<68 || strlen($erw)<10) ){
+                        if(strpos($uyinchilar,substr($uyinchilar,$i,1))!==false &&(strlen($OxirgiZapis)<68 || strlen($erw)<10)){
+                            $db->SetError("Chiqish5=".$data21,23423);
+
                             $db->Chiqishde($data21,0);
                         }
                     }
@@ -948,20 +952,20 @@ class DbOperation
             $rtwq=str_replace((string)$index,"",$uyinchilar);
             $db->SetError("Usha=".$rtwq." uyinchilar=".$uyinchilar,$lk);
             $db->SEndMEssageToGroup($lk,$rtwq ,$data.$index.$ass3);
-            if ($sonide >= 2 && $lk <= 2100 )
+            if($sonide >= 2 && $lk <= 2100 )
             {
                 $db->YurishAsosiy($lk, $minSatck, 2);
             }
             //Turnir
-            if ($lk > 2100)
+            if($lk > 2100)
             {   for($i=0;$i<2;$i++){
                 if($lk%2==$i){
                     if($sonide==$odamlade[$i]){
                         $db->YurishAsosiy($lk, $minSatck, $odamlade[$i]);
                         $i=2;
+                      }
                     }
                 }
-            }
             }
             return $data.$index.$ass3 ;
         }
@@ -1142,10 +1146,10 @@ class DbOperation
                 $index=substr($nmadr,0,1);
 
                 $timede2=$db->GetTimede2($userGrop,"time".$index);
-                //     $db->SetError("asd2 ".$timede2,$userGrop);
-                if(time()-(int)$timede2>28){
 
+                if(time()-(int)$timede2>28 &&$timede2!=""){
                     $data21 = "Chiqishde".$index.str_pad((string)($userGrop),4,'0',STR_PAD_LEFT);
+                    $db->SetError("DATA=Chiqish3=".$data21,23423);
                     $db->Chiqishde($data21,1);
                 }
             }
@@ -1893,8 +1897,6 @@ class DbOperation
                             break;
                         }else{
                             $db->setOchered($Id,$lk,(string)time());
-                            $db->SetError("data=".$data." size=".sizeof($ochered),453);
-
                         }
                     }else{
                         if($l!=1&&$rt=="false"){
@@ -1928,7 +1930,6 @@ class DbOperation
             $db->DeleteMessages($index,$lk,0);
 
             $db->SetTimede($lk,"time".$index,"");
-            $db->SetError("Chiqishde = ".$index,$lk);
             $db->SetTimede2($lk,"time".$index,"");
 
             // ObnovitQilish($lk);
@@ -1987,7 +1988,6 @@ class DbOperation
                 if ($db->GetHuy($lk) == 1 && strlen($uyinchilar) > 1)
                 {
                     $db->Sethu3(0,$lk);
-                    // StartCoroutine(Pas(lk));
                 }
                 if (strlen($uyinchilar) < 2)
                 {
@@ -2020,10 +2020,11 @@ class DbOperation
 
         if(strlen($Id)>7){ $db->DeleteOchered($lk,$Id);}
 
-        if(strlen($yurishkimmiki)==2 &&substr($yurishkimmiki,1,1)==substr($yurishkimmiki,0,1) && strlen($uyinchilar)>1){
+        if(strlen($yurishkimmiki)==2 && substr($yurishkimmiki,1,1)==substr($yurishkimmiki,0,1) && strlen($uyinchilar)>1){
 
             $db->Pas($lk,0);
         }
+        $db->SetError("UTTI=".$data,234);
         return "Zo'r";
     }
     //WWWWLobbi
@@ -2284,39 +2285,19 @@ class DbOperation
     //Botlar
     function CreateBot($Nomerstol, $index){
     //check if is Does anybody online
-         $t = 0;
-    $db=new DbOperation();
-    $min=$db->TurnLk((int)$Nomerstol);
-    $mkf=$db->ChooisePul((int)$Nomerstol);
-    $pul=$mkf[0];
-    $money=$mkf[1];
+            $db=new DbOperation();
+            $min=$db->TurnLk((int)$Nomerstol);
+            $mkf=$db->ChooisePul((int)$Nomerstol);
+            $pul=$mkf[0];
+            $money=$mkf[1];
 
 
-    $stmt = $this->con->prepare("SELECT id,idBot,botname FROM botlist WHERE online = ?");
-    $stmt->bind_param("i", $t);
-    $stmt->execute();
-    $stmt->bind_result($id,$idbot,$namew);
-
-    while($stmt->fetch()){
-        $t = 1;
-        $u=2;
-        $stmt =$this->con->prepare("UPDATE botlist SET online = ?,groupnumber=?,money=?,pul=?,minstavka=?,Indexq=? WHERE id =?");
-        $stmt->bind_param("iissiii",$u,$Nomerstol,$money,$pul,$min,$index,$id);
-        $stmt->execute();
-
-        $stmt =$this->con->prepare("INSERT INTO  botgrouplar (indexs,idnumber,groupnumber) VALUES(?,?,?)");
-        $stmt->bind_param("iii",$index,$id,$Nomerstol);
-        $stmt->execute();
-        $db->registerUser("%??" . $idbot . $namew.str_pad((string)($pul),12,'0',STR_PAD_LEFT). "00" . "f" .str_pad((string)($id),12,'0',STR_PAD_LEFT));
-        break;
-    }
-              if($t != 1){
             $chars = "BCDFGHJKLMNPQRSTVWXYZ";
             $chars2 = "qwrtypsdfghjklzxcvbnm";
             $chars3 = "aioue";
 
                   $name=substr($chars,rand(0,20),1).substr($chars3,rand(0,4),1).substr($chars2,rand(0,20),1).substr($chars3,rand(0,4),1).
-                      substr($chars2,rand(0,20),1).substr($chars3,rand(0,4),1).substr($chars2,rand(0,20),1).substr($chars3,rand(0,4),1);
+                  substr($chars2,rand(0,20),1).substr($chars3,rand(0,4),1).substr($chars2,rand(0,20),1).substr($chars3,rand(0,4),1);
 
             $Id = "0000000000";
             $Online = 2;
@@ -2326,14 +2307,15 @@ class DbOperation
                   $stmt->bind_param("iissiiss",$Online,$GroupNumber,$money,$pul,$min,$index,$Id,$name);
                   $stmt->execute();
                   $idd=$stmt->insert_id;
+                  $stmt->close();
 
                   $stmt =$this->con->prepare("INSERT INTO  botgrouplar (indexs,idnumber,groupnumber) VALUES(?,?,?)");
                   $stmt->bind_param("isi",$index,$idd,$Nomerstol);
                   $stmt->execute();
-
+                  $stmt->close();
                   $db->registerUser("%??" . $Id . $name.str_pad((string)($pul),12,'0',STR_PAD_LEFT). "00" . "f" .str_pad((string)($idd),12,'0',STR_PAD_LEFT));
-        }
-     }//ochered need
+
+    }//ochered need
     function OnIncomBot($data,$i)
     {
         $db=new DbOperation();
@@ -2477,7 +2459,7 @@ class DbOperation
 
                         if ((int)($pul) < $uyindanOldingiPuli) { $pul =(string)$uyindanOldingiPuli; }
 
-                         $db->Setall($i,0,"1","",0,0,0,"0","","",$pul,0);
+                         $db->Setall($i,0,"1","",0,0,0,"0","","",$pul,0,"");
 
                         $db->Chiqishde("Chiqishde".$index.str_pad($r2[1],4,'0',STR_PAD_LEFT),1);
 
