@@ -2024,7 +2024,6 @@ class DbOperation
 
             $db->Pas($lk,0);
         }
-        $db->SetError("UTTI=".$data,234);
         return "Zo'r";
     }
     //WWWWLobbi
