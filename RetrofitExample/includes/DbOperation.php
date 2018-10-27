@@ -872,7 +872,7 @@ class DbOperation
             $erw=$db->GetTimede($GroupNumber,"time".substr($uyinchilar,$i,1));
             $OxirgiZapis=$db->GetOxirgiZapisplar($userGrop,"OxirgiZapis".substr($uyinchilar,$i,1));
             $data21 = "Chiqishde" .substr($uyinchilar,$i,1).str_pad((string)($GroupNumber),4,'0',STR_PAD_LEFT);
-            if(strpos($uyinchilar,substr($uyinchilar,$i,1))!==false && time()-(int)substr($erw,10,strlen($erw)-10)>4 && $BotOrClient=="true"){
+            if(strpos($uyinchilar,substr($uyinchilar,$i,1))!==false && time()-(int)substr($erw,10,strlen($erw)-10)>7 && $BotOrClient=="true"){
                $db->SetError("Chiqish=".$data21,23423);
                 $db->Chiqishde($data21,0);
             }else{
@@ -1300,7 +1300,6 @@ class DbOperation
             for($l=1;$l<10;$l++){
 
                 $javoblade[$l]=$db->GetJavoblade($lk,"Javoblade".(string)$l);
-                $db->SetError("javob".$l."=".$javoblade[$l],43242);
             }
             $d=array();
             $d[0] = "st"; $d[1] = "p1"; $d[2] = "p2"; $d[3] = "se";
@@ -1680,8 +1679,7 @@ class DbOperation
                         substr($uyinchilar,$i,1)))-39),$lk,"OxirgiZapis".substr($uyinchilar,$i,1)
             );
         }
-          $db->SetError("Assassin-".$kmn,$lk);
-        if ($kmn != "") { $db->SEndMEssageToGroup($lk,$uyinchilar,$kmn); }
+        if($kmn != ""){ $db->SEndMEssageToGroup($lk,$uyinchilar,$kmn); }
         sleep(6);
         $minSatck = $db->TurnLk($lk);
         $db=new DbOperation();
@@ -1839,9 +1837,9 @@ class DbOperation
             $stmt2 = $this->con->prepare($sql);
             $stmt2->bind_param("iii", $lk,$index,$ids[$i]);
             $stmt2->execute();
-            $sql="DELETE FROM botlist WHERE groupnumber = ? AND indexq=? AND id=? ";
+            $sql="DELETE FROM botlist WHERE groupnumber = ? AND indexq=?  ";
             $stmt3 = $this->con->prepare($sql);
-            $stmt3->bind_param("iii", $lk,$index,$ids[$i]);
+            $stmt3->bind_param("ii", $lk,$index);
             $stmt3->execute();
             $sql="DELETE FROM ocheredbot WHERE groupnumber = ?  AND botId=? ";
             $stmt4 = $this->con->prepare($sql);
@@ -1932,12 +1930,11 @@ class DbOperation
             $db->SetTimede($lk,"time".$index,"");
             $db->SetTimede2($lk,"time".$index,"");
 
-            // ObnovitQilish($lk);
 
             $yurishkimmiki=$db->GetYurishKimmiki($lk);
-            if (strpos($yurishkimmiki,$index)!==false)
+            if(strpos($yurishkimmiki,$index)!==false)
             {
-                if ($kartatarqatildi=="true")
+                if($kartatarqatildi=="true")
                 {
                     if (substr($yurishkimmiki,0,1) != $index)
                     {
@@ -2412,12 +2409,12 @@ class DbOperation
                 {
                     $db->Setbotlistkeraklide($i,$keraklide+1);
 
-                    if (strpos($data,"()")!==false && strlen($data) > 16)
+                    if(strpos($data,"()")!==false && strlen($data) > 16)
                     {
                         $dsds = "";
                         for ($i1 = 0; $i1 < strlen($data) - 16; $i1++)
                         {
-                            if ((string)$index !=substr($data,9+$i1,1) && $i == 0)
+                            if((string)$index !=substr($data,9+$i1,1) && $i == 0)
                             {
                                 $uyinchilar=str_replace(substr($data,9+$i1,1),"",$uyinchilar);
                                 $db->Setbotlistuyinchilar($i,$uyinchilar);
@@ -2426,11 +2423,11 @@ class DbOperation
                             {
                                 if ((string)$index != substr($data,9+$i1,1))
                                 {
-                                    $dsds = $dsds .substr($data,9+$i1,1);
+                                    $dsds = $dsds.substr($data,9+$i1,1);
                                 }
                             }
                         }
-                        for ($i1 = 1; $i1 < 10; $i1++)
+                        for($i1 = 1; $i1 < 10; $i1++)
                         {
                             if (strpos($uyinchilar,(string)$i)!==false)
                             {
@@ -2444,23 +2441,19 @@ class DbOperation
                     }
                     else
                     {
-                        if ((string)$index  != substr($data,9,1))
+                        if ((string)$index!= substr($data,9,1))
                         {
                                $uyinchilar=str_replace(substr($data,9,1),"",$uyinchilar);
                                        $db->Setbotlistuyinchilar($i,$uyinchilar);
                         }
                     }
-               //     print(BotsList[i].Uyinchilar + " =uyinchilar");
-                    if (strlen($uyinchilar) < 2)
+                    if(strlen($uyinchilar) < 2)
                     {
-                        $pul =(string) ((int)($yol) + (int)($pul) + $judgement);
-
-
-                        if ((int)($pul) < $uyindanOldingiPuli) { $pul =(string)$uyindanOldingiPuli; }
-
-                         $db->Setall($i,0,"1","",0,0,0,"0","","",$pul,0,"");
-
-                        $db->Chiqishde("Chiqishde".$index.str_pad($r2[1],4,'0',STR_PAD_LEFT),1);
+                      //  $pul =(string)((int)($yol) + (int)($pul) + $judgement);
+                       // if ((int)($pul) < $uyindanOldingiPuli){$pul =(string)$uyindanOldingiPuli;}
+                      //  $db->Setall($i,0,"1","",0,0,0,"0","","",$pul,0,"");
+                      //  $db->SetError("CHIQDE=".$index,234);
+                       /// $db->Chiqishde("Chiqishde".$index.str_pad($r2[1],4,'0',STR_PAD_LEFT),1);
 
                     }
                     else
