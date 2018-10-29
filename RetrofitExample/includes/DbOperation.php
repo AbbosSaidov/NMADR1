@@ -1329,7 +1329,7 @@ class DbOperation
                     {
                         if ($d[$x] == $b[(int)substr($asosiy,$i,1)])
                         {
-                            if ($x > $t) { $t = $x; $t1 = substr($asosiy,$i,1);     break; }
+                            if ($x > $t) { $t = $x; $t1 = substr($asosiy,$i,1);break; }
                             if ($x == $t) { $t1 = $t1.substr($asosiy,$i,1); }
                             if (strlen($t1) > 1)
                             {
@@ -2447,24 +2447,14 @@ class DbOperation
                                        $db->Setbotlistuyinchilar($i,$uyinchilar);
                         }
                     }
-                    if(strlen($uyinchilar) < 2)
-                    {
-                      //  $pul =(string)((int)($yol) + (int)($pul) + $judgement);
-                       // if ((int)($pul) < $uyindanOldingiPuli){$pul =(string)$uyindanOldingiPuli;}
-                      //  $db->Setall($i,0,"1","",0,0,0,"0","","",$pul,0,"");
-                      //  $db->SetError("CHIQDE=".$index,234);
-                       /// $db->Chiqishde("Chiqishde".$index.str_pad($r2[1],4,'0',STR_PAD_LEFT),1);
-
-                    }
-                    else
-                    {
+               //  $db->SetError("NMadr",324);
                         $db->Setall($i,$uyindanOldingiPuli,$Pas,"",$keraklide,$mik,$EngKatta,$yol,$UziniKartasi,$uyinchilar,$pul,$online,$UrtadagiKartalar);
 
                         $r2[5]=$keraklide;
                         $r2[7]=$uyinchilar;
                         $r2[15]=$EngKatta;
                         $db->Yurish($i, $data,$r2);
-                    }
+
                 }
                 else
                 {
