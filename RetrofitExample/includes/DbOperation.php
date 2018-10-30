@@ -1767,7 +1767,6 @@ class DbOperation
                                 $huy=strlen($yurishkimmiki);
                                 $pasde[1]=(string)$huy."&";
                                  if(strlen($data)>34){
-
                                      $stmqt = $this->con->prepare("SELECT indexs,idnumber FROM botgrouplar WHERE groupnumber = ?");
                                      $stmqt->bind_param("i", $GroupNumber);
                                      $stmqt->execute();
@@ -2610,7 +2609,7 @@ class DbOperation
                         $db->SetbotlistJudgement($i,$judgement);
 
                         $db->Setall($i,$uyindanOldingiPuli,$Pas,$qaysiligiKartani,$keraklide,$mik,$EngKatta,$yol,$UziniKartasi,$uyinchilar,$pul,$online,$UrtadagiKartalar);
-                        }
+                    }
                     else
                     {
                         $db->Setall($i,$uyindanOldingiPuli,$Pas,$qaysiligiKartani,$keraklide,$mik,$EngKatta,$yol,$UziniKartasi,$uyinchilar,$pul,$online,$UrtadagiKartalar)
